@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flashcards - Meus Estudos</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <link rel="stylesheet" href="TelaPrincipal.css">
+    <link rel="stylesheet" href="flashcards.css">
+
+    <link rel="icon" type="image/png" href="fotos/logo.png">
+</head>
+
+<body>
+
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <a href="TelaPrincipal.html"> <img src="fotos/logo.png" alt="Logo Meus Estudos"></a>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="TelaPrincipal.html"><i class="fa-solid fa-house"></i><span>Home</span></a></li>
+                    <li><a href="calendario.html"><i class="fa-solid fa-calendar-days"></i><span>Cronograma</span></a></li>
+                    <li><a href="edital.html"><i class="fa-solid fa-book-open"></i><span>Edital</span></a></li>
+                    <li class="active"><a href="#"><i class="fa-solid fa-layer-group"></i><span>Flashcards</span></a></li>
+                    <li><a href="#"><i class="fa-solid fa-list-check"></i><span>Questões</span></a></li>
+                    <li><a href="#"><i class="fa-solid fa-map-location-dot"></i><span>Guia</span></a></li>
+                    <li><a href="#"><i class="fa-solid fa-chart-pie"></i><span>Painel Tático</span></a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <div class="flashcard-area">
+                <header class="flashcard-header">
+                    <h1>Revisão Ativa</h1>
+                    <p>Direito Constitucional - Art. 5º</p>
+                </header>
+
+                <div class="flashcard-viewer">
+                    <div class="flashcard" id="flashcard">
+                        <div class="flashcard-front">
+                            <p id="card-question">Carregando pergunta...</p>
+                        </div>
+                        <div class="flashcard-back">
+                            <p id="card-answer">Carregando resposta...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flashcard-controls">
+                    <button id="prev-card"><i class="fa-solid fa-arrow-left"></i> Anterior</button>
+                    <span id="card-counter">0 / 0</span>
+                    <button id="next-card">Próximo <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+                 <div class="flashcard-tip">
+                    Clique no card para virar
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="flashcards.js"></script>
+</body>
+</html>

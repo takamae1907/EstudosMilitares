@@ -1,0 +1,156 @@
+/* ---
+LAYOUT AJUSTADO PARA A PÁGINA DE FLASHCARDS
+--- */
+.dashboard-container {
+    /* Sobrescreve o grid para ter apenas 2 colunas (sidebar e main) */
+    grid-template-columns: 240px 1fr;
+}
+
+/* ---
+ÁREA PRINCIPAL DOS FLASHCARDS
+--- */
+.flashcard-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: 20px;
+}
+
+.flashcard-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.flashcard-header h1 {
+    font-size: 2.5em;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.flashcard-header p {
+    font-size: 1.2em;
+    color: #8a8a8e; /* Cinza suave da Apple */
+    font-weight: 500;
+}
+
+/* ---
+O VISUALIZADOR E O CARD COM EFEITO 3D
+--- */
+.flashcard-viewer {
+    perspective: 1000px; /* Cria o espaço 3D para o efeito de virar */
+    margin-bottom: 25px;
+}
+
+.flashcard {
+    width: 600px;
+    height: 350px;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.6s ease;
+    cursor: pointer;
+    border-radius: 16px;
+}
+
+.flashcard.is-flipped {
+    transform: rotateY(180deg); /* Gira o card em 180 graus */
+}
+
+.flashcard-front,
+.flashcard-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden; /* Esconde o lado de trás do elemento */
+    border-radius: 16px;
+    background-color: #1c1c1e; /* Cor padrão dos widgets */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+    text-align: center;
+    font-size: 1.4em;
+    line-height: 1.5;
+}
+
+.flashcard-back {
+    transform: rotateY(180deg); /* Posiciona a parte de trás já virada */
+    font-weight: 500;
+}
+
+.flashcard-front {
+    font-weight: 600; /* Pergunta com mais destaque */
+}
+
+
+/* ---
+CONTROLES DE NAVEGAÇÃO
+--- */
+.flashcard-controls {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.flashcard-controls button {
+    background-color: #2c2c2e;
+    border: none;
+    color: #f5f5f7;
+    padding: 12px 25px;
+    font-size: 1em;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.flashcard-controls button:hover {
+    background-color: #3a3a3c;
+}
+
+#card-counter {
+    font-size: 1.1em;
+    font-weight: 600;
+    color: #8a8a8e;
+    min-width: 50px;
+    text-align: center;
+}
+
+.flashcard-tip {
+    margin-top: 15px;
+    font-size: 0.9em;
+    color: #8a8a8e;
+}
+
+
+/* ---
+RESPONSIVIDADE PARA FLASHCARDS
+--- */
+@media (max-width: 1200px) {
+    .dashboard-container {
+        grid-template-columns: 90px 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .dashboard-container {
+        grid-template-columns: 1fr; /* Apenas uma coluna */
+    }
+    
+    .flashcard {
+        width: 90vw;
+        height: 60vh;
+    }
+
+    .flashcard-header h1 {
+        font-size: 1.8em;
+    }
+
+    .flashcard-header p {
+        font-size: 1em;
+    }
+}

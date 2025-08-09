@@ -471,3 +471,4 @@ RESPONSIVIDADE - ADAPTAÇÃO FLUIDA
     .widgets-grid { grid-template-columns: 1fr; }
     .turmas-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
 }
+
