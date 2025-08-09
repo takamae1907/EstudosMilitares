@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analisador de Editais IA</title>
+    <link rel="stylesheet" href="edital.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="icon" type="image/png" href="fotos/logo.png">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1>Analisador de Editais IA</h1>
+        <p>A alma do seu estudo começa aqui. Envie o edital e deixe a IA fazer o trabalho pesado.</p>
+    </header>
+
+    <main>
+        <section id="upload-section" class="card">
+            <h2>1. Envie seu Edital</h2>
+            <input type="file" id="edital-input" accept=".pdf">
+            <button id="analyze-btn">Analisar Edital</button>
+        </section>
+
+        <section id="loading-section" class="hidden">
+            <div class="spinner"></div>
+            <p>Analisando o edital... A IA está lendo, interpretando e estruturando as informações para você.</p>
+        </section>
+
+        <section id="dashboard-main" class="hidden">
+            <div class="dashboard-grid">
+                
+                <div id="fases-concurso" class="card">
+                    <h3>Fases do Concurso</h3>
+                    <ul id="fases-list"></ul>
+                </div>
+
+                <div id="edital-progresso" class="card">
+                    <h3>Progresso no Edital</h3>
+                    <p>Sua leitura e revisão do conteúdo programático.</p>
+                    <div class="progress-bar-container">
+                        <div id="edital-visto-bar" class="progress-bar"></div>
+                    </div>
+                    <span id="edital-visto-percent">0%</span>
+                </div>
+
+                <div id="criterios-avaliacao" class="card card-large">
+                    <h3>Critérios de Avaliação e Matérias</h3>
+                    <table id="materias-table">
+                        <thead>
+                            <tr>
+                                <th>Matéria</th>
+                                <th>Nº de Questões</th>
+                                <th>Peso/Valor</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+
+                <div id="conteudo-programatico" class="card card-large">
+                    <h3>Conteúdo Programático</h3>
+                    <div id="conteudo-list"></div>
+                </div>
+
+                <div id="cronograma" class="card">
+                    <h3>Cronograma / Calendário</h3>
+                    <ul id="cronograma-list"></ul>
+                </div>
+
+                <div id="plano-estudo" class="card">
+                    <h3>Seu Plano de Hoje</h3>
+                    <ul id="dia-estudo-list"></ul>
+                </div>
+
+                 <div id="rendimento-geral" class="card">
+                    <h3>Seu Rendimento</h3>
+                    <p>Análise do seu acerto em questões vs. o edital.</p>
+                    <div class="progress-bar-container">
+                        <div id="rendimento-bar" class="progress-bar rendimento"></div>
+                    </div>
+                    <span id="rendimento-percent">0%</span>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <script src="edital.js"></script>
+</body>
+</html>

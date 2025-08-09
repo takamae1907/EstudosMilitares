@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cronograma Integrado</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <link rel="stylesheet" href="calendario.css">
+
+    <link rel="icon" type="image/png" href="fotos/logo.png">
+</head>
+
+<body>
+
+    <div class="app-container">
+        <aside class="sidebar-nav">
+            <div class="sidebar-logo">
+                <a href="TelaPrincipal.html"> <img src="fotos/logo.png" alt="Logo Meus Estudos"></a>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="TelaPrincipal.html"><i class="fa-solid fa-house"></i><span>Home</span></a></li>
+                    <li class="active"><a href="calendario.html"><i class="fa-solid fa-calendar-days"></i><span>Cronograma</span></a></li>
+                    <li><a href="edital.html"><i class="fa-solid fa-book-open"></i><span>Edital</span></a></li>
+                    <li><a href="#"><i class="fa-solid fa-layer-group"></i><span>Flashcards</span></a></li>
+                    <li><a href="#"><i class="fa-solid fa-list-check"></i><span>Questões</span></a></li>
+                    <li><a href="#"><i class="fa-solid fa-map-location-dot"></i><span>Guia</span></a></li>
+                    <li><a href="#"><i class="fa-solid fa-chart-pie"></i><span>Painel Tático</span></a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <div class="top-content-grid">
+                <div class="calendar-widget">
+                    <div class="calendar-header">
+                        <button id="prev-month-button" class="nav-button"><i class="fas fa-chevron-left"></i></button>
+                        <h2 id="month-year-header">Carregando...</h2>
+                        <button id="next-month-button" class="nav-button"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                    <div class="calendar-weekdays">
+                        <span>DOM</span><span>SEG</span><span>TER</span><span>QUA</span><span>QUI</span><span>SEX</span><span>SÁB</span>
+                    </div>
+                    <div class="calendar-days" id="calendar-days-grid"></div>
+                </div>
+
+                <div class="right-column">
+                    <div class="widget add-prova-widget">
+                        <h4><i class="fas fa-calendar-plus"></i> Adicionar Prova</h4>
+                        <form id="add-prova-form">
+                            <div class="form-group">
+                                <label for="prova-name-input">Nome da Prova ou Concurso</label>
+                                <input type="text" id="prova-name-input" placeholder="Ex: Polícia Federal" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="prova-date-input">Data da Prova</label>
+                                <input type="date" id="prova-date-input" required>
+                            </div>
+                            <button type="submit">Adicionar Prova</button>
+                        </form>
+                    </div>
+
+                    <div class="widget provas-widget">
+                        <h4><i class="fas fa-flag-checkered"></i> Próximas Provas</h4>
+                        <ul id="provas-list">
+                            </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="widget todo-widget">
+                 <div class="todo-header">
+                     <h3 id="todo-title">Lembretes do Dia</h3>
+                     <div class="todo-filter">
+                         <label for="show-completed-toggle">Mostrar Concluídos</label>
+                         <label class="switch">
+                             <input type="checkbox" id="show-completed-toggle">
+                             <span class="slider round"></span>
+                         </label>
+                     </div>
+                 </div>
+                 <div class="todo-body">
+                     <ul id="reminder-list"></ul>
+                 </div>
+                 <div class="todo-footer">
+                     <form id="add-reminder-form">
+                         <input type="text" id="new-reminder-input" placeholder="Adicionar nova tarefa..." required>
+                         <button type="submit"><i class="fas fa-plus"></i> Adicionar</button>
+                     </form>
+                 </div>
+            </div>
+        </main>
+
+    </div>
+
+    <div id="edit-modal" class="modal-overlay"> 
+        </div>
+
+    <script src="calendario.js"></script>
+</body>
+
+</html>

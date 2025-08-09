@@ -1,0 +1,689 @@
+/*
+========================================
+APPLE-INSPIRED CALENDAR STYLESHEET (V2)
+========================================
+*/
+
+/* --- VARIÁVEIS DE COR E FONTES GLOBAIS --- */
+:root {
+    --bg-color: #151515;
+    /* Fundo um pouco mais claro para o efeito de vidro */
+    --primary-widget-bg: #1c1c1e;
+    --secondary-bg: #2c2c2e;
+    --border-color: #3a3a3c;
+    --text-color: #f5f5f7;
+    --text-muted-color: #8a8a8e;
+    --accent-color: #0a84ff;
+    /* Apple Blue */
+    --danger-color: #ff4581;
+    /* Apple Pink/Red */
+    --success-color: #34c759;
+    /* Apple Green */
+    /* NOVO: Cor de destaque do calendário inspirado na imagem */
+    --calendar-highlight: #F95D47;
+    --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-family);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* --- LAYOUT PRINCIPAL DA APLICAÇÃO --- */
+.app-container {
+    display: grid;
+    /* ALTERADO: Sidebar volta a ser larga como no padrão */
+    grid-template-columns: 240px 1fr;
+    height: 100vh;
+    padding: 20px;
+    gap: 24px;
+}
+
+/* =====================================================
+--- BARRA LATERAL (ESTILO PADRÃO RESTAURADO) --- 
+=====================================================
+*/
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    /* Itens se esticam para preencher a largura */
+    padding: 10px 15px;
+}
+
+.sidebar-logo {
+    padding: 15px 10px;
+    margin-bottom: 20px;
+}
+
+.sidebar-logo img {
+    width: 50px;
+    height: auto;
+}
+
+.sidebar-nav nav ul {
+    list-style: none;
+    width: 100%;
+}
+
+.sidebar-nav li a {
+    display: flex;
+    /* ALTERADO: Ícone ao lado do texto */
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    color: var(--text-muted-color);
+    text-decoration: none;
+    padding: 12px 10px;
+    transition: all 0.2s ease;
+    gap: 20px;
+    /* Espaço entre ícone e texto */
+    border-radius: 8px;
+}
+
+.sidebar-nav li a i {
+    font-size: 1.2em;
+    width: 25px;
+    /* Alinhamento dos ícones */
+    text-align: center;
+}
+
+.sidebar-nav li a span {
+    font-size: 1em;
+    font-weight: 500;
+}
+
+/* ALTERADO: Efeito de hover/ativo volta a ser a "pílula" cinza */
+.sidebar-nav li.active a,
+.sidebar-nav li a:hover {
+    color: var(--text-color);
+    background-color: var(--secondary-bg);
+}
+
+
+/* --- CONTEÚDO PRINCIPAL (CENTRO) --- */
+.main-content {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    overflow-y: auto;
+}
+
+.main-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.main-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.main-content::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 4px;
+}
+
+.top-content-grid {
+    display: grid;
+    grid-template-columns: 1fr 400px;
+    gap: 24px;
+    align-items: start;
+}
+
+/* --- ESTILOS GERAIS PARA WIDGETS --- */
+.widget {
+    background-color: var(--primary-widget-bg);
+    border-radius: 16px;
+    padding: 25px;
+}
+
+/* ==================================================================================
+--- CALENDÁRIO (ESTILO GLASSMORPHISM - INSPIRADO NA IMAGEM) ---
+==================================================================================
+*/
+.calendar-widget {
+    /* Efeito de vidro */
+    background: rgba(44, 44, 46, 0.6);
+    /* Cor de fundo com transparência */
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+
+    /* Simulação do brilho roxo da imagem */
+    position: relative;
+    overflow: hidden;
+    padding: 20px;
+    border-radius: 20px;
+}
+
+.calendar-widget::before {
+    content: '';
+    position: absolute;
+    top: -50px;
+    left: -50px;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(168, 85, 247, 0.25), transparent 70%);
+    opacity: 0.8;
+    z-index: -1;
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    padding: 0 5px;
+}
+
+.calendar-header h2 {
+    text-transform: capitalize;
+    font-size: 1.2em;
+    font-weight: 500;
+}
+
+.nav-button {
+    background: transparent;
+    /* Fundo transparente */
+    border: none;
+    color: var(--text-muted-color);
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: all 0.2s;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+}
+
+.nav-button:hover {
+    color: var(--text-color);
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.calendar-weekdays,
+.calendar-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+    /* Maior espaçamento */
+}
+
+.calendar-weekdays span {
+    text-align: center;
+    font-weight: 500;
+    font-size: 0.8em;
+    color: var(--text-muted-color);
+    padding-bottom: 10px;
+}
+
+.day-cell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+    font-size: 0.9em;
+    border: 2px solid transparent;
+}
+
+.day-cell.empty-day {
+    cursor: default;
+    visibility: hidden;
+}
+
+.day-cell:not(.empty-day):hover {
+    background-color: var(--secondary-bg);
+}
+
+/* ALTERADO: Estilo do dia selecionado conforme a imagem */
+.selected-day {
+    background-color: var(--calendar-highlight);
+    color: #ffffff;
+    font-weight: 600;
+}
+
+/* Remove os pontos de lembrete do dia selecionado para um visual mais limpo */
+.selected-day.has-reminder::after,
+.selected-day.has-prova::after {
+    display: none;
+}
+
+/* Mantém os pontos para os outros dias */
+.day-cell.has-reminder::after,
+.day-cell.has-prova::after {
+    content: '';
+    position: absolute;
+    bottom: 8px;
+    /* Ponto um pouco mais para cima */
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+}
+
+.day-cell.has-reminder::after {
+    background-color: var(--success-color);
+}
+
+.day-cell.has-prova::after {
+    background-color: var(--danger-color);
+}
+
+/* O restante dos widgets mantém o estilo padrão escuro */
+.right-column {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.widget h4,
+.widget h3 {
+    font-size: 1.2em;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--text-color);
+    margin-bottom: 20px;
+}
+
+.widget h4 i {
+    color: var(--text-muted-color);
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    font-size: 0.9em;
+    color: var(--text-muted-color);
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+input[type="text"],
+input[type="date"] {
+    width: 100%;
+    background-color: var(--bg-color);
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 1em;
+    font-family: var(--font-family);
+    transition: all 0.2s;
+}
+
+input[type="text"]:focus,
+input[type="date"]:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 3px rgba(10, 132, 255, 0.3);
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(0.8);
+    cursor: pointer;
+}
+
+button[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    background: var(--accent-color);
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 1em;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button[type="submit"]:hover {
+    background: #0077e6;
+}
+
+.provas-widget ul {
+    list-style: none;
+}
+
+.provas-widget li {
+    padding: 15px 0;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+}
+
+.provas-widget li:last-child {
+    border-bottom: none;
+}
+
+.provas-widget li strong {
+    font-weight: 500;
+}
+
+.provas-widget li span {
+    font-size: 0.9em;
+    color: var(--text-muted-color);
+}
+
+.todo-widget {
+    display: flex;
+    flex-direction: column;
+}
+
+.todo-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.todo-body {
+    overflow-y: auto;
+    flex-grow: 1;
+    max-height: 250px;
+}
+
+#reminder-list {
+    list-style: none;
+}
+
+#reminder-list li {
+    display: flex;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+#reminder-list li:last-child {
+    border-bottom: none;
+}
+
+#reminder-list .task-text {
+    flex-grow: 1;
+    margin: 0 15px;
+}
+
+#reminder-list .completed .task-text {
+    text-decoration: line-through;
+    color: var(--text-muted-color);
+}
+
+.task-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.task-actions button,
+.complete-btn {
+    background: none;
+    border: none;
+    color: var(--text-muted-color);
+    cursor: pointer;
+    font-size: 1.1em;
+}
+
+.task-actions .edit-btn:hover {
+    color: var(--accent-color);
+}
+
+.task-actions .delete-btn:hover {
+    color: var(--danger-color);
+}
+
+.complete-btn:hover,
+.complete-btn .fa-check-square {
+    color: var(--success-color);
+}
+
+.todo-footer {
+    padding-top: 20px;
+    border-top: 1px solid var(--border-color);
+}
+
+#add-reminder-form {
+    display: flex;
+    gap: 10px;
+}
+
+#add-reminder-form input {
+    flex-grow: 1;
+    background: var(--secondary-bg);
+}
+
+#add-reminder-form button {
+    width: auto;
+    padding: 0 20px;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 44px;
+    height: 24px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--secondary-bg);
+    transition: .4s;
+    border-radius: 24px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked+.slider {
+    background-color: var(--success-color);
+}
+
+input:checked+.slider:before {
+    transform: translateX(20px);
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.3s;
+    z-index: 1000;
+}
+
+.modal-overlay.visible {
+    visibility: visible;
+    opacity: 1;
+}
+
+.modal-content {
+    background: var(--secondary-bg);
+    padding: 30px;
+    border-radius: 16px;
+    width: 90%;
+    max-width: 500px;
+}
+
+.modal-content h4 {
+    margin-bottom: 20px;
+}
+
+#edit-reminder-textarea {
+    width: 100%;
+    background: var(--bg-color);
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 1em;
+    margin-bottom: 20px;
+    resize: vertical;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.modal-actions button {
+    padding: 10px 20px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    border-radius: 8px;
+}
+
+#cancel-edit-btn {
+    background: var(--border-color);
+    color: var(--text-color);
+}
+
+.modal-actions button[type="submit"] {
+    background: var(--accent-color);
+    color: #fff;
+}
+
+/* --- RESPONSIVIDADE --- */
+@media (max-width: 1200px) {
+    .app-container {
+        grid-template-columns: 90px 1fr;
+        /* Colapsa a sidebar */
+    }
+
+    /* Adapta a sidebar para o modo colapsado */
+    .sidebar-nav {
+        padding: 10px 0;
+    }
+
+    .sidebar-nav li a {
+        flex-direction: column;
+        gap: 8px;
+        justify-content: center;
+    }
+
+    .sidebar-nav li a span {
+        font-size: 0.7em;
+    }
+
+    .sidebar-logo img {
+        width: 45px;
+    }
+
+    .top-content-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .right-column {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+    }
+}
+
+@media (max-width: 768px) {
+    body {
+        overflow-y: auto;
+    }
+
+    .app-container {
+        display: flex;
+        flex-direction: column;
+        padding: 10px 10px 80px 10px;
+        height: auto;
+    }
+
+    .main-content {
+        order: 1;
+    }
+
+    .right-column {
+        grid-template-columns: 1fr;
+    }
+
+    /* Barra de navegação vira uma Tab Bar no rodapé */
+    .sidebar-nav {
+        order: 2;
+        flex-direction: row;
+        justify-content: space-around;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 70px;
+        padding: 5px 0;
+        border-radius: 0;
+        z-index: 1000;
+        background-color: rgba(28, 28, 30, 0.7);
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .sidebar-logo,
+    .sidebar-nav li a span {
+        display: none;
+    }
+
+    .sidebar-nav nav {
+        width: 100%;
+    }
+
+    .sidebar-nav nav ul {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        width: 100%;
+    }
+
+    .sidebar-nav li a:hover,
+    .sidebar-nav li.active a {
+        background-color: transparent;
+    }
+
+    .sidebar-nav li.active a {
+        color: var(--accent-color);
+    }
+}

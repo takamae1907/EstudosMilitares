@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Meus Estudos</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <link rel="stylesheet" href="TelaPrincipal.css">
+
+    <link rel="icon" type="image/png" href="fotos/logo.png">
+</head>
+
+<body>
+
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <a href="#"> <img src="fotos/logo.png" alt="Logo Meus Estudos"></a>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li class="active"><a href="#"><i class="fa-solid fa-house"></i><span>Home</span></a></li>
+                    <li><a href="calendario.html"><i class="fa-solid fa-calendar-days"></i><span>Cronograma</span></a></li>
+                    <li><a href="edital.html"><i class="fa-solid fa-book-open"></i><span>Edital</span></a></li>
+                    <li><a href="#"><i class="fa-solid fa-layer-group"></i><span>Flashcards</span></a></li>
+                    <li><a href="#"><i class="fa-solid fa-list-check"></i><span>Questões</span></a></li>
+                    <li><a href="#"><i class="fa-solid fa-map-location-dot"></i><span>Guia</span></a></li>
+                    <li><a href="#"><i class="fa-solid fa-chart-pie"></i><span>Painel Tático</span></a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="main-header">
+                <h2>SUA OPINIÃO É IMPORTANTE</h2>
+                <button>Participe da pesquisa</button>
+            </header>
+
+            <div class="widgets-grid">
+                <div class="widget welcome-widget">
+                    <h3>Olá, Mike. <span class="subtitle">Bem-vindo!</span></h3>
+                    <div class="progress-bar">
+                        <div class="progress" style="width: 65.96%;"></div>
+                    </div>
+                    <p>65,96% APROVEITAMENTO GERAL</p>
+                    <div class="stats">
+                        <div><strong>77</strong><br>Melhor Nota</div>
+                        <div><strong>5</strong><br>Pior Nota</div>
+                    </div>
+                </div>
+
+                <div class="widget quote-widget">
+                    <h4>Frase do dia</h4>
+                    <blockquote>"Você precisa fazer aquilo que pensa que não é capaz de fazer."<footer>- Eleanor Roosevelt</footer>
+                    </blockquote>
+                </div>
+
+                <div class="widget editais-widget">
+                    <h4>Meus Editais</h4>
+                    <div class="editais-icons">
+                        <i class="fa-solid fa-file-signature" title="Edital Aberto"></i>
+                        <i class="fa-solid fa-file-zipper" title="Edital Finalizado"></i>
+                        <i class="fa-solid fa-file-circle-plus" title="Adicionar Edital"></i>
+                        <i class="fa-solid fa-folder-open" title="Ver Todos"></i>
+                    </div>
+                    <p>Gerencie os editais que você está estudando.</p>
+                </div>
+            </div>
+
+            <section class="turmas-section">
+                <div class="section-header">
+                    <h2>Minhas Turmas</h2>
+                    <input type="text" placeholder="Pesquisar turmas...">
+                </div>
+                <div class="turmas-grid">
+                    <a href="edital-pmdf.html" class="turma-card">
+                        <img src="fotos/cfo-pmdf.png" alt="Turma CFO PMDF">
+                        <div class="turma-title">CFO PMDF</div>
+                    </a>
+                    <a href="#" class="turma-card">
+                        <img src="fotos/sd-pmdf.png" alt="Turma SD PMDF">
+                        <div class="turma-title">SD PMDF</div>
+                    </a>
+                    <a href="#" class="turma-card">
+                        <img src="fotos/cfo-cbm.png" alt="Turma CFO CBM">
+                        <div class="turma-title">CFO CBM</div>
+                    </a>
+                    <a href="#" class="turma-card">
+                        <img src="fotos/cfo-sd.png" alt="Turma SD CBM">
+                        <div class="turma-title">SD CBM</div>
+                    </a>
+                    <a href="#" class="turma-card">
+                        <img src="fotos/sd-pmmg.png" alt="Turma SD PMGO">
+                        <div class="turma-title">SD PMGO</div>
+                    </a>
+                    <a href="#" class="turma-card">
+                        <img src="fotos/cfo-pmgo.png" alt="Turma CFO PMGO">
+                        <div class="turma-title">CFO PMGO</div>
+                    </a>
+                    <a href="#" class="turma-card">
+                        <img src="fotos/pp-mg.png" alt="Turma PP MG">
+                        <div class="turma-title">PP MG</div>
+                    </a>
+                    <a href="#" class="turma-card">
+                        <img src="fotos/5.png" alt="Turma Tribunal Regional">
+                        <div class="turma-title">Tribunal Regional</div>
+                    </a>
+                </div>
+            </section>
+        </main>
+
+        <aside class="right-column">
+            <div class="section-header">
+                <h2>Meu Dia</h2>
+                <a href="#" class="view-all">Ver todos</a>
+            </div>
+            <div class="lembretes-widget">
+                <h4>LEMBRETES</h4>
+                <ul>
+                    </ul>
+            </div>
+        </aside>
+    </div>
+
+    <script src="TelaPrincipal.js"></script>
+</body>
+
+</html>

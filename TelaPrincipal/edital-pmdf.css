@@ -1,0 +1,516 @@
+/*
+========================================
+APPLE-INSPIRED STUDY PLAN STYLESHEET
+========================================
+*/
+
+/* --- VARIÁVEIS DE COR E FONTES GLOBAIS --- */
+:root {
+    --bg-color: #000000;
+    --primary-widget-bg: #1c1c1e;
+    --secondary-bg: #2c2c2e;
+    --border-color: #3a3a3c;
+    --text-color: #f5f5f7;
+    --text-muted-color: #8a8a8e;
+    --accent-color: #0a84ff;
+    /* Apple Blue */
+    --success-color: #34c759;
+    /* Apple Green */
+    --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-family);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+/* --- LAYOUT PRINCIPAL E SIDEBAR PADRÃO --- */
+.dashboard-container {
+    display: grid;
+    grid-template-columns: 240px 1fr 340px;
+    /* Sidebar padrão larga */
+    height: 100vh;
+    gap: 24px;
+    padding: 20px;
+}
+
+.sidebar {
+    padding: 10px 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.sidebar-logo {
+    padding: 15px 10px;
+    margin-bottom: 20px;
+}
+
+.sidebar-logo img {
+    width: 50px;
+}
+
+.sidebar-nav ul {
+    list-style: none;
+    width: 100%;
+}
+
+.sidebar-nav li a {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+    color: var(--text-muted-color);
+    text-decoration: none;
+    padding: 12px 10px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.sidebar-nav li a i {
+    font-size: 1.2em;
+    width: 25px;
+    text-align: center;
+}
+
+.sidebar-nav li a span {
+    font-size: 1em;
+    font-weight: 500;
+}
+
+.sidebar-nav li.active a,
+.sidebar-nav li a:hover {
+    color: var(--text-color);
+    background-color: var(--secondary-bg);
+}
+
+/* --- CONTEÚDO PRINCIPAL --- */
+.main-content {
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+.main-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.main-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.main-content::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 4px;
+}
+
+.page-header {
+    margin-bottom: 30px;
+}
+
+.page-header h1 {
+    font-size: 2.2em;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.page-header p {
+    color: var(--text-muted-color);
+    font-size: 1.1em;
+}
+
+/* --- PAINEL DE PROGRESSO --- */
+.progress-panel {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin-bottom: 40px;
+}
+
+.chart-container {
+    background-color: var(--primary-widget-bg);
+    padding: 20px;
+    border-radius: 16px;
+}
+
+.chart-container h4 {
+    margin-bottom: 15px;
+    font-size: 0.9em;
+    font-weight: 500;
+    color: var(--text-muted-color);
+}
+
+.overall-chart h4 {
+    font-size: 1.1em;
+    color: var(--text-color);
+    font-weight: 600;
+}
+
+.progress-bar-container {
+    background-color: var(--secondary-bg);
+    border-radius: 5px;
+    height: 10px;
+    width: 100%;
+}
+
+.progress-bar {
+    background-color: var(--accent-color);
+    height: 100%;
+    border-radius: 5px;
+    width: 0%;
+    transition: width 0.5s ease-in-out;
+}
+
+.overall-chart .progress-bar {
+    background: linear-gradient(90deg, var(--accent-color), var(--success-color));
+}
+
+.progress-label {
+    display: block;
+    text-align: right;
+    font-size: 0.9em;
+    font-weight: 600;
+    margin-top: 8px;
+}
+
+/* --- PLANO DE ESTUDOS (ACORDEÃO) --- */
+.plan-container h2 {
+    margin-bottom: 20px;
+    font-size: 1.8em;
+}
+
+.accordion-item {
+    background-color: var(--primary-widget-bg);
+    border-radius: 16px;
+    margin-bottom: 12px;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+}
+
+.accordion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.accordion-header:hover {
+    background-color: var(--secondary-bg);
+}
+
+.accordion-header h3 {
+    font-size: 1.2em;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.progress-label-semana {
+    font-size: 0.8em;
+    color: var(--text-muted-color);
+    font-weight: 500;
+}
+
+.accordion-header .icon {
+    transition: transform 0.3s ease;
+    color: var(--text-muted-color);
+}
+
+.accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease, padding 0.5s ease;
+    padding: 0 20px;
+}
+
+.accordion-item.active .accordion-content {
+    max-height: 4000px;
+    /* Valor alto para acomodar todo o conteúdo */
+    padding: 0 20px 20px;
+}
+
+.accordion-item.active .accordion-header .icon {
+    transform: rotate(135deg);
+}
+
+.accordion-item.active .accordion-header {
+    background-color: var(--secondary-bg);
+}
+
+.day-plan {
+    border-top: 1px solid var(--border-color);
+    padding-top: 20px;
+    margin-top: 20px;
+}
+
+.day-plan:first-child {
+    border-top: none;
+    margin-top: 0;
+}
+
+.day-plan h4 {
+    margin-bottom: 15px;
+    font-weight: 600;
+    color: var(--text-color);
+    font-size: 1.1em;
+}
+
+.day-plan ul {
+    list-style: none;
+}
+
+.topic-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 10px 5px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.topic-item:hover {
+    background-color: var(--secondary-bg);
+}
+
+.topic-item label {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.topic-item .subject-tag {
+    font-size: 0.75em;
+    font-weight: 600;
+    color: var(--text-color);
+    background-color: var(--border-color);
+    padding: 3px 8px;
+    border-radius: 5px;
+    margin-top: 5px;
+    align-self: flex-start;
+}
+
+/* Checkbox Estilo Apple (circular) */
+.topic-item input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    flex-shrink: 0;
+    width: 22px;
+    height: 22px;
+    border: 2px solid var(--border-color);
+    border-radius: 50%;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s;
+}
+
+.topic-item input[type="checkbox"]:hover {
+    border-color: var(--text-muted-color);
+}
+
+.topic-item input[type="checkbox"]:checked {
+    background-color: var(--success-color);
+    border-color: var(--success-color);
+}
+
+.topic-item input[type="checkbox"]:checked::before {
+    content: '\f00c';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    color: #fff;
+    font-size: 12px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.topic-item.completed label {
+    color: var(--text-muted-color);
+}
+
+.topic-item.completed {
+    text-decoration: line-through;
+}
+
+/* --- COLUNA DA DIREITA --- */
+.right-column {
+    background-color: var(--primary-widget-bg);
+    border-radius: 16px;
+    padding: 25px;
+    overflow-y: auto;
+}
+
+.right-column .widget {
+    padding: 0;
+    background: none;
+}
+
+.right-column .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.right-column h2 {
+    font-size: 1.5em;
+}
+
+.right-column #current-date {
+    font-size: 0.9em;
+    color: var(--text-muted-color);
+}
+
+.today-widget,
+.lembretes-widget {
+    margin-bottom: 25px;
+}
+
+.today-widget h4,
+.lembretes-widget h4 {
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    font-size: 1.1em;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.today-widget ul,
+.lembretes-widget ul {
+    list-style: none;
+}
+
+.today-widget li,
+.lembretes-widget li {
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.today-widget li:last-child,
+.lembretes-widget li:last-child {
+    border-bottom: none;
+}
+
+.today-widget li strong,
+.lembretes-widget li strong {
+    font-weight: 500;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.today-widget li span,
+.lembretes-widget li span {
+    font-size: 0.85em;
+    color: var(--text-muted-color);
+}
+
+/* --- RESPONSIVIDADE --- */
+@media (max-width: 1200px) {
+    .dashboard-container {
+        grid-template-columns: 90px 1fr;
+    }
+
+    .right-column {
+        display: none;
+    }
+
+    .sidebar {
+        padding: 10px 0;
+    }
+
+    .sidebar-nav li a {
+        flex-direction: column;
+        gap: 8px;
+        justify-content: center;
+    }
+
+    .sidebar-nav li a span {
+        font-size: 0.7em;
+    }
+
+    .sidebar-logo {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    body {
+        overflow-y: auto;
+    }
+
+    .dashboard-container {
+        display: flex;
+        flex-direction: column;
+        height: auto;
+        min-height: 100vh;
+        padding: 15px 15px 85px 15px;
+    }
+
+    .main-content {
+        order: 1;
+        overflow-y: visible;
+        padding-right: 0;
+    }
+
+    .right-column {
+        display: block;
+        order: 2;
+        margin-top: 20px;
+        padding: 25px;
+    }
+
+    .sidebar {
+        order: 3;
+        flex-direction: row;
+        justify-content: space-around;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 70px;
+        padding: 5px 0;
+        border-radius: 0;
+        z-index: 1000;
+        background-color: rgba(28, 28, 30, 0.7);
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .sidebar-nav {
+        width: 100%;
+        padding: 0;
+    }
+
+    .sidebar-nav ul {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        width: 100%;
+    }
+
+    .sidebar-nav li a span {
+        display: none;
+    }
+
+    .sidebar-nav li a:hover,
+    .sidebar-nav li.active a {
+        background-color: transparent;
+    }
+
+    .sidebar-nav li.active a {
+        color: var(--accent-color);
+    }
+}

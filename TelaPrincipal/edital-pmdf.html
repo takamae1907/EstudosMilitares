@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plano de Estudos - PMDF</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <link rel="stylesheet" href="edital-pmdf.css">
+
+    <link rel="icon" type="image/png" href="fotos/logo.png">
+</head>
+
+<body>
+
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <a href="TelaPrincipal.html"> <img src="fotos/logo.png" alt="Logo Meus Estudos"></a>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="TelaPrincipal.html"><i class="fa-solid fa-house"></i><span>Home</span></a></li>
+                    <li class="active"><a href="plano.html"><i class="fa-solid fa-calendar-days"></i><span>Cronograma</span></a></li>
+                    <li><a href="#"><i class="fa-solid fa-book-open"></i><span>Edital</span></a></li>
+                    <li><a href="#"><i class="fa-solid fa-layer-group"></i><span>Flashcards</span></a></li>
+                    <li><a href="#"><i class="fa-solid fa-list-check"></i><span>Questões</span></a></li>
+                    <li><a href="#"><i class="fa-solid fa-map-location-dot"></i><span>Guia</span></a></li>
+                    <li><a href="#"><i class="fa-solid fa-chart-pie"></i><span>Painel Tático</span></a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="page-header">
+                <h1>Plano de Estudos - Edital PMDF</h1>
+                <p>Acompanhe seu progresso e mantenha a disciplina para alcançar a aprovação.</p>
+            </header>
+
+            <section class="progress-panel" id="progress-panel">
+                <div class="chart-container overall-chart">
+                    <h4>Progresso Geral do Edital</h4>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" id="geral-progress-bar"></div>
+                    </div>
+                    <span class="progress-label" id="geral-progress-label">0%</span>
+                </div>
+                </section>
+
+            <section class="plan-container">
+                <h2>Cronograma de Estudos - 12 Semanas</h2>
+                <div id="cronograma-container" class="accordion-container">
+                    </div>
+            </section>
+        </main>
+
+        <aside class="right-column">
+            <div class="widget today-widget">
+                <div class="section-header">
+                    <h2>Meu Dia</h2>
+                    <span id="current-date"></span>
+                </div>
+                <h4><i class="fa-solid fa-bullseye"></i> Estudos de Hoje</h4>
+                <ul id="today-list">
+                    </ul>
+            </div>
+            <div class="widget lembretes-widget">
+                <h4><i class="fa-solid fa-star"></i> Lembretes Fixos</h4>
+                <ul>
+                    <li>
+                        <strong>Revisão de Sábado</strong>
+                        <span>Revisar os tópicos mais difíceis da semana.</span>
+                    </li>
+                    </ul>
+            </div>
+        </aside>
+    </div>
+
+    <script src="edital-pmdf.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,473 @@
+/* ---
+APPLE DESIGN PHILOSOPHY - RESET & GLOBAIS
+--- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    /* Tipografia: Usamos uma "pilha de fontes do sistema".
+    Em dispositivos Apple, ele usará a fonte "San Francisco".
+    Em outros, usará a melhor fonte de UI disponível.
+    */
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+    background-color: #000000; /* Fundo preto puro, ideal para telas OLED */
+    color: #f5f5f7; /* Um branco levemente acinzentado da Apple */
+    -webkit-font-smoothing: antialiased; /* Renderização de fonte mais suave */
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* ---
+LAYOUT PRINCIPAL - GRID E ESPAÇAMENTO
+--- */
+.dashboard-container {
+    display: grid;
+    /* Sidebar mais larga para acomodar texto e ícone */
+    grid-template-columns: 240px 1fr 340px; 
+    height: 100vh;
+    gap: 24px; /* Mais espaçamento para um layout mais "respirado" */
+    padding: 20px;
+}
+
+/* ---
+BARRA LATERAL (SIDEBAR) - CLAREZA E FOCO
+--- */
+.sidebar {
+    /* O sidebar agora não tem cor de fundo, ele se mescla ao corpo */
+    padding: 10px 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-logo {
+    padding: 15px 25px;
+    margin-bottom: 10px;
+}
+
+.sidebar-logo img {
+    width: 50px; /* Logo menor e mais sutil */
+}
+
+.sidebar-nav ul {
+    list-style: none;
+    width: 100%;
+    padding: 0 15px;
+}
+
+.sidebar-nav li a {
+    display: flex;
+    /* Layout de ícone ao lado do texto */
+    flex-direction: row; 
+    align-items: center;
+    gap: 20px; /* Espaço entre ícone e texto */
+    color: #8a8a8e; /* Cinza para itens inativos */
+    text-decoration: none;
+    padding: 12px 10px;
+    border-radius: 8px; /* Cantos arredondados suaves */
+    transition: all 0.2s ease-in-out;
+}
+
+.sidebar-nav li a i {
+    font-size: 1.2em;
+    width: 25px; /* Alinhamento dos ícones */
+    text-align: center;
+}
+
+.sidebar-nav li a span {
+    font-size: 1em;
+    font-weight: 500;
+}
+
+/* Efeito de hover e item ativo: um fundo sutil e cor de texto mais forte */
+.sidebar-nav li.active a,
+.sidebar-nav li a:hover {
+    color: #ffffff;
+    background-color: #2c2c2e; /* Fundo cinza escuro para destaque */
+}
+
+/* ---
+CONTEÚDO PRINCIPAL - PROFUNDIDADE E MATERIAL
+--- */
+.main-content {
+    overflow-y: auto;
+    /* Scrollbar estilizada */
+    &::-webkit-scrollbar { width: 8px; }
+    &::-webkit-scrollbar-track { background: transparent; }
+    &::-webkit-scrollbar-thumb { background: #3a3a3c; border-radius: 4px; }
+}
+
+.main-header {
+    /* Fundo sutil para criar profundidade, sem bordas */
+    background-color: #1c1c1e; 
+    border-radius: 12px;
+    padding: 18px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.main-header h2 {
+    font-size: 1.1em;
+    font-weight: 600;
+    color: #8a8a8e; /* Texto em maiúsculas com cor suave */
+    letter-spacing: 0.5px;
+}
+
+.main-header button {
+    background-color: transparent;
+    /* Cor azul padrão da Apple para ações */
+    color: #0a84ff; 
+    border: none;
+    padding: 0;
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.main-header button:hover {
+    color: #339cff;
+}
+
+.widgets-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+    margin-bottom: 24px;
+}
+
+.widget {
+    background-color: #1c1c1e;
+    padding: 25px;
+    border-radius: 16px; /* Cantos mais arredondados */
+}
+
+.welcome-widget h3 {
+    font-size: 1.8em;
+    font-weight: 600;
+}
+
+.welcome-widget .subtitle {
+    font-weight: 500;
+    color: #8a8a8e;
+}
+
+.progress-bar {
+    background-color: #3a3a3c;
+    border-radius: 4px;
+    height: 8px; /* Barra mais fina e elegante */
+    margin: 20px 0 8px;
+    overflow: hidden;
+}
+
+.progress {
+    background-color: #34c759; /* Verde da Apple */
+    height: 100%;
+    border-radius: 4px;
+}
+
+.welcome-widget p {
+    font-size: 0.8em;
+    font-weight: 600;
+    color: #8a8a8e;
+    letter-spacing: 0.5px;
+}
+
+.stats {
+    display: flex;
+    gap: 40px;
+    margin-top: 20px;
+}
+.stats div {
+    line-height: 1.3;
+}
+.stats strong {
+     font-size: 1.5em;
+     font-weight: 600;
+}
+
+.quote-widget h4 {
+    margin-bottom: 15px;
+    color: #8a8a8e;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.8em;
+    letter-spacing: 0.5px;
+}
+
+.quote-widget blockquote {
+    font-style: italic;
+    font-size: 1.1em;
+    border-left: none; /* Removemos a borda para um visual mais limpo */
+    padding-left: 0;
+    position: relative;
+}
+
+.quote-widget footer {
+    font-style: normal;
+    font-size: 0.9em;
+    color: #8a8a8e;
+    text-align: right;
+    margin-top: 15px;
+}
+
+.editais-widget h4 {
+    margin-bottom: 20px;
+}
+
+.editais-icons {
+    display: flex;
+    gap: 15px;
+    font-size: 1.8em; /* Ícones menores */
+    color: #f5f5f7;
+    margin-bottom: 20px;
+}
+
+.editais-icons i {
+    cursor: pointer;
+    transition: transform 0.2s, color 0.2s;
+    background-color: #3a3a3c;
+    border-radius: 50%; /* Ícones em círculos */
+    padding: 12px;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.editais-icons i:hover {
+    background-color: #48484a;
+    color: #ffffff;
+    transform: scale(1.05);
+}
+
+.editais-widget p {
+    color: #8a8a8e;
+    font-size: 0.9em;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 0 5px;
+}
+
+.section-header h2 {
+    font-size: 1.5em;
+    font-weight: 600;
+}
+
+.section-header input {
+    background-color: #1c1c1e;
+    border: 1px solid #3a3a3c;
+    color: #f5f5f7;
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-size: 1em;
+    width: 250px; /* Largura definida */
+    transition: all 0.2s;
+}
+.section-header input:focus {
+    outline: none;
+    border-color: #0a84ff;
+    box-shadow: 0 0 0 3px rgba(10, 132, 255, 0.3);
+}
+
+.turmas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 24px;
+}
+
+.turma-card {
+    background-color: #1c1c1e;
+    border-radius: 16px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    text-decoration: none;
+    color: #f5f5f7;
+    display: block; /* Para o <a> se comportar como um bloco */
+}
+
+.turma-card:hover {
+    transform: scale(1.03); /* Efeito de zoom sutil */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.turma-card img {
+    width: 100%;
+    height: 140px; /* Altura fixa para as imagens */
+    object-fit: cover; /* Garante que a imagem cubra o espaço sem distorcer */
+    display: block;
+}
+
+.turma-card .turma-title {
+    padding: 15px;
+    font-weight: 600;
+    font-size: 1em;
+}
+
+/* ---
+COLUNA DA DIREITA - INFORMAÇÕES CONTEXTUAIS
+--- */
+.right-column {
+    background-color: #1c1c1e;
+    border-radius: 16px;
+    padding: 25px;
+    overflow-y: auto;
+    &::-webkit-scrollbar { display: none; } /* Esconder scrollbar */
+}
+
+.right-column .view-all {
+    font-size: 0.9em;
+    color: #0a84ff;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.lembretes-widget {
+    margin-top: 20px;
+    border-top: 1px solid #3a3a3c;
+    padding-top: 25px;
+}
+
+.lembretes-widget h4 {
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    font-size: 0.8em;
+    font-weight: 600;
+    color: #8a8a8e;
+    letter-spacing: 0.5px;
+}
+
+.lembretes-widget ul {
+    list-style: none;
+}
+
+.lembretes-widget li {
+    background-color: transparent; /* Fundo transparente */
+    padding: 12px 5px;
+    border-radius: 0;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #3a3a3c; /* Linha divisória sutil */
+    border-left: none; /* Remove a borda esquerda antiga */
+    position: relative;
+    padding-left: 20px;
+}
+/* Adiciona um ponto colorido como em lembretes do iOS */
+.lembretes-widget li::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    background-color: #0a84ff;
+    border-radius: 50%;
+    position: absolute;
+    left: 0;
+    top: 18px;
+}
+
+
+.lembretes-widget li strong {
+    display: block;
+    margin-bottom: 4px;
+    font-weight: 500;
+}
+
+.lembretes-widget li span {
+    font-size: 0.85em;
+    color: #8a8a8e;
+}
+.lembretes-widget li:last-child {
+    border-bottom: none;
+}
+
+/* ---
+RESPONSIVIDADE - ADAPTAÇÃO FLUIDA
+--- */
+@media (max-width: 1200px) {
+    .dashboard-container {
+        grid-template-columns: 90px 1fr; /* Sidebar apenas com ícones */
+        grid-template-areas:
+            "sidebar main"
+            "sidebar right";
+    }
+    .sidebar-nav li a {
+        flex-direction: column;
+        gap: 8px;
+        justify-content: center;
+    }
+    .sidebar-nav li a span {
+        font-size: 0.7em;
+    }
+    .sidebar-logo img { width: 40px; }
+    .right-column {
+        grid-area: right;
+        height: auto;
+        overflow-y: visible;
+    }
+}
+
+@media (max-width: 768px) {
+    body { overflow-y: auto; }
+    .dashboard-container {
+        display: flex;
+        flex-direction: column;
+        height: auto;
+        min-height: 100vh;
+        padding: 10px 10px 80px 10px; /* Espaço no fundo para a barra de navegação */
+    }
+
+    .sidebar {
+        order: 3;
+        flex-direction: row;
+        justify-content: space-around;
+        position: fixed; /* Barra fixa no fundo */
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 70px;
+        padding: 5px 0;
+        border-radius: 0;
+        z-index: 1000;
+        /* Efeito de vidro fosco (Glassmorphism) */
+        background-color: rgba(28, 28, 30, 0.7);
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .sidebar-logo { display: none; }
+    .sidebar-nav { width: 100%; }
+    .sidebar-nav ul {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        width: 100%;
+        padding: 0;
+    }
+
+    .sidebar-nav li a span { display: none; } /* Esconde o texto */
+    .sidebar-nav li a i { font-size: 1.6em; }
+    .sidebar-nav li.active a, .sidebar-nav li a:hover {
+        background-color: transparent; /* Sem fundo no hover/active */
+        color: #0a84ff; /* Apenas muda a cor do ícone */
+    }
+
+    .main-content { order: 1; overflow-y: visible; }
+    .right-column { order: 2; margin-top: 24px; }
+
+    .main-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+    .widgets-grid { grid-template-columns: 1fr; }
+    .turmas-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+}

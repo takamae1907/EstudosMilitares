@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro - Meus Estudos</title>
+    <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="icon" type="image/png" href="TelaPrincipal/fotos/logo.png">
+</head>
+<body>
+    <div class="login-container">
+        <h1>CRIAR CONTA</h1>
+
+        <form id="register-form">
+            <div class="input-group">
+                <input type="text" id="fullname" placeholder="nome completo" required>
+            </div>
+            <div class="input-group">
+                <input type="email" id="email" placeholder="email" required>
+            </div>
+            <div class="input-group">
+                <input type="password" id="password" placeholder="senha" required>
+            </div>
+            <div class="input-group">
+                <input type="password" id="confirm-password" placeholder="confirmar senha" required>
+            </div>
+            <button type="submit" class="btn-login">CADASTRAR</button>
+        </form>
+
+        <div class="register-link">
+            <p>Já tem uma conta? <a href="index.html">Faça login</a></p>
+        </div>
+
+        <div class="separator">
+            <hr>
+            <span>OU CADASTRE-SE COM</span>
+            <hr>
+        </div>
+
+        <div class="social-login">
+            <a href="#" class="social-btn whatsapp">
+                <i class="fab fa-whatsapp"></i> Whatsapp
+            </a>
+            <a href="#" class="social-btn facebook">
+                <i class="fab fa-facebook-f"></i> Facebook
+            </a>
+            <a href="#" class="social-btn google">
+                <i class="fab fa-google"></i> Google
+            </a>
+        </div>
+    </div>
+
+    <script src="cadastro.js"></script>
+</body>
+</html>
