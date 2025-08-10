@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cronômetro - Meus Estudos (Corrigido)</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <link rel="icon" type="image/png" href="fotos/logo.png">
+
+    <style>
+        /* --- ESTILOS GLOBAIS E CORREÇÃO DEFINITIVA DE LAYOUT --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100vh; /* Trava a altura na altura da tela */
+            overflow: hidden; /* Impede a rolagem do corpo da página */
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #000000;
+            color: #f5f5f7;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .dashboard-container {
+            display: grid;
+            grid-template-columns: 240px 1fr; /* Layout de 2 colunas */
+            height: 100vh; /* Ocupa a altura total */
+            padding: 20px;
+            gap: 24px;
+        }
+
+        .main-content {
+            display: flex; /* Essencial para a correção */
+            flex-direction: column; /* Organiza header e conteúdo em coluna */
+            overflow: hidden; /* Esconde qualquer overflow inesperado */
+        }
+        
+        .main-header {
+            background-color: #1c1c1e; 
+            border-radius: 12px;
+            padding: 18px 25px;
+            margin-bottom: 24px;
+            flex-shrink: 0; /* Impede que o header encolha */
+        }
+
+        .main-header h2 {
+            font-size: 1.1em;
+            font-weight: 600;
+            color: #8a8a8e;
+            letter-spacing: 0.5px;
+        }
+
+        /* ESTA É A ÁREA QUE VAI ROLAR, E NÃO A PÁGINA INTEIRA */
+        .scrollable-area {
+            flex-grow: 1; /* Ocupa todo o espaço restante */
+            overflow-y: auto; /* Cria a barra de rolagem APENAS AQUI */
+            padding-right: 15px; /* Espaço para a barra de rolagem não sobrepor o conteúdo */
+        }
+
+        /* Estilizando a barra de rolagem para o design */
+        .scrollable-area::-webkit-scrollbar { width: 8px; }
+        .scrollable-area::-webkit-scrollbar-track { background: transparent; }
+        .scrollable-area::-webkit-scrollbar-thumb { background: #3a3a3c; border-radius: 4px; }
+
+
+        /* --- ESTILOS DA SIDEBAR (COPIADOS DO SEU DESIGN ORIGINAL) --- */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+        }
+        .sidebar-logo { padding: 15px 25px; margin-bottom: 10px; }
+        .sidebar-logo img { width: 50px; }
+        .sidebar-nav ul { list-style: none; width: 100%; padding: 0 15px; }
+        .sidebar-nav li a {
+            display: flex;
+            flex-direction: row; 
+            align-items: center;
+            gap: 20px;
+            color: #8a8a8e;
+            text-decoration: none;
+            padding: 12px 10px;
+            border-radius: 8px;
+            transition: all 0.2s ease-in-out;
+        }
+        .sidebar-nav li a i { font-size: 1.2em; width: 25px; text-align: center; }
+        .sidebar-nav li a span { font-size: 1em; font-weight: 500; }
+        .sidebar-nav li.active a, .sidebar-nav li a:hover {
+            color: #ffffff;
+            background-color: #2c2c2e;
+        }
+
+
+        /* --- ESTILOS DA PÁGINA DE CRONÔMETRO --- */
+        .hidden { display: none !important; }
+
+        .activity-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .mode-selector {
+            display: flex;
+            background-color: #2c2c2e;
+            border-radius: 10px;
+            padding: 5px;
+            margin-bottom: 24px;
+        }
+        .mode-selector button {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            background-color: transparent;
+            color: #8a8a8e;
+            font-size: 1em;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .mode-selector button.active { background-color: #0a84ff; color: #ffffff; }
+
+        .form-card, .chart-card { background-color: #1c1c1e; border-radius: 16px; padding: 30px; }
+        
+        .form-section { margin-bottom: 20px; }
+        .form-section label { display: block; color: #f5f5f7; margin-bottom: 8px; font-weight: 500; }
+        .form-section input, .form-section select, .form-section textarea {
+            width: 100%;
+            background-color: #2c2c2e;
+            border: 1px solid #3a3a3c;
+            color: #f5f5f7;
+            padding: 12px 15px;
+            border-radius: 8px;
+            font-size: 1em;
+            font-family: inherit;
+        }
+        .form-section input:focus, .form-section select:focus, .form-section textarea:focus {
+            outline: none;
+            border-color: #0a84ff;
+            box-shadow: 0 0 0 3px rgba(10, 132, 255, 0.3);
+        }
+        .form-row { display: flex; gap: 15px; }
+        .form-divider { border: none; border-top: 1px solid #3a3a3c; margin: 30px 0; }
+
+        .timer-display { text-align: center; padding: 20px 0; }
+        #timer { font-size: 4em; font-weight: 600; font-family: 'SF Mono', 'Menlo', 'Monaco', monospace; }
+        .timer-controls { display: flex; justify-content: center; gap: 15px; margin-top: 10px; }
+        .timer-controls button {
+            background-color: #2c2c2e; border: none; color: #f5f5f7;
+            padding: 10px 20px; border-radius: 8px; cursor: pointer;
+            font-size: 0.9em; font-weight: 500; transition: background-color 0.2s ease;
+        }
+        .timer-controls button:hover { background-color: #3a3a3c; }
+
+        .save-button {
+            width: 100%; background-color: #34c759; color: #ffffff;
+            border: none; padding: 15px; font-size: 1.1em;
+            font-weight: 600; border-radius: 8px; cursor: pointer;
+            margin-top: 10px; transition: background-color 0.2s ease;
+        }
+        .save-button:hover { background-color: #30b152; }
+        
+        .chart-card { height: 100%; display: flex; flex-direction: column; }
+        .chart-card h3 { color: #f5f5f7; margin-bottom: 20px; font-weight: 600; text-align: center; }
+        .chart-wrapper { position: relative; flex-grow: 1; max-height: 450px; margin: 0 auto; }
+
+        @media (max-width: 1200px) {
+            .dashboard-container { grid-template-columns: 90px 1fr; }
+        }
+        @media (max-width: 1024px) {
+            .activity-grid { grid-template-columns: 1fr; }
+            .chart-wrapper { max-height: 400px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <a href="TelaPrincipal.html"><img src="fotos/logo.png" alt="Logo Meus Estudos"></a>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="TelaPrincipal.html"><i class="fa-solid fa-house"></i><span>Home</span></a></li>
+                    <li><a href="#"><i class="fa-solid fa-book"></i><span>Conteúdo</span></a></li>
+                    <li><a href="calendario.html"><i class="fa-solid fa-calendar-days"></i><span>Cronograma</span></a></li>
+                    <li class="active"><a href="#"><i class="fa-solid fa-stopwatch"></i><span>Cronômetro</span></a></li>
+                    <li><a href="#"><i class="fa-solid fa-chart-pie"></i><span>Painel Tático</span></a></li>
+                    <li><a href="#"><i class="fa-solid fa-list-check"></i><span>Questões</span></a></li>
+                    <li><a href="caderno.html"><i class="fa-solid fa-swatchbook"></i><span>Cadernos</span></a></li>
+                    <li><a href="flashcards.html"><i class="fa-solid fa-layer-group"></i><span>Flashcards</span></a></li>
+                    <li><a href="#"><i class="fa-solid fa-map-location-dot"></i><span>Guia</span></a></li>
+                    <li><a href="edital.html"><i class="fa-solid fa-book-open"></i><span>Edital</span></a></li>
+                    <li><a href="musica.html"><i class="fa-solid fa-music"></i><span>Música</span></a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="main-header">
+                <h2>REGISTRO DE ATIVIDADE</h2>
+            </header>
+
+            <div class="scrollable-area">
+                <div class="activity-grid">
+                    <div class="activity-form-container">
+                        <div class="mode-selector">
+                            <button id="mode-cronometro" class="active">Cronômetro</button>
+                            <button id="mode-manual">Manual</button>
+                        </div>
+                        <form id="activity-form" class="form-card">
+                            <div class="form-section">
+                                <label for="materia-input">Matéria</label>
+                                <input type="text" id="materia-input" placeholder="Selecione ou escreva uma nova matéria">
+                            </div>
+                            <div class="form-section">
+                                <label for="conteudo-input">Conteúdo</label>
+                                <input type="text" id="conteudo-input" placeholder="Selecione ou escreva um novo conteúdo">
+                            </div>
+                            <div id="cronometro-view">
+                                <div class="timer-display"><span id="timer">00:00:00</span></div>
+                                <div class="timer-controls">
+                                    <button type="button" id="start-btn"><i class="fa-solid fa-play"></i> Iniciar</button>
+                                    <button type="button" id="pause-btn"><i class="fa-solid fa-pause"></i> Pausar</button>
+                                    <button type="button" id="reset-btn"><i class="fa-solid fa-rotate-left"></i> Zerar</button>
+                                </div>
+                            </div>
+                            <div id="manual-view" class="hidden">
+                                <div class="form-row">
+                                    <div class="form-section">
+                                        <label for="start-date">Data de início</label>
+                                        <input type="date" id="start-date">
+                                    </div>
+                                    <div class="form-section">
+                                        <label for="start-time">Horário</label>
+                                        <input type="time" id="start-time">
+                                    </div>
+                                </div>
+                                <div class="form-section">
+                                    <label for="duration-input">Duração (h:m:s)</label>
+                                    <input type="text" id="duration-input" placeholder="Ex: 01:30:00">
+                                </div>
+                            </div>
+                            <hr class="form-divider">
+                            <div class="form-section">
+                                <label>Registro de exercícios</label>
+                                <div class="form-row">
+                                    <input type="number" id="questoes-qnt" placeholder="Quantidade">
+                                    <input type="number" id="questoes-acertos" placeholder="Acertos">
+                                </div>
+                            </div>
+                            <div class="form-section">
+                                <label for="study-type">Tipo de estudo</label>
+                                <select id="study-type">
+                                    <option value="nao-definido">Não definido</option>
+                                    <option value="teoria">Teoria</option>
+                                    <option value="exercicios">Exercícios</option>
+                                    <option value="revisao">Revisão</option>
+                                    <option value="simulado">Simulado</option>
+                                </select>
+                            </div>
+                            <div class="form-section">
+                                <label for="anotacoes">Anotações</label>
+                                <textarea id="anotacoes" rows="4"></textarea>
+                            </div>
+                            <button type="submit" class="save-button">Salvar Atividade</button>
+                        </form>
+                    </div>
+
+                    <div class="chart-container">
+                        <div class="chart-card">
+                            <h3>Divisão por Tipo de Estudo</h3>
+                            <div class="chart-wrapper">
+                                <canvas id="study-chart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const modeCronometroBtn = document.getElementById('mode-cronometro');
+            const modeManualBtn = document.getElementById('mode-manual');
+            const cronometroView = document.getElementById('cronometro-view');
+            const manualView = document.getElementById('manual-view');
+            const form = document.getElementById('activity-form');
+            const timerDisplay = document.getElementById('timer');
+            const startBtn = document.getElementById('start-btn');
+            const pauseBtn = document.getElementById('pause-btn');
+            const resetBtn = document.getElementById('reset-btn');
+
+            let seconds = 0;
+            let timerInterval = null;
+            let currentMode = 'cronometro';
+
+            modeCronometroBtn.addEventListener('click', () => setMode('cronometro'));
+            modeManualBtn.addEventListener('click', () => setMode('manual'));
+
+            function setMode(mode) {
+                currentMode = mode;
+                if (mode === 'cronometro') {
+                    modeCronometroBtn.classList.add('active');
+                    modeManualBtn.classList.remove('active');
+                    cronometroView.classList.remove('hidden');
+                    manualView.classList.add('hidden');
+                } else {
+                    modeManualBtn.classList.add('active');
+                    modeCronometroBtn.classList.remove('active');
+                    manualView.classList.remove('hidden');
+                    cronometroView.classList.add('hidden');
+                }
+            }
+
+            startBtn.addEventListener('click', () => {
+                if (timerInterval) return;
+                timerInterval = setInterval(() => {
+                    seconds++;
+                    updateTimerDisplay();
+                }, 1000);
+            });
+
+            pauseBtn.addEventListener('click', () => {
+                clearInterval(timerInterval);
+                timerInterval = null;
+            });
+
+            resetBtn.addEventListener('click', () => {
+                clearInterval(timerInterval);
+                timerInterval = null;
+                seconds = 0;
+                updateTimerDisplay();
+            });
+
+            function updateTimerDisplay() {
+                const hours = Math.floor(seconds / 3600);
+                const minutes = Math.floor((seconds % 3600) / 60);
+                const secs = seconds % 60;
+                timerDisplay.textContent = 
+                    `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+            }
+
+            form.addEventListener('submit', (event) => {
+                event.preventDefault();
+                const activityData = {
+                    modo: currentMode,
+                    materia: document.getElementById('materia-input').value,
+                    conteudo: document.getElementById('conteudo-input').value,
+                    exercicios: {
+                        quantidade: document.getElementById('questoes-qnt').value,
+                        acertos: document.getElementById('questoes-acertos').value
+                    },
+                    tipoEstudo: document.getElementById('study-type').value,
+                    anotacoes: document.getElementById('anotacoes').value,
+                };
+
+                if (currentMode === 'cronometro') {
+                    activityData.duracao = timerDisplay.textContent;
+                } else {
+                    activityData.dataInicio = document.getElementById('start-date').value;
+                    activityData.horaInicio = document.getElementById('start-time').value;
+                    activityData.duracao = document.getElementById('duration-input').value;
+                }
+                console.log("Atividade Salva:", activityData);
+                alert("Atividade salva com sucesso! (Verifique o console do navegador para ver os dados)");
+                form.reset();
+                resetTimer();
+            });
+
+            const ctx = document.getElementById('study-chart').getContext('2d');
+            const chartData = {
+                labels: ['Teoria', 'Exercícios', 'Revisão', 'Simulado'],
+                datasets: [{
+                    label: 'Horas por Tipo',
+                    data: [12, 19, 5, 3],
+                    backgroundColor: ['rgba(10, 132, 255, 0.8)', 'rgba(52, 199, 89, 0.8)', 'rgba(255, 159, 10, 0.8)', 'rgba(175, 82, 222, 0.8)'],
+                    borderColor: '#1c1c1e',
+                    borderWidth: 3,
+                    hoverOffset: 4
+                }]
+            };
+            const chartConfig = {
+                type: 'doughnut',
+                data: chartData,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                color: '#f5f5f7',
+                                padding: 20,
+                                font: { size: 14 }
+                            }
+                        }
+                    }
+                }
+            };
+            new Chart(ctx, chartConfig);
+            document.getElementById('start-date').valueAsDate = new Date();
+        });
+    </script>
+</body>
+</html>

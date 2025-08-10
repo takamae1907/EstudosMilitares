@@ -1,0 +1,192 @@
+/* --- CORREÇÃO DE LAYOUT DEFINITIVA --- */
+/* Esta regra impede que a página inteira se estique.
+   Ela trava a altura no tamanho da tela e força o .main-content
+   a usar sua própria barra de rolagem, como planejado. */
+html, body {
+    height: 100vh;
+    overflow: hidden;
+}
+
+
+/* --- ESTILOS DA PÁGINA DE CRONÔMETRO --- */
+
+.hidden {
+    display: none !important;
+}
+
+.activity-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 24px;
+}
+
+/* Seletor de modo: Cronômetro / Manual */
+.mode-selector {
+    display: flex;
+    background-color: #2c2c2e;
+    border-radius: 10px;
+    padding: 5px;
+    margin-bottom: 24px;
+}
+
+.mode-selector button {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    background-color: transparent;
+    color: #8a8a8e;
+    font-size: 1em;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.mode-selector button.active {
+    background-color: #0a84ff;
+    color: #ffffff;
+}
+
+/* Card do formulário */
+.form-card {
+    background-color: #1c1c1e;
+    border-radius: 16px;
+    padding: 30px;
+}
+
+.form-section {
+    margin-bottom: 20px;
+}
+
+.form-section label {
+    display: block;
+    color: #f5f5f7;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.form-section input[type="text"],
+.form-section input[type="number"],
+.form-section input[type="date"],
+.form-section input[type="time"],
+.form-section select,
+.form-section textarea {
+    width: 100%;
+    background-color: #2c2c2e;
+    border: 1px solid #3a3a3c;
+    color: #f5f5f7;
+    padding: 12px 15px;
+    border-radius: 8px;
+    font-size: 1em;
+    font-family: inherit;
+}
+
+.form-section input:focus, 
+.form-section select:focus, 
+.form-section textarea:focus {
+    outline: none;
+    border-color: #0a84ff;
+    box-shadow: 0 0 0 3px rgba(10, 132, 255, 0.3);
+}
+
+.form-row {
+    display: flex;
+    gap: 15px;
+}
+
+.form-divider {
+    border: none;
+    border-top: 1px solid #3a3a3c;
+    margin: 30px 0;
+}
+
+/* Visor e controles do Cronômetro */
+.timer-display {
+    text-align: center;
+    padding: 20px 0;
+}
+
+#timer {
+    font-size: 4em;
+    font-weight: 600;
+    font-family: 'SF Mono', 'Menlo', 'Monaco', monospace;
+    color: #f5f5f7;
+}
+
+.timer-controls {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.timer-controls button {
+    background-color: #2c2c2e;
+    border: none;
+    color: #f5f5f7;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9em;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+}
+
+.timer-controls button:hover {
+    background-color: #3a3a3c;
+}
+
+/* Botão de salvar */
+.save-button {
+    width: 100%;
+    background-color: #34c759; /* Verde da Apple */
+    color: #ffffff;
+    border: none;
+    padding: 15px;
+    font-size: 1.1em;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.2s ease;
+}
+
+.save-button:hover {
+    background-color: #30b152;
+}
+
+
+/* Card e container do gráfico */
+.chart-card {
+    background-color: #1c1c1e;
+    border-radius: 16px;
+    padding: 30px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.chart-card h3 {
+    color: #f5f5f7;
+    margin-bottom: 20px;
+    font-weight: 600;
+    text-align: center;
+}
+
+.chart-wrapper {
+    position: relative;
+    flex-grow: 1; /* Faz o wrapper crescer para ocupar o espaço do card */
+    max-height: 450px; /* Define uma altura máxima para o gráfico */
+    margin: 0 auto;
+}
+
+/* Responsividade */
+@media (max-width: 1200px) {
+    .activity-grid {
+        grid-template-columns: 1fr; /* Empilha as colunas */
+    }
+    .chart-wrapper {
+        max-height: 400px;
+    }
+}
