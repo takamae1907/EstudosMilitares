@@ -19,8 +19,8 @@
         }
 
         html, body {
-            height: 100vh; /* Trava a altura na altura da tela */
-            overflow: hidden; /* Impede a rolagem do corpo da página */
+            height: 100vh;
+            overflow: hidden;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             background-color: #000000;
             color: #f5f5f7;
@@ -30,24 +30,24 @@
 
         .dashboard-container {
             display: grid;
-            grid-template-columns: 240px 1fr; /* Layout de 2 colunas */
-            height: 100vh; /* Ocupa a altura total */
+            grid-template-columns: 240px 1fr;
+            height: 100vh;
             padding: 20px;
             gap: 24px;
         }
 
         .main-content {
-            display: flex; /* Essencial para a correção */
-            flex-direction: column; /* Organiza header e conteúdo em coluna */
-            overflow: hidden; /* Esconde qualquer overflow inesperado */
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
         }
         
         .main-header {
-            background-color: #1c1c1e; 
+            background-color: #1c1c1e;
             border-radius: 12px;
             padding: 18px 25px;
             margin-bottom: 24px;
-            flex-shrink: 0; /* Impede que o header encolha */
+            flex-shrink: 0;
         }
 
         .main-header h2 {
@@ -57,23 +57,22 @@
             letter-spacing: 0.5px;
         }
 
-        /* ESTA É A ÁREA QUE VAI ROLAR, E NÃO A PÁGINA INTEIRA */
         .scrollable-area {
-            flex-grow: 1; /* Ocupa todo o espaço restante */
-            overflow-y: auto; /* Cria a barra de rolagem APENAS AQUI */
-            padding-right: 15px; /* Espaço para a barra de rolagem não sobrepor o conteúdo */
+            flex-grow: 1;
+            overflow-y: auto;
+            padding-right: 15px;
         }
 
-        /* Estilizando a barra de rolagem para o design */
         .scrollable-area::-webkit-scrollbar { width: 8px; }
         .scrollable-area::-webkit-scrollbar-track { background: transparent; }
         .scrollable-area::-webkit-scrollbar-thumb { background: #3a3a3c; border-radius: 4px; }
 
-
-        /* --- ESTILOS DA SIDEBAR (COPIADOS DO SEU DESIGN ORIGINAL) --- */
+        /* --- ESTILOS DA SIDEBAR --- */
         .sidebar {
             display: flex;
             flex-direction: column;
+            background-color: #1c1c1e; /* Adicionado background para contraste */
+            border-radius: 16px;
         }
         .sidebar-logo { padding: 15px 25px; margin-bottom: 10px; }
         .sidebar-logo img { width: 50px; }
@@ -96,13 +95,19 @@
             background-color: #2c2c2e;
         }
 
-
-        /* --- ESTILOS DA PÁGINA DE CRONÔMETRO --- */
+        /* --- ESTILOS DA PÁGINA DE CRONÔMETRO APRIMORADOS --- */
         .hidden { display: none !important; }
 
         .activity-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr 1fr; /* Dividido em duas colunas */
+            gap: 24px;
+        }
+
+        /* Novo estilo para o container de gráficos */
+        .charts-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* Gráficos lado a lado */
             gap: 24px;
         }
 
@@ -173,9 +178,12 @@
 
         @media (max-width: 1200px) {
             .dashboard-container { grid-template-columns: 90px 1fr; }
+            .sidebar-nav li a span { display: none; }
+            .sidebar-logo img { width: 40px; }
         }
         @media (max-width: 1024px) {
             .activity-grid { grid-template-columns: 1fr; }
+            .charts-container { grid-template-columns: 1fr; }
             .chart-wrapper { max-height: 400px; }
         }
     </style>
@@ -275,11 +283,17 @@
                         </form>
                     </div>
 
-                    <div class="chart-container">
+                    <div class="charts-container">
                         <div class="chart-card">
                             <h3>Divisão por Tipo de Estudo</h3>
                             <div class="chart-wrapper">
                                 <canvas id="study-chart"></canvas>
+                            </div>
+                        </div>
+                        <div class="chart-card">
+                            <h3>Tempo de Estudo por Matéria</h3>
+                            <div class="chart-wrapper">
+                                <canvas id="subject-chart"></canvas>
                             </div>
                         </div>
                     </div>
@@ -350,6 +364,13 @@
                     `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
             }
 
+            function resetTimer() {
+                clearInterval(timerInterval);
+                timerInterval = null;
+                seconds = 0;
+                updateTimerDisplay();
+            }
+
             form.addEventListener('submit', (event) => {
                 event.preventDefault();
                 const activityData = {
@@ -377,8 +398,9 @@
                 resetTimer();
             });
 
-            const ctx = document.getElementById('study-chart').getContext('2d');
-            const chartData = {
+            // Gráfico 1 - Divisão por Tipo de Estudo (Doughnut)
+            const studyCtx = document.getElementById('study-chart').getContext('2d');
+            const studyChartData = {
                 labels: ['Teoria', 'Exercícios', 'Revisão', 'Simulado'],
                 datasets: [{
                     label: 'Horas por Tipo',
@@ -389,9 +411,9 @@
                     hoverOffset: 4
                 }]
             };
-            const chartConfig = {
+            const studyChartConfig = {
                 type: 'doughnut',
-                data: chartData,
+                data: studyChartData,
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
@@ -407,7 +429,44 @@
                     }
                 }
             };
-            new Chart(ctx, chartConfig);
+            new Chart(studyCtx, studyChartConfig);
+
+            // Gráfico 2 - Tempo de Estudo por Matéria (Barra)
+            const subjectCtx = document.getElementById('subject-chart').getContext('2d');
+            const subjectChartData = {
+                labels: ['Matemática', 'Português', 'História', 'Física'],
+                datasets: [{
+                    label: 'Tempo de Estudo (Horas)',
+                    data: [8, 10, 6, 4],
+                    backgroundColor: ['#0a84ff', '#34c759', '#ff9f0a', '#af52de'],
+                    borderColor: '#1c1c1e',
+                    borderWidth: 1,
+                }]
+            };
+            const subjectChartConfig = {
+                type: 'bar',
+                data: subjectChartData,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            ticks: { color: '#8a8a8e' },
+                            grid: { color: '#3a3a3c' }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            ticks: { color: '#8a8a8e' },
+                            grid: { color: '#3a3a3c' }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false }
+                    }
+                }
+            };
+            new Chart(subjectCtx, subjectChartConfig);
+
             document.getElementById('start-date').valueAsDate = new Date();
         });
     </script>

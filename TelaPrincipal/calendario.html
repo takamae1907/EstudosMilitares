@@ -3,28 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cronômetro - Meus Estudos</title>
-
+    <title>Cronograma Integrado</title>
+    <link rel="stylesheet" href="calendario.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    
-    <link rel="stylesheet" href="TelaPrincipal.css">
-    <link rel="stylesheet" href="cronometro.css">
-
-    <link rel="icon" type="image/png" href="fotos/logo.png">
 </head>
 <body>
 
-    <div class="dashboard-container">
-        <aside class="sidebar">
-            <div class="sidebar-logo">
-                <a href="TelaPrincipal.html"><img src="fotos/logo.png" alt="Logo Meus Estudos"></a>
-            </div>
-            <nav class="sidebar-nav">
+    <div class="app-container">
+        <aside class="sidebar-nav">
+            <div class="sidebar-logo"><i class="fa-solid fa-skull-crossbones"></i></div>
+            <nav>
                 <ul>
                     <li><a href="TelaPrincipal.html"><i class="fa-solid fa-house"></i><span>Home</span></a></li>
                     <li><a href="#"><i class="fa-solid fa-book"></i><span>Conteúdo</span></a></li>
-                    <li><a href="calendario.html"><i class="fa-solid fa-calendar-days"></i><span>Cronograma</span></a></li>
-                    <li class="active"><a href="#"><i class="fa-solid fa-stopwatch"></i><span>Cronômetro</span></a></li>
+                    <li class="active"><a href="calendario.html"><i class="fa-solid fa-calendar-days"></i><span>Calendário</span></a></li>
+                    <li><a href="cronometro.html"><i class="fa-solid fa-stopwatch"></i><span>Cronômetro</span></a></li>
                     <li><a href="#"><i class="fa-solid fa-chart-pie"></i><span>Painel Tático</span></a></li>
                     <li><a href="#"><i class="fa-solid fa-list-check"></i><span>Questões</span></a></li>
                     <li><a href="caderno.html"><i class="fa-solid fa-swatchbook"></i><span>Cadernos</span></a></li>
@@ -37,98 +30,80 @@
         </aside>
 
         <main class="main-content">
-            <header class="main-header">
-                <h2>REGISTRO DE ATIVIDADE</h2>
-            </header>
-
-            <div class="activity-grid">
-                <div class="activity-form-container">
-                    <div class="mode-selector">
-                        <button id="mode-cronometro" class="active">Cronômetro</button>
-                        <button id="mode-manual">Manual</button>
+            
+            <div class="calendar-layout-grid">
+                
+                <div class="left-calendar-column">
+                    
+                    <div class="todo-widget widget">
+                        <div class="todo-header">
+                            <h3 id="todo-title">Lembretes para DD/MM/AAAA</h3>
+                             <div class="todo-filter">
+                                <label for="show-completed-toggle">Mostrar Concluídos</label>
+                                <label class="switch">
+                                    <input type="checkbox" id="show-completed-toggle">
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="todo-body">
+                            <ul id="reminder-list">
+                                </ul>
+                        </div>
+                        <div class="todo-footer">
+                            <form id="add-reminder-form">
+                                <input type="text" id="new-reminder-input" placeholder="Adicionar nova tarefa..." required>
+                                <button type="submit"><i class="fas fa-plus"></i> Adicionar</button>
+                            </form>
+                        </div>
                     </div>
 
-                    <form id="activity-form" class="form-card">
-                        <div class="form-section">
-                            <label for="materia-input">Matéria</label>
-                            <input type="text" id="materia-input" placeholder="Selecione ou escreva uma nova matéria">
+                    <div class="calendar-widget">
+                        <div class="calendar-header">
+                            <button id="prev-month-button" class="nav-button"><i class="fas fa-chevron-left"></i></button>
+                            <h2 id="month-year-header">Carregando...</h2>
+                            <button id="next-month-button" class="nav-button"><i class="fas fa-chevron-right"></i></button>
                         </div>
-                        <div class="form-section">
-                            <label for="conteudo-input">Conteúdo</label>
-                            <input type="text" id="conteudo-input" placeholder="Selecione ou escreva um novo conteúdo">
+                        <div class="calendar-weekdays">
+                            <span>DOM</span><span>SEG</span><span>TER</span><span>QUA</span><span>QUI</span><span>SEX</span><span>SÁB</span>
                         </div>
-
-                        <div id="cronometro-view">
-                            <div class="timer-display">
-                                <span id="timer">00:00:00</span>
-                            </div>
-                            <div class="timer-controls">
-                                <button type="button" id="start-btn"><i class="fa-solid fa-play"></i> Iniciar</button>
-                                <button type="button" id="pause-btn"><i class="fa-solid fa-pause"></i> Pausar</button>
-                                <button type="button" id="reset-btn"><i class="fa-solid fa-rotate-left"></i> Zerar</button>
-                            </div>
-                        </div>
-
-                        <div id="manual-view" class="hidden">
-                             <div class="form-row">
-                                <div class="form-section">
-                                    <label for="start-date">Data de início</label>
-                                    <input type="date" id="start-date">
-                                </div>
-                                <div class="form-section">
-                                    <label for="start-time">Horário</label>
-                                    <input type="time" id="start-time">
-                                </div>
-                            </div>
-                            <div class="form-section">
-                                <label for="duration-input">Duração (h:m:s)</label>
-                                <input type="text" id="duration-input" placeholder="Ex: 01:30:00">
-                            </div>
-                        </div>
-                        
-                        <hr class="form-divider">
-
-                        <div class="form-section">
-                            <label>Registro de exercícios</label>
-                            <div class="form-row">
-                                <input type="number" id="questoes-qnt" placeholder="Quantidade">
-                                <input type="number" id="questoes-acertos" placeholder="Acertos">
-                            </div>
-                        </div>
-
-                        <div class="form-section">
-                            <label for="study-type">Tipo de estudo</label>
-                            <select id="study-type">
-                                <option value="nao-definido">Não definido</option>
-                                <option value="teoria">Teoria</option>
-                                <option value="exercicios">Exercícios</option>
-                                <option value="revisao">Revisão</option>
-                                <option value="simulado">Simulado</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-section">
-                            <label for="anotacoes">Anotações</label>
-                            <textarea id="anotacoes" rows="4"></textarea>
-                        </div>
-
-                        <button type="submit" class="save-button">Salvar Atividade</button>
-                    </form>
+                        <div class="calendar-days" id="calendar-days-grid"></div>
+                    </div>
+                    
                 </div>
 
-                <div class="chart-container">
-                    <div class="chart-card">
-                        <h3>Divisão por Tipo de Estudo</h3>
-                        <div class="chart-wrapper">
-                            <canvas id="study-chart"></canvas>
-                        </div>
+                <div class="right-widgets-column">
+
+                    <div class="add-prova-widget widget">
+                        <h4><i class="fas fa-calendar-plus"></i> Adicionar Prova</h4>
+                        <form id="add-prova-form">
+                            <div class="form-group">
+                                <label for="prova-name-input">Nome da Prova ou Concurso</label>
+                                <input type="text" id="prova-name-input" placeholder="Ex: Polícia Federal" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="prova-date-input">Data da Prova</label>
+                                <input type="date" id="prova-date-input" required>
+                            </div>
+                            <button type="submit">Salvar Prova</button>
+                        </form>
+                    </div>
+
+                    <div class="provas-widget widget">
+                        <h4><i class="fas fa-flag-checkered"></i> Próximas Provas</h4>
+                        <ul id="provas-list">
+                            </ul>
                     </div>
                 </div>
+
             </div>
+
         </main>
+        
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="cronometro.js"></script>
+    <div id="edit-modal" class="modal-overlay"> </div>
+
+    <script src="calendario.js"></script>
 </body>
 </html>
