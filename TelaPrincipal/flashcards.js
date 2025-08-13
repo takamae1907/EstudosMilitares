@@ -1,100 +1,204 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    // --- DADOS DE EXEMPLO PARA OS FLASHCARDS ---
-    // No futuro, isso pode vir de um banco de dados ou API.
-    const flashcardsData = [
-        { 
-            question: "Qual o objetivo fundamental da República Federativa do Brasil que busca construir uma sociedade livre, justa e solidária?", 
-            answer: "É o Inciso I do Art. 3º da Constituição Federal. Os outros objetivos são: garantir o desenvolvimento nacional, erradicar a pobreza e a marginalização, e promover o bem de todos." 
-        },
-        { 
-            question: "A casa é asilo inviolável do indivíduo. Em qual situação é permitido entrar nela sem consentimento do morador, durante a noite?", 
-            answer: "Durante a noite, apenas em caso de flagrante delito ou desastre, ou para prestar socorro. Com determinação judicial, o ingresso só é permitido durante o dia."
-        },
-        { 
-            question: "Todos podem reunir-se pacificamente, sem armas, em locais abertos ao público. O que é necessário para exercer esse direito?", 
-            answer: "Não é necessária autorização, mas apenas prévio aviso à autoridade competente para que não frustre outra reunião anteriormente convocada para o mesmo local." 
-        },
-        { 
-            question: "O que significa o princípio da 'anterioridade da lei penal'?", 
-            answer: "Significa que 'não há crime sem lei anterior que o defina, nem pena sem prévia cominação legal'. (Art. 5º, XXXIX)" 
-        },
-        { 
-            question: "A criação de associações e, na forma da lei, a de cooperativas independem de autorização. O que é vedado?", 
-            answer: "É vedada a interferência estatal em seu funcionamento." 
-        }
-    ];
+    // --- ESTRUTURA DE DADOS E VARIÁVEIS ---
+    let decks = [];
+    let activeDeck = null;
+    let currentCardIndex = 0;
 
     // --- REFERÊNCIAS AOS ELEMENTOS DO DOM ---
+    const deckSelectionView = document.getElementById('deck-selection-view');
+    const flashcardViewerView = document.getElementById('flashcard-viewer-view');
+    const deckGrid = document.getElementById('deck-grid');
+    const addDeckBtn = document.getElementById('add-deck-btn'); // Novo botão do header
+    
+    // Elementos do Viewer
     const flashcard = document.getElementById('flashcard');
+    const deckTitle = document.getElementById('deck-title');
     const cardQuestion = document.getElementById('card-question');
     const cardAnswer = document.getElementById('card-answer');
     const prevButton = document.getElementById('prev-card');
     const nextButton = document.getElementById('next-card');
     const cardCounter = document.getElementById('card-counter');
+    const backToDecksBtn = document.getElementById('back-to-decks-btn');
+    const addFlashcardBtn = document.getElementById('add-flashcard-btn');
 
-    let currentCardIndex = 0;
+    // Elementos dos Modais
+    const addDeckModal = document.getElementById('add-deck-modal');
+    const addDeckForm = document.getElementById('add-deck-form');
+    const addFlashcardModal = document.getElementById('add-flashcard-modal');
+    const addFlashcardForm = document.getElementById('add-flashcard-form');
 
-    // --- FUNÇÕES ---
+    // --- FUNÇÕES DE DADOS (LocalStorage) ---
 
-    /**
-     * Exibe o card no índice especificado.
-     * @param {number} index - O índice do card a ser mostrado.
-     */
-    function showCard(index) {
-        // Garante que o card esteja sempre virado para a frente ao carregar
+    function loadDecks() {
+        const savedDecks = localStorage.getItem('flashcardDecks');
+        if (savedDecks) {
+            decks = JSON.parse(savedDecks);
+        } else {
+            decks = [{
+                id: Date.now(),
+                title: "Direito Constitucional",
+                cards: [
+                    { question: "Qual o objetivo da RFB que busca construir uma sociedade livre, justa e solidária?", answer: "É o Inciso I do Art. 3º da CF." },
+                    { question: "Quando é permitido entrar na casa de alguém sem consentimento, durante a noite?", answer: "Apenas em flagrante delito, desastre, ou para prestar socorro." }
+                ]
+            }];
+        }
+    }
+
+    function saveDecks() {
+        localStorage.setItem('flashcardDecks', JSON.stringify(decks));
+    }
+
+    // --- FUNÇÕES DE RENDERIZAÇÃO E VISUALIZAÇÃO ---
+
+    function renderDecks() {
+        deckGrid.innerHTML = ''; // Limpa a grade
+        
+        decks.forEach(deck => {
+            const card = document.createElement('div');
+            card.className = 'deck-card';
+            card.dataset.deckId = deck.id;
+            
+            card.innerHTML = `
+                <div class="card-header">
+                    <span class="icon"><i class="fa-solid fa-layer-group"></i></span>
+                    <button class="delete-btn" data-deck-id="${deck.id}"><i class="fa-solid fa-trash-can"></i></button>
+                </div>
+                <div class="card-content">
+                    <h2>${deck.title}</h2>
+                    <p>${deck.cards.length} card(s)</p>
+                </div>
+            `;
+            
+            // Evento para abrir o baralho (não dispara se clicar no botão de deletar)
+            card.addEventListener('click', (e) => {
+                if (!e.target.closest('.delete-btn')) {
+                    showFlashcardView(deck.id);
+                }
+            });
+
+            // Evento para o botão de deletar
+            card.querySelector('.delete-btn').addEventListener('click', (e) => {
+                e.stopPropagation(); // Impede que o baralho seja aberto
+                if (confirm(`Tem certeza que deseja apagar o baralho "${deck.title}"?`)) {
+                    deleteDeck(deck.id);
+                }
+            });
+
+            deckGrid.appendChild(card);
+        });
+    }
+
+    function showDeckSelectionView() {
+        flashcardViewerView.classList.add('hidden');
+        deckSelectionView.classList.remove('hidden');
+        activeDeck = null;
+        renderDecks();
+    }
+
+    function showFlashcardView(deckId) {
+        const deck = decks.find(d => d.id == deckId);
+        if (!deck) return;
+
+        activeDeck = deck;
+        currentCardIndex = 0;
+        deckTitle.textContent = activeDeck.title;
+        
+        deckSelectionView.classList.add('hidden');
+        flashcardViewerView.classList.remove('hidden');
+        
+        displayCurrentCard();
+    }
+
+    function displayCurrentCard() {
         flashcard.classList.remove('is-flipped');
 
-        // Atualiza o conteúdo da pergunta e da resposta
-        cardQuestion.textContent = flashcardsData[index].question;
-        cardAnswer.textContent = flashcardsData[index].answer;
-
-        // Atualiza o contador
-        cardCounter.textContent = `${index + 1} / ${flashcardsData.length}`;
-    }
-
-    /**
-     * Vira o card para mostrar a frente ou o verso.
-     */
-    function flipCard() {
-        flashcard.classList.toggle('is-flipped');
-    }
-
-    /**
-     * Mostra o próximo card na lista.
-     */
-    function showNextCard() {
-        // Incrementa o índice. Se chegar ao fim, volta para o início (loop).
-        currentCardIndex = (currentCardIndex + 1) % flashcardsData.length;
-        showCard(currentCardIndex);
-    }
-
-    /**
-     * Mostra o card anterior na lista.
-     */
-    function showPrevCard() {
-        // Decrementa o índice. Se passar do início, vai para o fim (loop).
-        if (currentCardIndex === 0) {
-            currentCardIndex = flashcardsData.length - 1;
+        if (!activeDeck || activeDeck.cards.length === 0) {
+            cardQuestion.textContent = "Este baralho está vazio.";
+            cardAnswer.textContent = "Adicione um novo card para começar!";
+            cardCounter.textContent = "0 / 0";
         } else {
-            currentCardIndex--;
+            const card = activeDeck.cards[currentCardIndex];
+            cardQuestion.textContent = card.question;
+            cardAnswer.textContent = card.answer;
+            cardCounter.textContent = `${currentCardIndex + 1} / ${activeDeck.cards.length}`;
         }
-        showCard(currentCardIndex);
+    }
+    
+    // --- FUNÇÕES DE MODAIS E AÇÕES ---
+    function openModal(modal) { modal.classList.remove('hidden'); }
+    function closeModal(modal) { modal.classList.add('hidden'); }
+    
+    function deleteDeck(deckId) {
+        decks = decks.filter(d => d.id !== deckId);
+        saveDecks();
+        renderDecks();
     }
 
-    // --- EVENT LISTENERS ---
+    // --- LÓGICA DE EVENTOS ---
+    
+    flashcard.addEventListener('click', () => flashcard.classList.toggle('is-flipped'));
+    nextButton.addEventListener('click', () => {
+        if (activeDeck && activeDeck.cards.length > 0) {
+            currentCardIndex = (currentCardIndex + 1) % activeDeck.cards.length;
+            displayCurrentCard();
+        }
+    });
+    prevButton.addEventListener('click', () => {
+        if (activeDeck && activeDeck.cards.length > 0) {
+            currentCardIndex = (currentCardIndex - 1 + activeDeck.cards.length) % activeDeck.cards.length;
+            displayCurrentCard();
+        }
+    });
 
-    // Virar o card ao clicar nele
-    flashcard.addEventListener('click', flipCard);
+    backToDecksBtn.addEventListener('click', showDeckSelectionView);
+    addFlashcardBtn.addEventListener('click', () => openModal(addFlashcardModal));
+    addDeckBtn.addEventListener('click', () => openModal(addDeckModal)); // Botão do Header
 
-    // Navegar para o próximo card
-    nextButton.addEventListener('click', showNextCard);
+    // Lógica para fechar modais
+    addDeckModal.addEventListener('click', (e) => {
+        if (e.target.classList.contains('modal-overlay') || e.target.classList.contains('cancel-btn')) {
+            closeModal(addDeckModal);
+        }
+    });
+    addFlashcardModal.addEventListener('click', (e) => {
+        if (e.target.classList.contains('modal-overlay') || e.target.classList.contains('cancel-btn')) {
+            closeModal(addFlashcardModal);
+        }
+    });
 
-    // Navegar para o card anterior
-    prevButton.addEventListener('click', showPrevCard);
+    // Submeter formulário de novo baralho
+    addDeckForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const titleInput = document.getElementById('new-deck-title');
+        const newTitle = titleInput.value.trim();
+        if (newTitle) {
+            decks.push({ id: Date.now(), title: newTitle, cards: [] });
+            saveDecks();
+            renderDecks();
+            titleInput.value = '';
+            closeModal(addDeckModal);
+        }
+    });
 
+    // Submeter formulário de novo flashcard
+    addFlashcardForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const questionInput = document.getElementById('new-card-question');
+        const answerInput = document.getElementById('new-card-answer');
+        if (questionInput.value.trim() && answerInput.value.trim() && activeDeck) {
+            activeDeck.cards.push({ question: questionInput.value.trim(), answer: answerInput.value.trim() });
+            saveDecks();
+            currentCardIndex = activeDeck.cards.length - 1;
+            displayCurrentCard();
+            questionInput.value = '';
+            answerInput.value = '';
+            closeModal(addFlashcardModal);
+        }
+    });
+    
     // --- INICIALIZAÇÃO ---
-    // Mostra o primeiro card assim que a página carrega
-    showCard(currentCardIndex);
-
+    loadDecks();
+    showDeckSelectionView();
 });
