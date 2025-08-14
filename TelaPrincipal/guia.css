@@ -1,0 +1,430 @@
+/* ---
+BASE DO DESIGN (Copiado do padrão)
+--- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+    background-color: #000000;
+    color: #f5f5f7;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.dashboard-container {
+    display: grid;
+    grid-template-columns: 240px 1fr 340px;
+    height: 100vh;
+    gap: 24px;
+    padding: 20px;
+}
+
+.sidebar {
+    padding: 10px 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-logo {
+    padding: 15px 25px;
+    margin-bottom: 10px;
+}
+
+.sidebar-logo img {
+    width: 50px;
+}
+
+.sidebar-nav ul {
+    list-style: none;
+    width: 100%;
+    padding: 0 15px;
+}
+
+.sidebar-nav li a {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+    color: #8a8a8e;
+    text-decoration: none;
+    padding: 12px 10px;
+    border-radius: 8px;
+    transition: all 0.2s ease-in-out;
+}
+
+.sidebar-nav li a i {
+    font-size: 1.2em;
+    width: 25px;
+    text-align: center;
+}
+
+.sidebar-nav li a span {
+    font-size: 1em;
+    font-weight: 500;
+}
+
+.sidebar-nav li.active a,
+.sidebar-nav li a:hover {
+    color: #ffffff;
+    background-color: #2c2c2e;
+}
+
+.main-content,
+.right-column {
+    overflow-y: auto;
+}
+
+.main-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.main-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.main-content::-webkit-scrollbar-thumb {
+    background: #3a3a3c;
+    border-radius: 4px;
+}
+
+.main-header {
+    background-color: #1c1c1e;
+    border-radius: 12px;
+    padding: 18px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.main-header h2 {
+    font-size: 1.1em;
+    font-weight: 600;
+    color: #8a8a8e;
+    letter-spacing: 0.5px;
+}
+
+.right-column {
+    background-color: #1c1c1e;
+    border-radius: 16px;
+    padding: 25px;
+}
+
+.right-column::-webkit-scrollbar {
+    display: none;
+}
+
+.right-column .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 0 5px;
+}
+
+.right-column .section-header h2 {
+    font-size: 1.5em;
+    font-weight: 600;
+}
+
+/* ---
+NOVOS ESTILOS PARA A PÁGINA GUIA
+--- */
+
+/* Widgets de Resumo */
+.summary-widgets {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 24px;
+    margin-bottom: 30px;
+}
+
+.summary-card {
+    background-color: #1c1c1e;
+    border-radius: 16px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.summary-card i {
+    font-size: 1.8em;
+    color: #0a84ff;
+}
+
+.summary-card span {
+    font-size: 0.9em;
+    color: #8a8a8e;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.summary-card strong {
+    font-size: 1.5em;
+    font-weight: 600;
+}
+
+/* Seção de Progresso (Baseado na Imagem) */
+.progress-section {
+    margin-bottom: 30px;
+}
+
+.progress-section h2 {
+    font-size: 1.2em;
+    font-weight: 500;
+    color: #8a8a8e;
+    margin-bottom: 20px;
+    padding-left: 5px;
+}
+
+.progress-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.progress-card {
+    background-color: #1c1c1e;
+    border-radius: 16px;
+    padding: 20px;
+}
+
+.progress-card h3 {
+    font-size: 1.1em;
+    font-weight: 500;
+    margin-bottom: 15px;
+}
+
+.progress-bar-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.progress-bar {
+    flex-grow: 1;
+    background-color: #3a3a3c;
+    border-radius: 5px;
+    height: 10px;
+    overflow: hidden;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    width: 0%;
+    /* Alterado pelo JS */
+    border-radius: 5px;
+    background-color: #0a84ff;
+    /* Cor padrão azul */
+    transition: width 1s ease-out;
+}
+
+.progress-bar-fill.geral {
+    background-color: #34c759;
+    /* Cor verde para o geral */
+}
+
+.percentage {
+    font-size: 1.1em;
+    font-weight: 600;
+}
+
+/* Análise de Desempenho */
+.performance-analysis {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 24px;
+}
+
+.performance-card {
+    background-color: #1c1c1e;
+    border-radius: 16px;
+    padding: 25px;
+}
+
+.performance-card h3 {
+    font-size: 1.2em;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: #8a8a8e;
+}
+
+.performance-card h3 i {
+    margin-right: 10px;
+}
+
+#pontos-fortes h3 i {
+    color: #34c759;
+}
+
+#pontos-fracos h3 i {
+    color: #ff3b30;
+}
+
+.performance-card ul {
+    list-style: none;
+}
+
+.performance-card li {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #3a3a3c;
+    font-size: 0.95em;
+}
+
+.performance-card li:last-child {
+    border: none;
+}
+
+.performance-card li span {
+    color: #8a8a8e;
+}
+
+/* Widgets da Coluna Direita */
+.sugestoes-widget ul,
+.atividade-recente-widget ul {
+    list-style: none;
+}
+
+.sugestoes-widget li,
+.atividade-recente-widget li {
+    padding: 12px 5px;
+    border-bottom: 1px solid #3a3a3c;
+}
+
+.sugestoes-widget li:last-child,
+.atividade-recente-widget li:last-child {
+    border: none;
+}
+
+.sugestoes-widget i {
+    color: #0a84ff;
+    margin-right: 12px;
+}
+
+.atividade-recente-widget i {
+    color: #8a8a8e;
+    margin-right: 12px;
+}
+
+
+/* --- RESPONSIVIDADE (Padrão) --- */
+@media (max-width: 1200px) {
+    .dashboard-container {
+        grid-template-columns: 90px 1fr;
+        grid-template-areas: "sidebar main" "sidebar right";
+    }
+
+    .sidebar-nav li a {
+        flex-direction: column;
+        gap: 8px;
+        justify-content: center;
+    }
+
+    .sidebar-nav li a span {
+        font-size: 0.7em;
+    }
+
+    .sidebar-logo img {
+        width: 40px;
+    }
+
+    .right-column {
+        grid-area: right;
+        height: auto;
+        overflow-y: visible;
+        margin-top: 0;
+    }
+
+    .sidebar {
+        grid-area: sidebar;
+    }
+
+    .main-content {
+        grid-area: main;
+    }
+}
+
+@media (max-width: 768px) {
+    body {
+        overflow-y: auto;
+    }
+
+    .dashboard-container {
+        display: flex;
+        flex-direction: column;
+        height: auto;
+        min-height: 100vh;
+        padding: 10px 10px 80px 10px;
+    }
+
+    .sidebar {
+        order: 3;
+        flex-direction: row;
+        justify-content: space-around;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 70px;
+        padding: 5px 0;
+        border-radius: 0;
+        z-index: 1000;
+        background-color: rgba(28, 28, 30, 0.7);
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .sidebar-logo {
+        display: none;
+    }
+
+    .sidebar-nav {
+        width: 100%;
+    }
+
+    .sidebar-nav ul {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        width: 100%;
+        padding: 0;
+    }
+
+    .sidebar-nav li a span {
+        display: none;
+    }
+
+    .sidebar-nav li a i {
+        font-size: 1.6em;
+    }
+
+    .sidebar-nav li.active a,
+    .sidebar-nav li a:hover {
+        background-color: transparent;
+        color: #0a84ff;
+    }
+
+    .main-content {
+        order: 1;
+        overflow-y: visible;
+    }
+
+    .right-column {
+        order: 2;
+        margin-top: 24px;
+    }
+
+    .summary-widgets,
+    .performance-analysis {
+        grid-template-columns: 1fr;
+    }
+}

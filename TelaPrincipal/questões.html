@@ -4,24 +4,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Música - Meus Estudos</title>
+    <title>Questões - Meus Estudos</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-
-    <link rel="stylesheet" href="TelaPrincipal.css">
-    <link rel="stylesheet" href="musica.css">
+    
+    <link rel="stylesheet" href="questões.css">
 
     <link rel="icon" type="image/png" href="fotos/logo.png">
 </head>
 
 <body>
-
     <div class="dashboard-container">
         <aside class="sidebar">
             <div class="sidebar-logo">
-                <a href="TelaPrincipal.html"><img src="fotos/logo.png" alt="Logo Meus Estudos"></a>
+                <a href="TelaPrincipal.html"> <img src="fotos/logo.png" alt="Logo Meus Estudos"></a>
             </div>
-            <nav class="sidebar-nav">
+           <nav class="sidebar-nav">
                 <ul>
                     <li>
                         <a href="TelaPrincipal.html">
@@ -104,45 +102,56 @@
         </aside>
 
         <main class="main-content">
-            <div class="music-page-container">
-                <header class="main-header">
-                    <h2>MÚSICA PARA ESTUDAR</h2>
-                </header>
+            <header class="main-header">
+                <h2>BANCO DE QUESTÕES</h2>
+                <input type="text" id="search-materias" placeholder="Pesquisar matéria...">
+            </header>
 
-                <div class="music-grid">
-                    <div class="player-and-library">
-                        <div class="music-card music-player-card">
-                            <h3>Player</h3>
-                            <audio id="audio-player" controls></audio>
-                            <p id="current-song-title">Nenhuma música selecionada</p>
-                        </div>
-                        <div class="music-card music-library-card">
-                            <h3>Minha Biblioteca</h3>
-                            <ul id="playlist">
-                            </ul>
-                            <label for="upload-input" class="upload-button-label">
-                                <i class="fa-solid fa-upload"></i> Adicionar Músicas
-                                <input type="file" id="upload-input" accept="audio/*" multiple style="display: none;">
-                            </label>
-                        </div>
+            <section id="materias-view">
+                <div class="materias-grid">
                     </div>
+            </section>
 
-                    <div class="music-card Youtube-card">
-                        <h3>Pesquisar no YouTube</h3>
-                        <input type="text" id="Youtube-input" placeholder="Nome da música ou artista...">
-                        <button id="Youtube-btn">
-                            <i class="fa-brands fa-youtube"></i> Pesquisar
-                        </button>
-                        <div id="youtube-results">
-                            <p>A funcionalidade de busca real requer configuração da API do YouTube.</p>
-                        </div>
+            <section id="questoes-view" class="hidden">
+                <div class="questoes-header">
+                    <button id="back-to-materias"><i class="fa-solid fa-arrow-left"></i> Voltar</button>
+                    <h2 id="materia-title"></h2>
+                </div>
+                <div class="question-container">
                     </div>
+                <div class="question-nav">
+                    <button id="answer-btn">Responder</button>
+                    <button id="next-question-btn" class="hidden">Próxima <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+        </main>
+
+        <aside class="right-column">
+            <div class="section-header">
+                <h2>Sessão Atual</h2>
+            </div>
+            <div class="stats-widget">
+                <div class="stat-item">
+                    <span>Questões Resolvidas</span>
+                    <strong id="stat-resolvidas">0</strong>
+                </div>
+                <div class="stat-item">
+                    <span>Acertos</span>
+                    <strong id="stat-acertos" class="acertos">0</strong>
+                </div>
+                <div class="stat-item">
+                    <span>Erros</span>
+                    <strong id="stat-erros" class="erros">0</strong>
+                </div>
+                <div class="stat-item aproveitamento">
+                    <span>Aproveitamento</span>
+                    <strong id="stat-aproveitamento">0%</strong>
                 </div>
             </div>
-        </main>
+        </aside>
     </div>
 
-    <script src="musica.js"></script>
+    <script src="questões.js"></script>
 </body>
-
 </html>
