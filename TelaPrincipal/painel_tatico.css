@@ -1,0 +1,493 @@
+/* ---
+BASE DO DESIGN (Padrão)
+--- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+    background-color: #000000;
+    color: #f5f5f7;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.dashboard-container {
+    display: grid;
+    grid-template-columns: 240px 1fr 340px;
+    height: 100vh;
+    gap: 24px;
+    padding: 20px;
+}
+
+.sidebar {
+    padding: 10px 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-logo {
+    padding: 15px 25px;
+    margin-bottom: 10px;
+}
+
+.sidebar-logo img {
+    width: 50px;
+}
+
+.sidebar-nav ul {
+    list-style: none;
+    width: 100%;
+    padding: 0 15px;
+}
+
+.sidebar-nav li a {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+    color: #8a8a8e;
+    text-decoration: none;
+    padding: 12px 10px;
+    border-radius: 8px;
+    transition: all 0.2s ease-in-out;
+}
+
+.sidebar-nav li a i {
+    font-size: 1.2em;
+    width: 25px;
+    text-align: center;
+}
+
+.sidebar-nav li a span {
+    font-size: 1em;
+    font-weight: 500;
+}
+
+.sidebar-nav li.active a,
+.sidebar-nav li a:hover {
+    color: #ffffff;
+    background-color: #2c2c2e;
+}
+
+.main-content,
+.right-column {
+    overflow-y: auto;
+}
+
+.main-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.main-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.main-content::-webkit-scrollbar-thumb {
+    background: #3a3a3c;
+    border-radius: 4px;
+}
+
+.main-header {
+    background-color: #1c1c1e;
+    border-radius: 12px;
+    padding: 18px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.main-header h2 {
+    font-size: 1.1em;
+    font-weight: 600;
+    color: #8a8a8e;
+    letter-spacing: 0.5px;
+}
+
+.right-column {
+    background-color: #1c1c1e;
+    border-radius: 16px;
+    padding: 25px;
+}
+
+.right-column::-webkit-scrollbar {
+    display: none;
+}
+
+.right-column .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 0 5px;
+}
+
+.right-column .section-header h2 {
+    font-size: 1.5em;
+    font-weight: 600;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* ---
+NOVOS ESTILOS PARA O PAINEL TÁTICO
+--- */
+
+/* Filtros de Tempo */
+.time-filters {
+    display: flex;
+    gap: 10px;
+    background-color: #1c1c1e;
+    border-radius: 12px;
+    padding: 8px;
+    margin-bottom: 24px;
+    width: fit-content;
+}
+
+.filter-btn {
+    background: transparent;
+    border: none;
+    color: #8a8a8e;
+    padding: 8px 20px;
+    font-size: 0.95em;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.2s ease-in-out;
+}
+
+.filter-btn:hover {
+    color: #f5f5f7;
+}
+
+.filter-btn.active {
+    background-color: #3a3a3c;
+    color: #f5f5f7;
+}
+
+/* Card Principal do Gráfico */
+.chart-card {
+    background-color: #1c1c1e;
+    border-radius: 16px;
+    padding: 25px;
+    margin-bottom: 24px;
+}
+
+.chart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.chart-header h3 {
+    font-size: 1.5em;
+    font-weight: 600;
+}
+
+.chart-header button {
+    background: #3a3a3c;
+    color: #f5f5f7;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.chart-header button:hover {
+    background-color: #48484a;
+}
+
+.chart-body {
+    display: grid;
+    grid-template-columns: 1fr 200px;
+    /* Gráfico | Resumo */
+    gap: 30px;
+    align-items: center;
+}
+
+.chart-container {
+    position: relative;
+    min-height: 350px;
+}
+
+#no-data-message {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: #8a8a8e;
+}
+
+#no-data-message p {
+    margin-bottom: 15px;
+}
+
+#no-data-message button {
+    background-color: #0a84ff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+/* Resumo ao lado do Gráfico */
+.chart-summary {
+    text-align: center;
+}
+
+.summary-value {
+    font-size: 4em;
+    font-weight: 700;
+    color: #f5f5f7;
+}
+
+.summary-text {
+    font-size: 1.1em;
+    color: #8a8a8e;
+    line-height: 1.5;
+    margin: 10px 0;
+}
+
+.summary-text strong {
+    color: #f5f5f7;
+}
+
+.summary-footer {
+    font-size: 0.9em;
+    color: #8a8a8e;
+}
+
+/* Tabela de Desempenho */
+.materias-performance-table {
+    background-color: #1c1c1e;
+    border-radius: 16px;
+    padding: 25px;
+}
+
+.materias-performance-table h3 {
+    font-size: 1.2em;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.materias-performance-table table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.materias-performance-table th,
+.materias-performance-table td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #3a3a3c;
+}
+
+.materias-performance-table thead th {
+    color: #8a8a8e;
+    font-weight: 500;
+    font-size: 0.9em;
+}
+
+.materias-performance-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.materias-performance-table tbody td:last-child {
+    font-weight: 600;
+}
+
+/* Insights na Coluna Direita */
+.insights-widget {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.insight-card {
+    background-color: #2c2c2e;
+    border-radius: 16px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.insight-card i {
+    font-size: 1.8em;
+    width: 30px;
+}
+
+.insight-card.best i {
+    color: #34c759;
+}
+
+.insight-card.worst i {
+    color: #ff3b30;
+}
+
+.insight-card.comparison i {
+    color: #0a84ff;
+}
+
+.insight-card span {
+    font-size: 0.9em;
+    color: #8a8a8e;
+    display: block;
+}
+
+.insight-card strong {
+    font-size: 1.3em;
+    font-weight: 600;
+    margin: 2px 0;
+    display: block;
+}
+
+.insight-card p {
+    font-size: 0.9em;
+    color: #8a8a8e;
+    line-height: 1.3;
+}
+
+.insight-card .percent {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #f5f5f7;
+}
+
+/* --- RESPONSIVIDADE (Padrão) --- */
+@media (max-width: 1200px) {
+    .dashboard-container {
+        grid-template-columns: 90px 1fr;
+        grid-template-areas: "sidebar main" "sidebar right";
+    }
+
+    .sidebar-nav li a {
+        flex-direction: column;
+        gap: 8px;
+        justify-content: center;
+    }
+
+    .sidebar-nav li a span {
+        font-size: 0.7em;
+    }
+
+    .sidebar-logo img {
+        width: 40px;
+    }
+
+    .right-column {
+        grid-area: right;
+        height: auto;
+        overflow-y: visible;
+        margin-top: 0;
+    }
+
+    .sidebar {
+        grid-area: sidebar;
+    }
+
+    .main-content {
+        grid-area: main;
+    }
+}
+
+@media (max-width: 992px) {
+    .chart-body {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .chart-summary {
+        margin-top: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    body {
+        overflow-y: auto;
+    }
+
+    .dashboard-container {
+        display: flex;
+        flex-direction: column;
+        height: auto;
+        min-height: 100vh;
+        padding: 10px 10px 80px 10px;
+    }
+
+    .sidebar {
+        order: 3;
+        flex-direction: row;
+        justify-content: space-around;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 70px;
+        padding: 5px 0;
+        border-radius: 0;
+        z-index: 1000;
+        background-color: rgba(28, 28, 30, 0.7);
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .sidebar-logo {
+        display: none;
+    }
+
+    .sidebar-nav {
+        width: 100%;
+    }
+
+    .sidebar-nav ul {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        width: 100%;
+        padding: 0;
+    }
+
+    .sidebar-nav li a span {
+        display: none;
+    }
+
+    .sidebar-nav li a i {
+        font-size: 1.6em;
+    }
+
+    .sidebar-nav li.active a,
+    .sidebar-nav li a:hover {
+        background-color: transparent;
+        color: #0a84ff;
+    }
+
+    .main-content {
+        order: 1;
+        overflow-y: visible;
+    }
+
+    .right-column {
+        order: 2;
+        margin-top: 24px;
+    }
+
+    .time-filters {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+}
