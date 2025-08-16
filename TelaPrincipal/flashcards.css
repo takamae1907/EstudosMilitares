@@ -13,7 +13,6 @@ body {
     color: #f5f5f7;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    /* Evita scrollbars duplicados nesta página específica */
     overflow: hidden;
 }
 
@@ -41,9 +40,17 @@ BARRA LATERAL (SIDEBAR) - Estilo Padrão
     flex-direction: column;
 }
 
+.sidebar-user h2,
 .sidebar-logo {
     padding: 15px 25px;
     margin-bottom: 10px;
+}
+
+.sidebar-user h2 {
+    /* Adaptação para o nome do usuário */
+    font-size: 1.8em;
+    font-weight: 600;
+    line-height: 50px;
 }
 
 .sidebar-logo img {
@@ -74,11 +81,6 @@ BARRA LATERAL (SIDEBAR) - Estilo Padrão
     text-align: center;
 }
 
-.sidebar-nav li a span {
-    font-size: 1em;
-    font-weight: 500;
-}
-
 .sidebar-nav li.active a,
 .sidebar-nav li a:hover {
     color: #ffffff;
@@ -92,9 +94,7 @@ CONTEÚDO PRINCIPAL
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    /* Garante que o conteúdo interno controle o scroll */
     background-color: #1c1c1e;
-    /* Fundo para o conteúdo principal */
     border-radius: 16px;
     padding: 25px;
 }
@@ -164,27 +164,37 @@ CONTEÚDO PRINCIPAL
 .deck-card {
     background-color: #2c2c2e;
     border-radius: 12px;
-    padding: 20px;
+    padding: 15px;
     cursor: pointer;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition: all 0.2s ease;
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 10px;
+    border: 1px solid transparent;
+    max-height: 150px;
+    /* --- ALTERAÇÃO: Altura máxima para o card --- */
+    overflow: hidden;
+    /* --- Garante que o conteúdo não vaze --- */
 }
 
 .deck-card:hover {
     transform: translateY(-3px);
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+    background-color: #3a3a3c;
+    border-color: #48484a;
 }
 
 .deck-card .card-header {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
+    margin-bottom: 5px;
+    /* --- ALTERAÇÃO: Reduzindo a margem --- */
 }
 
 .deck-card .icon {
-    font-size: 1.5em;
+    font-size: 1.3em;
+    /* --- ALTERAÇÃO: Ícone menor --- */
     color: #8a8a8e;
 }
 
@@ -192,7 +202,8 @@ CONTEÚDO PRINCIPAL
     background: none;
     border: none;
     color: #5e5e62;
-    font-size: 1.1em;
+    font-size: 0.9em;
+    /* --- ALTERAÇÃO: Ícone menor --- */
     cursor: pointer;
     transition: color 0.2s;
 }
@@ -201,14 +212,26 @@ CONTEÚDO PRINCIPAL
     color: #ff453a;
 }
 
+.deck-card .card-content {
+    overflow: hidden;
+    /* --- Garante que o texto não vaze --- */
+}
+
 .deck-card .card-content h2 {
-    font-size: 1.3em;
+    font-size: 1.1em;
+    /* --- ALTERAÇÃO: Fonte menor --- */
     font-weight: 600;
-    margin-bottom: 5px;
+    margin-bottom: 2px;
+    white-space: nowrap;
+    /* --- Evita que o título quebre em várias linhas --- */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /* --- Adiciona "..." se o título for muito longo --- */
 }
 
 .deck-card .card-content p {
-    font-size: 0.9em;
+    font-size: 0.8em;
+    /* --- ALTERAÇÃO: Fonte menor --- */
     color: #8a8a8e;
 }
 
@@ -344,7 +367,6 @@ CONTEÚDO PRINCIPAL
     height: 100%;
     background-color: rgba(0, 0, 0, 0.7);
     backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -417,18 +439,7 @@ CONTEÚDO PRINCIPAL
     color: white;
 }
 
-.modal-buttons .save-btn:hover {
-    background-color: #0077ee;
-}
-
 .modal-buttons .cancel-btn {
     background-color: #3a3a3c;
     color: white;
 }
-
-.modal-buttons .cancel-btn:hover {
-    background-color: #48484a;
-}
-
-/* --- RESPONSIVIDADE --- */
-/* (Mesmas regras de responsividade das outras páginas) */

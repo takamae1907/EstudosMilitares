@@ -8,14 +8,10 @@ APPLE DESIGN PHILOSOPHY - RESET & GLOBAIS
 }
 
 body {
-    /* Tipografia: Usamos uma "pilha de fontes do sistema".
-    Em dispositivos Apple, ele usará a fonte "San Francisco".
-    Em outros, usará a melhor fonte de UI disponível.
-    */
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
-    background-color: #000000; /* Fundo preto puro, ideal para telas OLED */
-    color: #f5f5f7; /* Um branco levemente acinzentado da Apple */
-    -webkit-font-smoothing: antialiased; /* Renderização de fonte mais suave */
+    background-color: #000000;
+    color: #f5f5f7;
+    -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
 
@@ -24,30 +20,31 @@ LAYOUT PRINCIPAL - GRID E ESPAÇAMENTO
 --- */
 .dashboard-container {
     display: grid;
-    /* Sidebar mais larga para acomodar texto e ícone */
-    grid-template-columns: 240px 1fr 340px; 
+    grid-template-columns: 240px 1fr 340px;
     height: 100vh;
-    gap: 24px; /* Mais espaçamento para um layout mais "respirado" */
+    gap: 24px;
     padding: 20px;
 }
 
 /* ---
-BARRA LATERAL (SIDEBAR) - CLAREZA E FOCO
+BARRA LATERAL (SIDEBAR)
 --- */
 .sidebar {
-    /* O sidebar agora não tem cor de fundo, ele se mescla ao corpo */
     padding: 10px 0;
     display: flex;
     flex-direction: column;
 }
 
-.sidebar-logo {
+.sidebar-user {
     padding: 15px 25px;
     margin-bottom: 10px;
 }
 
-.sidebar-logo img {
-    width: 50px; /* Logo menor e mais sutil */
+.sidebar-user h2 {
+    font-size: 1.8em;
+    font-weight: 600;
+    color: #f5f5f7;
+    line-height: 50px;
 }
 
 .sidebar-nav ul {
@@ -58,20 +55,19 @@ BARRA LATERAL (SIDEBAR) - CLAREZA E FOCO
 
 .sidebar-nav li a {
     display: flex;
-    /* Layout de ícone ao lado do texto */
-    flex-direction: row; 
+    flex-direction: row;
     align-items: center;
-    gap: 20px; /* Espaço entre ícone e texto */
-    color: #8a8a8e; /* Cinza para itens inativos */
+    gap: 20px;
+    color: #8a8a8e;
     text-decoration: none;
     padding: 12px 10px;
-    border-radius: 8px; /* Cantos arredondados suaves */
+    border-radius: 8px;
     transition: all 0.2s ease-in-out;
 }
 
 .sidebar-nav li a i {
     font-size: 1.2em;
-    width: 25px; /* Alinhamento dos ícones */
+    width: 25px;
     text-align: center;
 }
 
@@ -80,27 +76,34 @@ BARRA LATERAL (SIDEBAR) - CLAREZA E FOCO
     font-weight: 500;
 }
 
-/* Efeito de hover e item ativo: um fundo sutil e cor de texto mais forte */
 .sidebar-nav li.active a,
 .sidebar-nav li a:hover {
     color: #ffffff;
-    background-color: #2c2c2e; /* Fundo cinza escuro para destaque */
+    background-color: #2c2c2e;
 }
 
 /* ---
-CONTEÚDO PRINCIPAL - PROFUNDIDADE E MATERIAL
+CONTEÚDO PRINCIPAL
 --- */
 .main-content {
     overflow-y: auto;
-    /* Scrollbar estilizada */
-    &::-webkit-scrollbar { width: 8px; }
-    &::-webkit-scrollbar-track { background: transparent; }
-    &::-webkit-scrollbar-thumb { background: #3a3a3c; border-radius: 4px; }
+
+    &::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: #3a3a3c;
+        border-radius: 4px;
+    }
 }
 
 .main-header {
-    /* Fundo sutil para criar profundidade, sem bordas */
-    background-color: #1c1c1e; 
+    background-color: #1c1c1e;
     border-radius: 12px;
     padding: 18px 25px;
     display: flex;
@@ -112,14 +115,13 @@ CONTEÚDO PRINCIPAL - PROFUNDIDADE E MATERIAL
 .main-header h2 {
     font-size: 1.1em;
     font-weight: 600;
-    color: #8a8a8e; /* Texto em maiúsculas com cor suave */
+    color: #8a8a8e;
     letter-spacing: 0.5px;
 }
 
 .main-header button {
     background-color: transparent;
-    /* Cor azul padrão da Apple para ações */
-    color: #0a84ff; 
+    color: #0a84ff;
     border: none;
     padding: 0;
     font-size: 1em;
@@ -142,7 +144,7 @@ CONTEÚDO PRINCIPAL - PROFUNDIDADE E MATERIAL
 .widget {
     background-color: #1c1c1e;
     padding: 25px;
-    border-radius: 16px; /* Cantos mais arredondados */
+    border-radius: 16px;
 }
 
 .welcome-widget h3 {
@@ -155,16 +157,59 @@ CONTEÚDO PRINCIPAL - PROFUNDIDADE E MATERIAL
     color: #8a8a8e;
 }
 
+/* --- NOVOS ESTILOS PARA O CARD DE BOAS-VINDAS --- */
+.welcome-widget .welcome-message {
+    font-size: 0.95em;
+    color: #8a8a8e;
+    margin-top: 8px;
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+.welcome-widget .quick-actions {
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid #3a3a3c;
+    display: flex;
+    gap: 12px;
+}
+
+.welcome-widget .quick-actions button {
+    flex-grow: 1;
+    background-color: #3a3a3c;
+    border: none;
+    color: #f5f5f7;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 0.9em;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.welcome-widget .quick-actions button:hover {
+    background-color: #48484a;
+}
+
+.welcome-widget .quick-actions button i {
+    font-size: 0.9em;
+}
+
+
 .progress-bar {
     background-color: #3a3a3c;
     border-radius: 4px;
-    height: 8px; /* Barra mais fina e elegante */
+    height: 8px;
     margin: 20px 0 8px;
     overflow: hidden;
 }
 
 .progress {
-    background-color: #34c759; /* Verde da Apple */
+    background-color: #34c759;
     height: 100%;
     border-radius: 4px;
 }
@@ -181,73 +226,250 @@ CONTEÚDO PRINCIPAL - PROFUNDIDADE E MATERIAL
     gap: 40px;
     margin-top: 20px;
 }
+
 .stats div {
     line-height: 1.3;
 }
+
 .stats strong {
-     font-size: 1.5em;
-     font-weight: 600;
-}
-
-.quote-widget h4 {
-    margin-bottom: 15px;
-    color: #8a8a8e;
+    font-size: 1.5em;
     font-weight: 600;
+}
+
+.provas-widget h4 {
+    margin-bottom: 20px;
+    font-size: 1.2em;
+    font-weight: 600;
+}
+
+.provas-widget ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.provas-widget li {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background-color: #2c2c2e;
+    padding: 12px 15px;
+    border-radius: 10px;
+}
+
+.provas-widget .countdown {
+    flex-shrink: 0;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 2px solid #0a84ff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+
+.provas-widget .countdown strong {
+    font-size: 1.6em;
+    font-weight: 600;
+    color: #f5f5f7;
+}
+
+.provas-widget .countdown span {
+    font-size: 0.7em;
+    font-weight: 500;
+    color: #8a8a8e;
     text-transform: uppercase;
-    font-size: 0.8em;
-    letter-spacing: 0.5px;
 }
 
-.quote-widget blockquote {
-    font-style: italic;
-    font-size: 1.1em;
-    border-left: none; /* Removemos a borda para um visual mais limpo */
-    padding-left: 0;
-    position: relative;
+.provas-widget .prova-info strong {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 4px;
 }
 
-.quote-widget footer {
-    font-style: normal;
+.provas-widget .prova-info span {
     font-size: 0.9em;
     color: #8a8a8e;
-    text-align: right;
-    margin-top: 15px;
 }
 
-.editais-widget h4 {
-    margin-bottom: 20px;
-}
 
-.editais-icons {
+.stats-overview-widget {
+    grid-column: 1 / -1;
     display: flex;
-    gap: 15px;
-    font-size: 1.8em; /* Ícones menores */
-    color: #f5f5f7;
-    margin-bottom: 20px;
+    justify-content: space-around;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    flex-wrap: wrap;
 }
 
-.editais-icons i {
-    cursor: pointer;
-    transition: transform 0.2s, color 0.2s;
-    background-color: #3a3a3c;
-    border-radius: 50%; /* Ícones em círculos */
+.stat-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-grow: 1;
+    min-width: 220px;
+}
+
+.stat-item i {
+    font-size: 1.6em;
+    color: #0a84ff;
+    background-color: #2c2c2e;
     padding: 12px;
-    width: 50px;
-    height: 50px;
+    border-radius: 12px;
+    width: 54px;
+    height: 54px;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.editais-icons i:hover {
-    background-color: #48484a;
-    color: #ffffff;
-    transform: scale(1.05);
+.stat-item div span {
+    display: block;
+    font-size: 0.9em;
+    color: #8a8a8e;
+    margin-bottom: 4px;
 }
 
-.editais-widget p {
+.stat-item div strong {
+    font-size: 1.4em;
+    font-weight: 600;
+    color: #f5f5f7;
+}
+
+.editais-widget .widget-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.editais-widget .widget-header h4 {
+    font-size: 1.2em;
+    font-weight: 600;
+    margin-bottom: 0;
+}
+
+.editais-widget .edital-actions {
+    display: flex;
+    gap: 18px;
+    font-size: 1.3em;
     color: #8a8a8e;
+}
+
+.editais-widget .edital-actions i {
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.editais-widget .edital-actions i:hover {
+    color: #f5f5f7;
+}
+
+.editais-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.editais-list li {
+    background-color: #2c2c2e;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+.edital-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.edital-info strong {
+    font-weight: 500;
+}
+
+.edital-info .status {
+    font-size: 0.8em;
+    font-weight: 600;
+    padding: 4px 8px;
+    border-radius: 15px;
+}
+
+.edital-info .status.open {
+    color: #32d74b;
+    background-color: rgba(50, 215, 75, 0.15);
+}
+
+.edital-info .status.closed {
+    color: #ff9f0a;
+    background-color: rgba(255, 159, 10, 0.15);
+}
+
+.edital-progress span {
+    font-size: 0.8em;
+    color: #8a8a8e;
+    margin-top: 6px;
+    display: block;
+}
+
+.progress-bar-small {
+    background-color: #3a3a3c;
+    border-radius: 4px;
+    height: 6px;
+    overflow: hidden;
+}
+
+.progress-small {
+    background-color: #0a84ff;
+    height: 100%;
+    border-radius: 4px;
+}
+
+.revision-widget h4 {
+    margin-bottom: 20px;
+    font-size: 1.2em;
+    font-weight: 600;
+    color: #f5f5f7;
+}
+
+.revision-widget ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.revision-widget li {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background-color: #2c2c2e;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+.revision-widget li i {
+    font-size: 1.3em;
+    color: #8a8a8e;
+    width: 30px;
+    text-align: center;
+}
+
+.revision-widget li strong {
+    display: block;
+    font-weight: 500;
+    color: #f5f5f7;
+    margin-bottom: 2px;
+}
+
+.revision-widget li span {
     font-size: 0.9em;
+    color: #8a8a8e;
 }
 
 .section-header {
@@ -270,9 +492,10 @@ CONTEÚDO PRINCIPAL - PROFUNDIDADE E MATERIAL
     padding: 10px 15px;
     border-radius: 8px;
     font-size: 1em;
-    width: 250px; /* Largura definida */
+    width: 250px;
     transition: all 0.2s;
 }
+
 .section-header input:focus {
     outline: none;
     border-color: #0a84ff;
@@ -293,18 +516,18 @@ CONTEÚDO PRINCIPAL - PROFUNDIDADE E MATERIAL
     transition: all 0.2s ease-in-out;
     text-decoration: none;
     color: #f5f5f7;
-    display: block; /* Para o <a> se comportar como um bloco */
+    display: block;
 }
 
 .turma-card:hover {
-    transform: scale(1.03); /* Efeito de zoom sutil */
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    transform: scale(1.03);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
 .turma-card img {
     width: 100%;
-    height: 140px; /* Altura fixa para as imagens */
-    object-fit: cover; /* Garante que a imagem cubra o espaço sem distorcer */
+    height: 140px;
+    object-fit: cover;
     display: block;
 }
 
@@ -314,15 +537,15 @@ CONTEÚDO PRINCIPAL - PROFUNDIDADE E MATERIAL
     font-size: 1em;
 }
 
-/* ---
-COLUNA DA DIREITA - INFORMAÇÕES CONTEXTUAIS
---- */
 .right-column {
     background-color: #1c1c1e;
     border-radius: 16px;
     padding: 25px;
     overflow-y: auto;
-    &::-webkit-scrollbar { display: none; } /* Esconder scrollbar */
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
 }
 
 .right-column .view-all {
@@ -352,16 +575,15 @@ COLUNA DA DIREITA - INFORMAÇÕES CONTEXTUAIS
 }
 
 .lembretes-widget li {
-    background-color: transparent; /* Fundo transparente */
+    background-color: transparent;
     padding: 12px 5px;
     border-radius: 0;
     margin-bottom: 10px;
-    border-bottom: 1px solid #3a3a3c; /* Linha divisória sutil */
-    border-left: none; /* Remove a borda esquerda antiga */
+    border-bottom: 1px solid #3a3a3c;
     position: relative;
     padding-left: 20px;
 }
-/* Adiciona um ponto colorido como em lembretes do iOS */
+
 .lembretes-widget li::before {
     content: '';
     width: 8px;
@@ -373,7 +595,6 @@ COLUNA DA DIREITA - INFORMAÇÕES CONTEXTUAIS
     top: 18px;
 }
 
-
 .lembretes-widget li strong {
     display: block;
     margin-bottom: 4px;
@@ -384,29 +605,33 @@ COLUNA DA DIREITA - INFORMAÇÕES CONTEXTUAIS
     font-size: 0.85em;
     color: #8a8a8e;
 }
+
 .lembretes-widget li:last-child {
     border-bottom: none;
 }
 
-/* ---
-RESPONSIVIDADE - ADAPTAÇÃO FLUIDA
---- */
 @media (max-width: 1200px) {
     .dashboard-container {
-        grid-template-columns: 90px 1fr; /* Sidebar apenas com ícones */
-        grid-template-areas:
-            "sidebar main"
-            "sidebar right";
+        grid-template-columns: 90px 1fr;
+        grid-template-areas: "sidebar main" "sidebar right";
     }
+
+    .sidebar-user h2 {
+        font-size: 1.2em;
+        text-align: center;
+        line-height: normal;
+    }
+
     .sidebar-nav li a {
         flex-direction: column;
         gap: 8px;
         justify-content: center;
     }
+
     .sidebar-nav li a span {
         font-size: 0.7em;
     }
-    .sidebar-logo img { width: 40px; }
+
     .right-column {
         grid-area: right;
         height: auto;
@@ -415,20 +640,23 @@ RESPONSIVIDADE - ADAPTAÇÃO FLUIDA
 }
 
 @media (max-width: 768px) {
-    body { overflow-y: auto; }
+    body {
+        overflow-y: auto;
+    }
+
     .dashboard-container {
         display: flex;
         flex-direction: column;
         height: auto;
         min-height: 100vh;
-        padding: 10px 10px 80px 10px; /* Espaço no fundo para a barra de navegação */
+        padding: 10px 10px 80px 10px;
     }
 
     .sidebar {
         order: 3;
         flex-direction: row;
         justify-content: space-around;
-        position: fixed; /* Barra fixa no fundo */
+        position: fixed;
         bottom: 0;
         left: 0;
         width: 100%;
@@ -436,15 +664,20 @@ RESPONSIVIDADE - ADAPTAÇÃO FLUIDA
         padding: 5px 0;
         border-radius: 0;
         z-index: 1000;
-        /* Efeito de vidro fosco (Glassmorphism) */
         background-color: rgba(28, 28, 30, 0.7);
         backdrop-filter: blur(15px);
         -webkit-backdrop-filter: blur(15px);
         border-top: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    .sidebar-logo { display: none; }
-    .sidebar-nav { width: 100%; }
+    .sidebar-user {
+        display: none;
+    }
+
+    .sidebar-nav {
+        width: 100%;
+    }
+
     .sidebar-nav ul {
         display: flex;
         justify-content: space-around;
@@ -453,42 +686,63 @@ RESPONSIVIDADE - ADAPTAÇÃO FLUIDA
         padding: 0;
     }
 
-    .sidebar-nav li a span { display: none; } /* Esconde o texto */
-    .sidebar-nav li a i { font-size: 1.6em; }
-    .sidebar-nav li.active a, .sidebar-nav li a:hover {
-        background-color: transparent; /* Sem fundo no hover/active */
-        color: #0a84ff; /* Apenas muda a cor do ícone */
+    .sidebar-nav li a span {
+        display: none;
     }
 
-    .main-content { order: 1; overflow-y: visible; }
-    .right-column { order: 2; margin-top: 24px; }
+    .sidebar-nav li a i {
+        font-size: 1.6em;
+    }
+
+    .sidebar-nav li.active a,
+    .sidebar-nav li a:hover {
+        background-color: transparent;
+        color: #0a84ff;
+    }
+
+    .main-content {
+        order: 1;
+        overflow-y: visible;
+    }
+
+    .right-column {
+        order: 2;
+        margin-top: 24px;
+    }
 
     .main-header {
         flex-direction: column;
         align-items: flex-start;
         gap: 15px;
     }
-    .widgets-grid { grid-template-columns: 1fr; }
-    .turmas-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+
+    .widgets-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .turmas-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
+
+    .stats-overview-widget {
+        flex-direction: column;
+        align-items: flex-start;
+    }
 }
 
-/* ---
-ANIMAÇÃO DE TRANSIÇÃO
---- */
-
-/* Define a animação de fade-in */
 @keyframes fadeIn {
     from {
         opacity: 0;
-        transform: translateY(10px); /* Começa um pouco para baixo */
+        transform: translateY(10px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
     }
 }
 
-/* Aplica a animação ao corpo do site ou ao container principal */
-.main-content, .right-column {
+.main-content,
+.right-column {
     animation: fadeIn 0.5s ease-in-out forwards;
 }

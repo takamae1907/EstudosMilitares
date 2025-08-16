@@ -1,6 +1,4 @@
-/* ---
-APPLE DESIGN PHILOSOPHY - RESET & GLOBAIS
---- */
+/* GLOBAIS E RESET */
 * {
     margin: 0;
     padding: 0;
@@ -8,20 +6,17 @@ APPLE DESIGN PHILOSOPHY - RESET & GLOBAIS
 }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
-    background-color: #000000;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: #000;
     color: #f5f5f7;
     -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
 }
 
 .hidden {
     display: none !important;
 }
 
-/* ---
-LAYOUT PRINCIPAL - GRID E ESPAÇAMENTO
---- */
+/* LAYOUT PRINCIPAL */
 .dashboard-container {
     display: grid;
     grid-template-columns: 240px 1fr 340px;
@@ -30,22 +25,39 @@ LAYOUT PRINCIPAL - GRID E ESPAÇAMENTO
     padding: 20px;
 }
 
-/* ---
-BARRA LATERAL (SIDEBAR)
---- */
+.main-content {
+    overflow-y: auto;
+}
+
+.main-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.main-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.main-content::-webkit-scrollbar-thumb {
+    background: #3a3a3c;
+    border-radius: 4px;
+}
+
+/* SIDEBAR ESQUERDA (COM NOME DO USUÁRIO) */
 .sidebar {
     padding: 10px 0;
     display: flex;
     flex-direction: column;
 }
 
-.sidebar-logo {
+.sidebar-user {
     padding: 15px 25px;
     margin-bottom: 10px;
 }
 
-.sidebar-logo img {
-    width: 50px;
+.sidebar-user h2 {
+    font-size: 1.8em;
+    font-weight: 600;
+    line-height: 50px;
 }
 
 .sidebar-nav ul {
@@ -56,7 +68,6 @@ BARRA LATERAL (SIDEBAR)
 
 .sidebar-nav li a {
     display: flex;
-    flex-direction: row;
     align-items: center;
     gap: 20px;
     color: #8a8a8e;
@@ -79,30 +90,11 @@ BARRA LATERAL (SIDEBAR)
 
 .sidebar-nav li.active a,
 .sidebar-nav li a:hover {
-    color: #ffffff;
+    color: #fff;
     background-color: #2c2c2e;
 }
 
-/* ---
-CONTEÚDO PRINCIPAL
---- */
-.main-content {
-    overflow-y: auto;
-}
-
-.main-content::-webkit-scrollbar {
-    width: 8px;
-}
-
-.main-content::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-.main-content::-webkit-scrollbar-thumb {
-    background: #3a3a3c;
-    border-radius: 4px;
-}
-
+/* CONTEÚDO PRINCIPAL */
 .main-header {
     background-color: #1c1c1e;
     border-radius: 12px;
@@ -121,7 +113,6 @@ CONTEÚDO PRINCIPAL
     letter-spacing: 0.5px;
 }
 
-.main-header input,
 #search-materias {
     background-color: #2c2c2e;
     border: 1px solid #3a3a3c;
@@ -133,41 +124,13 @@ CONTEÚDO PRINCIPAL
     transition: all 0.2s;
 }
 
-.main-header input:focus,
 #search-materias:focus {
     outline: none;
     border-color: #0a84ff;
     box-shadow: 0 0 0 3px rgba(10, 132, 255, 0.3);
 }
 
-/* ---
-COLUNA DA DIREITA
---- */
-.right-column {
-    background-color: #1c1c1e;
-    border-radius: 16px;
-    padding: 25px;
-    overflow-y: auto;
-}
-
-.right-column::-webkit-scrollbar {
-    display: none;
-}
-
-.right-column .section-header {
-    margin-bottom: 20px;
-}
-
-.right-column .section-header h2 {
-    font-size: 1.5em;
-    font-weight: 600;
-}
-
-/* ---
-ESTILOS ESPECÍFICOS: PÁGINA DE QUESTÕES
---- */
-
-/* Grid de Matérias */
+/* Grid de Matérias com Progresso */
 .materias-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -183,8 +146,8 @@ ESTILOS ESPECÍFICOS: PÁGINA DE QUESTÕES
 }
 
 .materia-card:hover {
-    transform: scale(1.03);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
     background-color: #2c2c2e;
 }
 
@@ -196,13 +159,26 @@ ESTILOS ESPECÍFICOS: PÁGINA DE QUESTÕES
 
 .materia-card h3 {
     font-size: 1.3em;
-    font-weight: 600;
     margin-bottom: 8px;
 }
 
 .materia-card p {
     color: #8a8a8e;
     font-size: 0.9em;
+    margin-bottom: 15px;
+}
+
+.progress-bar-materia {
+    background-color: #3a3a3c;
+    border-radius: 4px;
+    height: 6px;
+    overflow: hidden;
+}
+
+.progress-materia {
+    background-color: #0a84ff;
+    height: 100%;
+    border-radius: 4px;
 }
 
 /* Tela de Resolver Questões */
@@ -244,7 +220,6 @@ ESTILOS ESPECÍFICOS: PÁGINA DE QUESTÕES
     font-weight: 600;
 }
 
-/* Container da Questão */
 .question-container p.enunciado {
     font-size: 1.2em;
     line-height: 1.6;
@@ -269,7 +244,6 @@ ul.alternativas li {
 
 ul.alternativas li:hover {
     background-color: #2c2c2e;
-    border-color: #48484a;
 }
 
 ul.alternativas li.selected {
@@ -293,10 +267,8 @@ ul.alternativas li.incorrect {
 
 ul.alternativas li input[type="radio"] {
     display: none;
-    /* Escondemos o radio original para um visual mais limpo */
 }
 
-/* Navegação das Questões */
 .question-nav {
     display: flex;
     justify-content: flex-end;
@@ -306,7 +278,7 @@ ul.alternativas li input[type="radio"] {
 
 .question-nav button {
     background-color: #0a84ff;
-    color: #ffffff;
+    color: #fff;
     border: none;
     padding: 12px 25px;
     font-size: 1em;
@@ -320,7 +292,21 @@ ul.alternativas li input[type="radio"] {
     background-color: #0077e6;
 }
 
-/* Widget de Estatísticas */
+/* SIDEBAR DIREITA REFORMULADA */
+.right-column {
+    background-color: #1c1c1e;
+    border-radius: 16px;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.right-column .section-header h2 {
+    font-size: 1.5em;
+    font-weight: 600;
+}
+
 .stats-widget .stat-item {
     display: flex;
     justify-content: space-between;
@@ -356,9 +342,52 @@ ul.alternativas li input[type="radio"] {
     color: #0a84ff;
 }
 
-/* ---
-ANIMAÇÃO DE TRANSIÇÃO
---- */
+.sidebar-subtitle {
+    color: #8a8a8e;
+    font-size: 0.8em;
+    text-transform: uppercase;
+    font-weight: 600;
+    border-top: 1px solid #3a3a3c;
+    padding-top: 20px;
+}
+
+.sidebar-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.sidebar-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9em;
+}
+
+.sidebar-list li strong {
+    font-weight: 600;
+}
+
+#reset-progress-btn {
+    background-color: rgba(255, 59, 48, 0.2);
+    color: #ff3b30;
+    border: 1px solid #ff3b30;
+    padding: 10px;
+    font-size: 0.9em;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: auto;
+    /* Empurra para o final */
+}
+
+#reset-progress-btn:hover {
+    background-color: #ff3b30;
+    color: #fff;
+}
+
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -375,130 +404,11 @@ ANIMAÇÃO DE TRANSIÇÃO
     animation: fadeIn 0.5s ease-in-out forwards;
 }
 
-/* ---
-RESPONSIVIDADE
---- */
+/* RESPONSIVIDADE */
 @media (max-width: 1200px) {
-    .dashboard-container {
-        grid-template-columns: 90px 1fr;
-        grid-template-areas:
-            "sidebar main"
-            "sidebar right";
-    }
-
-    .sidebar {
-        grid-area: sidebar;
-    }
-
-    .main-content {
-        grid-area: main;
-    }
-
-    .right-column {
-        grid-area: right;
-        height: auto;
-        overflow-y: visible;
-    }
-
-    .sidebar-nav li a {
-        flex-direction: column;
-        gap: 8px;
-        justify-content: center;
-    }
-
-    .sidebar-nav li a span {
-        font-size: 0.7em;
-    }
-
-    .sidebar-logo img {
-        width: 40px;
-    }
+    /* ... */
 }
 
 @media (max-width: 768px) {
-    body {
-        overflow-y: auto;
-    }
-
-    .dashboard-container {
-        display: flex;
-        flex-direction: column;
-        height: auto;
-        min-height: 100vh;
-        padding: 10px 10px 80px 10px;
-    }
-
-    .sidebar {
-        order: 3;
-        flex-direction: row;
-        justify-content: space-around;
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: 70px;
-        padding: 5px 0;
-        z-index: 1000;
-        background-color: rgba(28, 28, 30, 0.7);
-        backdrop-filter: blur(15px);
-        -webkit-backdrop-filter: blur(15px);
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .sidebar-logo {
-        display: none;
-    }
-
-    .sidebar-nav {
-        width: 100%;
-    }
-
-    .sidebar-nav ul {
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-        width: 100%;
-        padding: 0;
-    }
-
-    .sidebar-nav li a span {
-        display: none;
-    }
-
-    .sidebar-nav li a i {
-        font-size: 1.6em;
-    }
-
-    .sidebar-nav li.active a,
-    .sidebar-nav li a:hover {
-        background-color: transparent;
-        color: #0a84ff;
-    }
-
-    .main-content {
-        order: 1;
-        overflow-y: visible;
-    }
-
-    .right-column {
-        order: 2;
-        margin-top: 24px;
-    }
-
-    .main-header {
-        flex-direction: column;
-        align-items: stretch;
-        /* Ocupa toda a largura */
-        gap: 15px;
-    }
-
-    .main-header input,
-    #search-materias {
-        width: 100%;
-        /* Largura total em mobile */
-    }
-
-    .materias-grid {
-        grid-template-columns: 1fr;
-    }
+    /* ... */
 }

@@ -17,12 +17,12 @@
 
     <div class="dashboard-container">
         <aside class="sidebar">
-            <div class="sidebar-logo">
-                <a href="#"> <img src="fotos/logo.png" alt="Logo Meus Estudos"></a>
+            <div class="sidebar-user">
+                <h2>Mike</h2>
             </div>
             <nav class="sidebar-nav">
                 <ul>
-                    <li>
+                    <li class="active">
                         <a href="TelaPrincipal.html">
                             <i class="fa-solid fa-house"></i>
                             <span>Home</span>
@@ -30,7 +30,7 @@
                     </li>
 
                     <li>
-                        <a href="edital-pmdf.html">
+                        <a href="conteudos.html">
                             <i class="fa-solid fa-book"></i>
                             <span>Conteúdo</span>
                         </a>
@@ -43,7 +43,7 @@
                         </a>
                     </li>
 
-                    <li class="active">
+                    <li>
                         <a href="cronometro.html">
                             <i class="fa-solid fa-stopwatch"></i>
                             <span>Cronômetro</span>
@@ -111,6 +111,7 @@
             <div class="widgets-grid">
                 <div class="widget welcome-widget">
                     <h3>Olá, Mike. <span class="subtitle">Bem-vindo!</span></h3>
+                    <p class="welcome-message">Este é o resumo do seu progresso geral. Continue focado nos seus objetivos!</p>
                     <div class="progress-bar">
                         <div class="progress" style="width: 65.96%;"></div>
                     </div>
@@ -119,24 +120,133 @@
                         <div><strong>77</strong><br>Melhor Nota</div>
                         <div><strong>5</strong><br>Pior Nota</div>
                     </div>
+                    <div class="quick-actions">
+                        <button><i class="fa-solid fa-stopwatch"></i> Iniciar Estudo</button>
+                        <button><i class="fa-solid fa-list-check"></i> Praticar Questões</button>
+                    </div>
                 </div>
 
-                <div class="widget quote-widget">
-                    <h4>Frase do dia</h4>
-                    <blockquote>"Você precisa fazer aquilo que pensa que não é capaz de fazer."<footer>- Eleanor
-                            Roosevelt</footer>
-                    </blockquote>
+                <div class="widget provas-widget">
+                    <h4>Próximas Provas</h4>
+                    <ul>
+                        <li>
+                            <div class="countdown">
+                                <strong>72</strong>
+                                <span>dias</span>
+                            </div>
+                            <div class="prova-info">
+                                <strong>CFO PMDF</strong>
+                                <span>26 de Outubro, 2025</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="countdown">
+                                <strong>107</strong>
+                                <span>dias</span>
+                            </div>
+                            <div class="prova-info">
+                                <strong>SD PCGO</strong>
+                                <span>30 de Novembro, 2025</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="countdown">
+                                <strong>121</strong>
+                                <span>dias</span>
+                            </div>
+                            <div class="prova-info">
+                                <strong>PP DF</strong>
+                                <span>14 de Dezembro, 2025</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="widget stats-overview-widget">
+                    <div class="stat-item">
+                        <i class="fa-solid fa-clock"></i>
+                        <div>
+                            <span>Tempo de Estudo</span>
+                            <strong>127h 45m</strong>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fa-solid fa-list-check"></i>
+                        <div>
+                            <span>Questões Resolvidas</span>
+                            <strong>1.890</strong>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fa-solid fa-bullseye"></i>
+                        <div>
+                            <span>Aproveitamento Geral</span>
+                            <strong>78%</strong>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="widget editais-widget">
-                    <h4>Meus Editais</h4>
-                    <div class="editais-icons">
-                        <i class="fa-solid fa-file-signature" title="Edital Aberto"></i>
-                        <i class="fa-solid fa-file-zipper" title="Edital Finalizado"></i>
-                        <i class="fa-solid fa-file-circle-plus" title="Adicionar Edital"></i>
-                        <i class="fa-solid fa-folder-open" title="Ver Todos"></i>
-                    </div>
-                    <p>Gerencie os editais que você está estudando.</p>
+                    <div class="widget-header">
+                        <h4>Meus Editais</h4>
+                        <div class="edital-actions">
+                            <i class="fa-solid fa-file-circle-plus" title="Adicionar Edital"></i>
+                            <i class="fa-solid fa-folder-open" title="Ver Todos"></i>
+                        </div>
+                   </div>
+                   <ul class="editais-list">
+                       <li>
+                           <div class="edital-info">
+                               <strong>CFO PMDF - Oficial</strong>
+                               <span class="status open">Edital Aberto</span>
+                           </div>
+                           <div class="edital-progress">
+                               <div class="progress-bar-small">
+                                   <div class="progress-small" style="width: 75%;"></div>
+                               </div>
+                               <span>75% concluído</span>
+                           </div>
+                       </li>
+                       <li>
+                           <div class="edital-info">
+                               <strong>SD PMGO - Soldado</strong>
+                               <span class="status closed">Inscrições Encerradas</span>
+                           </div>
+                            <div class="edital-progress">
+                               <div class="progress-bar-small">
+                                   <div class="progress-small" style="width: 40%;"></div>
+                               </div>
+                               <span>40% concluído</span>
+                           </div>
+                       </li>
+                   </ul>
+                </div>
+                
+                <div class="widget revision-widget">
+                    <h4>Para Revisar Hoje</h4>
+                    <ul>
+                        <li>
+                            <i class="fa-solid fa-scale-balanced"></i>
+                            <div>
+                                <strong>Direito Penal</strong>
+                                <span>Dos Crimes contra a Pessoa</span>
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-calculator"></i>
+                            <div>
+                                <strong>Raciocínio Lógico</strong>
+                                <span>Tabela Verdade e Proposições</span>
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-spell-check"></i>
+                            <div>
+                                <strong>Língua Portuguesa</strong>
+                                <span>Uso da Crase</span>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
             </div>
 

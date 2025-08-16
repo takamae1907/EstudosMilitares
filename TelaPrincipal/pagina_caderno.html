@@ -3,68 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Caderno - Meus Estudos</title>
-
+    <title>Editando Caderno</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    
-    <link rel="stylesheet" href="TelaPrincipal.css">
-    
-    <link rel="stylesheet" href="caderno_editor.css">
-
+    <link rel="stylesheet" href="caderno.css">
+    <link rel="stylesheet" href="pagina_caderno_editor.css">
     <link rel="icon" type="image/png" href="fotos/logo.png">
-    
-    <script src="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@latest"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@editorjs/header@latest"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@editorjs/list@latest"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@editorjs/checklist@latest"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@editorjs/marker@latest"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@editorjs/undo@latest"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@editorjs/inline-code@latest"></script>
 </head>
 <body>
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="sidebar-user">
+                <h2>Mike</h2>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="TelaPrincipal.html"><i class="fa-solid fa-house"></i><span>Home</span></a></li>
+                    <li><a href="conteudo.html"><i class="fa-solid fa-book"></i><span>Conteúdo</span></a></li>
+                    <li><a href="calendario.html"><i class="fa-solid fa-calendar-days"></i><span>Calendario</span></a></li>
+                    <li><a href="cronometro.html"><i class="fa-solid fa-stopwatch"></i><span>Cronômetro</span></a></li>
+                    <li><a href="painel_tatico.html"><i class="fa-solid fa-chart-pie"></i><span>Painel Tático</span></a></li>
+                    <li><a href="questoes.html"><i class="fa-solid fa-list-check"></i><span>Questões</span></a></li>
+                    <li class="active"><a href="cadernos.html"><i class="fa-solid fa-swatchbook"></i><span>Cadernos</span></a></li>
+                    <li><a href="flashcards.html"><i class="fa-solid fa-layer-group"></i><span>Flashcards</span></a></li>
+                    <li><a href="guia.html"><i class="fa-solid fa-map-location-dot"></i><span>Guia</span></a></li>
+                    <li><a href="edital.html"><i class="fa-solid fa-book-open"></i><span>Edital</span></a></li>
+                    <li><a href="musica.html"><i class="fa-solid fa-music"></i><span>Música</span></a></li>
+                </ul>
+            </nav>
+        </aside>
 
-<div class="notebook-container">
-    <div id="sidebar-container"></div>
-
-    <aside class="outline-sidebar">
-        <div class="outline-header">
-            <a href="cadernos.html"><i class="fa-solid fa-chevron-left"></i> Voltar para Cadernos</a>
-        </div>
-        <div class="notebook-title-in-sidebar">
-            <i class="fa-solid fa-book-bookmark icon"></i>
-            <h3 id="notebook-title-sidebar">Carregando...</h3>
-        </div>
-        <nav class="toc-nav">
-            <h4>Índice</h4>
-            <ul id="toc-list"></ul>
-        </nav>
-    </aside>
-
-    <main class="editor-main-content">
-        <div id="editor-toolbar">
-            <button id="undo-btn" title="Desfazer (Ctrl+Z)"><i class="fas fa-undo"></i></button>
-            <button id="redo-btn" title="Refazer (Ctrl+Y)"><i class="fas fa-redo"></i></button>
-            <span class="toolbar-separator"></span>
-            <button id="h2-btn" title="Título 2">T2</button>
-            <button id="h3-btn" title="Título 3">T3</button>
-            <span class="toolbar-separator"></span>
-            <button id="bold-btn" title="Negrito (Ctrl+B)"><i class="fas fa-bold"></i></button>
-            <button id="italic-btn" title="Itálico (Ctrl+I)"><i class="fas fa-italic"></i></button>
-            <button id="marker-btn" title="Marca-texto (Ctrl+H)"><i class="fas fa-highlighter"></i></button>
-            <span class="toolbar-separator"></span>
-            <button id="list-ul-btn" title="Lista com Marcadores"><i class="fas fa-list-ul"></i></button>
-            <button id="checklist-btn" title="Checklist"><i class="fas fa-check-square"></i></button>
-        </div>
-
-        <div class="editor-container">
-            <div id="editorjs"></div>
-        </div>
-    </main>
-</div>
-
-<script src="app.js"></script>
-
-<script src="caderno_editor.js"></script>
-
+        <main class="main-content editor-mode">
+            <header class="editor-header">
+                <div class="header-left">
+                    <a href="caderno.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i> Voltar</a>
+                    <h2 id="notebook-title">Carregando...</h2>
+                </div>
+                <div class="header-right">
+                    <span id="save-status"></span>
+                    <button id="save-btn"><i class="fa-solid fa-save"></i> Salvar</button>
+                </div>
+            </header>
+            <textarea id="editor" placeholder="Comece a escrever suas anotações aqui..."></textarea>
+        </main>
+    </div>
+    <script src="pagina_caderno_editor.js"></script>
 </body>
 </html>

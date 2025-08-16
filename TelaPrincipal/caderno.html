@@ -5,30 +5,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meus Cadernos</title>
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="stylesheet" href="caderno.css">
     <link rel="icon" type="image/png" href="fotos/logo.png">
 </head>
 
 <body>
-
     <div class="dashboard-container">
         <aside class="sidebar">
-            <div class="sidebar-logo">
-                <a href="TelaPrincipal.html"> <img src="fotos/logo.png" alt="Logo Meus Estudos"></a>
+            <div class="sidebar-user">
+                <h2>Mike</h2>
             </div>
             <nav class="sidebar-nav">
                 <ul>
                     <li><a href="TelaPrincipal.html"><i class="fa-solid fa-house"></i><span>Home</span></a></li>
-                    <li><a href="edital-pmdf.html"><i class="fa-solid fa-book"></i><span>Conteúdo</span></a></li>
-                    <li><a href="calendario.html"><i class="fa-solid fa-calendar-days"></i><span>Calendário</span></a>
+                    <li><a href="conteudo.html"><i class="fa-solid fa-book"></i><span>Conteúdo</span></a></li>
+                    <li><a href="calendario.html"><i class="fa-solid fa-calendar-days"></i><span>Calendario</span></a>
                     </li>
                     <li><a href="cronometro.html"><i class="fa-solid fa-stopwatch"></i><span>Cronômetro</span></a></li>
                     <li><a href="painel_tatico.html"><i class="fa-solid fa-chart-pie"></i><span>Painel Tático</span></a>
                     </li>
                     <li><a href="questoes.html"><i class="fa-solid fa-list-check"></i><span>Questões</span></a></li>
-                    <li class="active"><a href="cadernos.html"><i
+                    <li class="active"><a href="caderno.html"><i
                                 class="fa-solid fa-swatchbook"></i><span>Cadernos</span></a></li>
                     <li><a href="flashcards.html"><i class="fa-solid fa-layer-group"></i><span>Flashcards</span></a>
                     </li>
@@ -54,7 +52,7 @@
             <h3>Novo Caderno</h3>
             <p>Qual o nome da matéria ou assunto deste caderno?</p>
             <form id="add-notebook-form">
-                <input type="text" id="notebook-name-input" placeholder="Ex: Direito Constitucional" required>
+                <input type="text" id="notebook-name-input" placeholder="Ex: Resumos de Direito Penal" required>
                 <div class="modal-actions">
                     <button type="button" class="cancel-btn">Cancelar</button>
                     <button type="submit" class="submit-btn">Criar Caderno</button>
@@ -63,7 +61,6 @@
         </div>
     </div>
 
-    <script src="app.js"></script>
     <script src="caderno.js"></script>
 </body>
 
