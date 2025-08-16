@@ -7,18 +7,18 @@
     <title>Painel Tático - Meus Estudos</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-
+    
     <link rel="stylesheet" href="painel_tatico.css">
 
     <link rel="icon" type="image/png" href="fotos/logo.png">
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
-
 </head>
 
 <body>
     <div class="dashboard-container">
+        
         <aside class="sidebar">
             <div class="sidebar-logo">
                 <a href="TelaPrincipal.html"> <img src="fotos/logo.png" alt="Logo Meus Estudos"></a>
@@ -27,10 +27,10 @@
                 <ul>
                     <li><a href="TelaPrincipal.html"><i class="fa-solid fa-house"></i><span>Home</span></a></li>
                     <li><a href="edital-pmdf.html"><i class="fa-solid fa-book"></i><span>Conteúdo</span></a></li>
-                    <li><a href="calendario.html"><i class="fa-solid fa-calendar-days"></i><span>Calendario</span></a></li>
+                    <li><a href="calendario.html"><i class="fa-solid fa-calendar-days"></i><span>Calendário</span></a></li>
                     <li><a href="cronometro.html"><i class="fa-solid fa-stopwatch"></i><span>Cronômetro</span></a></li>
                     <li class="active"><a href="painel_tatico.html"><i class="fa-solid fa-chart-pie"></i><span>Painel Tático</span></a></li>
-                    <li><a href="questões.html"><i class="fa-solid fa-list-check"></i><span>Questões</span></a></li>
+                    <li><a href="questoes.html"><i class="fa-solid fa-list-check"></i><span>Questões</span></a></li>
                     <li><a href="caderno.html"><i class="fa-solid fa-swatchbook"></i><span>Cadernos</span></a></li>
                     <li><a href="flashcards.html"><i class="fa-solid fa-layer-group"></i><span>Flashcards</span></a></li>
                     <li><a href="guia.html"><i class="fa-solid fa-map-location-dot"></i><span>Guia</span></a></li>
@@ -55,43 +55,43 @@
 
                 <div class="chart-card">
                     <div class="chart-header">
-                        <button id="prev-period"><i class="fa-solid fa-chevron-left"></i></button>
+                        <button id="prev-period" title="Período Anterior"><i class="fa-solid fa-chevron-left"></i></button>
                         <h3 id="period-display">11/08/2025 a 17/08/2025</h3>
-                        <button id="next-period"><i class="fa-solid fa-chevron-right"></i></button>
+                        <button id="next-period" title="Próximo Período"><i class="fa-solid fa-chevron-right"></i></button>
                     </div>
                     <div class="chart-body">
                         <div class="chart-container">
                             <canvas id="performanceChart"></canvas>
                              <div id="no-data-message" class="hidden">
-                                <p>Você não possui registros de exercícios cadastrados nesse período.</p>
-                                <button>Inicie um registro agora!</button>
-                            </div>
+                                 <p>Você não possui registros de exercícios cadastrados nesse período.</p>
+                                 <button onclick="window.location.href='questoes.html'">Inicie um registro agora!</button>
+                             </div>
                         </div>
                         <div class="chart-summary">
-                            <div id="summary-percentage" class="summary-value">78%</div>
+                            <div id="summary-percentage" class="summary-value">0%</div>
                             <div id="summary-details" class="summary-text">
-                                <strong>89</strong> questões<br>
-                                <strong>70</strong> acertos
+                                <strong>0</strong> questões<br>
+                                <strong>0</strong> acertos
                             </div>
-                            <p class="summary-footer">Média de desempenho em<br>11/08/2025 a 17/08/2025</p>
+                            <p id="summary-footer" class="summary-footer">Média de desempenho</p>
                         </div>
                     </div>
                 </div>
 
                 <div class="materias-performance-table">
-                     <h3>Desempenho por Matéria no Período</h3>
-                     <table>
-                         <thead>
-                             <tr>
-                                 <th>Matéria</th>
-                                 <th>Questões</th>
-                                 <th>Acertos</th>
-                                 <th>Aproveitamento</th>
-                             </tr>
-                         </thead>
-                         <tbody id="materias-tbody">
-                             </tbody>
-                     </table>
+                    <h3>Desempenho por Matéria no Período</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Matéria</th>
+                                <th>Questões</th>
+                                <th>Acertos</th>
+                                <th>Aproveitamento</th>
+                            </tr>
+                        </thead>
+                        <tbody id="materias-tbody">
+                            </tbody>
+                    </table>
                 </div>
             </section>
         </main>
@@ -105,23 +105,23 @@
                     <i class="fa-solid fa-trophy"></i>
                     <div>
                         <span>Melhor Matéria</span>
-                        <strong id="best-materia">Legislação</strong>
-                        <span id="best-materia-percent" class="percent">100%</span>
+                        <strong id="best-materia">-</strong>
+                        <span id="best-materia-percent" class="percent">-%</span>
                     </div>
                 </div>
                  <div class="insight-card worst">
                     <i class="fa-solid fa-person-digging"></i>
                     <div>
                         <span>Ponto a Melhorar</span>
-                        <strong id="worst-materia">Raciocínio Lógico</strong>
-                         <span id="worst-materia-percent" class="percent">33%</span>
+                        <strong id="worst-materia">-</strong>
+                         <span id="worst-materia-percent" class="percent">-%</span>
                     </div>
                 </div>
                 <div class="insight-card comparison">
                     <i class="fa-solid fa-chart-line"></i>
                     <div>
                         <span>Comparativo</span>
-                        <strong id="comparison-value">+5%</strong>
+                        <strong id="comparison-value">-</strong>
                         <p>em relação ao período anterior</p>
                     </div>
                 </div>
@@ -129,7 +129,7 @@
         </aside>
     </div>
 
+    <script src="app.js"></script>
     <script src="painel_tatico.js"></script>
 </body>
-
 </html>

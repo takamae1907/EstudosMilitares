@@ -24,6 +24,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Função para renderizar os cards de progresso
     function renderProgressCards() {
+        progressGrid.innerHTML = ''; // Limpa antes de adicionar
+        
         // Calcula o progresso geral primeiro
         const totalProgresso = dadosProgresso.reduce((acc, materia) => acc + materia.progresso, 0);
         const progressoGeral = Math.round(totalProgresso / dadosProgresso.length);
@@ -61,7 +63,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Função para analisar e mostrar pontos fortes e fracos
     function renderPerformanceAnalysis() {
-        const sortedMaterias = [...dadosProgresso].sort((a, b) => b.progresso - a.progresso);
+        // Filtra matérias já iniciadas para uma análise mais justa
+        const materiasIniciadas = dadosProgresso.filter(m => m.progresso > 0);
+        const sortedMaterias = [...materiasIniciadas].sort((a, b) => b.progresso - a.progresso);
 
         // Pontos Fortes (3 maiores)
         const fortes = sortedMaterias.slice(0, 3);
@@ -74,12 +78,17 @@ document.addEventListener('DOMContentLoaded', () => {
         // Gera sugestão baseada no ponto mais fraco
         if (fracos.length > 0) {
             sugestoesList.innerHTML = `
-                <li><i class="fa-solid fa-lightbulb"></i> Foque em <strong>${fracos[0].nome}</strong> para melhorar seu desempenho geral.</li>
-                <li><i class="fa-solid fa-list-check"></i> Faça uma lista de revisão para <strong>${fortes[0].nome}</strong> para manter o bom resultado.</li>
+                <li><i class="fa-solid fa-lightbulb"></i><div>Foque em <strong>${fracos[0].nome}</strong> para melhorar seu desempenho geral.</div></li>
+                <li><i class="fa-solid fa-list-check"></i><div>Faça uma lista de revisão para <strong>${fortes[0].nome}</strong> para manter o bom resultado.</div></li>
             `;
+        } else if (fortes.length > 0) {
+             sugestoesList.innerHTML = `
+                <li><i class="fa-solid fa-check-double"></i><div>Parabéns! Você está com um ótimo desempenho em todas as matérias iniciadas. Continue revisando <strong>${fortes[0].nome}</strong>.</div></li>
+            `;
+        } else {
+            sugestoesList.innerHTML = `<li><i class="fa-solid fa-rocket"></i><div>Comece a estudar uma nova matéria para gerar análises.</div></li>`;
         }
     }
-
 
     // --- INICIALIZAÇÃO DA PÁGINA ---
     renderProgressCards();

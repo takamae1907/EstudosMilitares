@@ -5,8 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meus Cadernos</title>
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <link rel="stylesheet" href="TelaPrincipal.css">
+    <link rel="stylesheet" href="caderno.css">
+    <link rel="icon" type="image/png" href="fotos/logo.png">
 </head>
 
 <body>
@@ -14,86 +16,25 @@
     <div class="dashboard-container">
         <aside class="sidebar">
             <div class="sidebar-logo">
-                <a href="#"><img src="fotos/logo.png" alt="Logo Meus Estudos"></a>
+                <a href="TelaPrincipal.html"> <img src="fotos/logo.png" alt="Logo Meus Estudos"></a>
             </div>
             <nav class="sidebar-nav">
                 <ul>
-                    <li>
-                        <a href="TelaPrincipal.html">
-                            <i class="fa-solid fa-house"></i>
-                            <span>Home</span>
-                        </a>
+                    <li><a href="TelaPrincipal.html"><i class="fa-solid fa-house"></i><span>Home</span></a></li>
+                    <li><a href="edital-pmdf.html"><i class="fa-solid fa-book"></i><span>Conteúdo</span></a></li>
+                    <li><a href="calendario.html"><i class="fa-solid fa-calendar-days"></i><span>Calendário</span></a>
                     </li>
-
-                    <li>
-                        <a href="edital-pmdf.html">
-                            <i class="fa-solid fa-book"></i>
-                            <span>Conteúdo</span>
-                        </a>
+                    <li><a href="cronometro.html"><i class="fa-solid fa-stopwatch"></i><span>Cronômetro</span></a></li>
+                    <li><a href="painel_tatico.html"><i class="fa-solid fa-chart-pie"></i><span>Painel Tático</span></a>
                     </li>
-
-                    <li>
-                        <a href="calendario.html">
-                            <i class="fa-solid fa-calendar-days"></i>
-                            <span>Calendario</span>
-                        </a>
+                    <li><a href="questoes.html"><i class="fa-solid fa-list-check"></i><span>Questões</span></a></li>
+                    <li class="active"><a href="cadernos.html"><i
+                                class="fa-solid fa-swatchbook"></i><span>Cadernos</span></a></li>
+                    <li><a href="flashcards.html"><i class="fa-solid fa-layer-group"></i><span>Flashcards</span></a>
                     </li>
-
-                    <li class="active">
-                        <a href="cronometro.html">
-                            <i class="fa-solid fa-stopwatch"></i>
-                            <span>Cronômetro</span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="painel_tatico.html">
-                            <i class="fa-solid fa-chart-pie"></i>
-                            <span>Painel Tático</span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="questões.html">
-                            <i class="fa-solid fa-list-check"></i>
-                            <span>Questões</span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="caderno.html">
-                            <i class="fa-solid fa-swatchbook"></i>
-                            <span>Cadernos</span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="flashcards.html">
-                            <i class="fa-solid fa-layer-group"></i>
-                            <span>Flashcards</span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="guia.html">
-                            <i class="fa-solid fa-map-location-dot"></i>
-                            <span>Guia</span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="edital.html">
-                            <i class="fa-solid fa-book-open"></i>
-                            <span>Edital</span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="musica.html">
-                            <i class="fa-solid fa-music"></i>
-                            <span>Música</span>
-                        </a>
-                    </li>
+                    <li><a href="guia.html"><i class="fa-solid fa-map-location-dot"></i><span>Guia</span></a></li>
+                    <li><a href="edital.html"><i class="fa-solid fa-book-open"></i><span>Edital</span></a></li>
+                    <li><a href="musica.html"><i class="fa-solid fa-music"></i><span>Música</span></a></li>
                 </ul>
             </nav>
         </aside>
@@ -103,11 +44,9 @@
                 <h2>Meus Cadernos</h2>
                 <button id="add-notebook-btn"><i class="fa-solid fa-plus"></i> Adicionar Caderno</button>
             </header>
-
             <div class="notebooks-grid" id="notebooks-grid">
             </div>
         </main>
-
     </div>
 
     <div id="add-notebook-modal" class="modal-overlay">
@@ -117,317 +56,15 @@
             <form id="add-notebook-form">
                 <input type="text" id="notebook-name-input" placeholder="Ex: Direito Constitucional" required>
                 <div class="modal-actions">
-                    <button type="button" id="cancel-btn">Cancelar</button>
-                    <button type="submit">Criar Caderno</button>
+                    <button type="button" class="cancel-btn">Cancelar</button>
+                    <button type="submit" class="submit-btn">Criar Caderno</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <style>
-        /* SEU CSS EXISTENTE VAI AQUI. ADICIONE APENAS O ESTILO PARA O BOTÃO DE DELETAR */
-        .notebook-card {
-            position: relative;
-            /* Necessário para posicionar o botão de deletar */
-            /* ... seus outros estilos de card ... */
-            background-color: #1c1c1e;
-            border: 1px solid #3a3a3c;
-            border-radius: 12px;
-            padding: 20px;
-            text-decoration: none;
-            color: #f5f5f7;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            transition: transform 0.2s, border-color 0.2s;
-            min-height: 150px;
-        }
-
-        .delete-notebook-btn {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: none;
-            border: none;
-            color: #555;
-            font-size: 1.1em;
-            cursor: pointer;
-            transition: color 0.2s;
-            padding: 5px;
-        }
-
-        .delete-notebook-btn:hover {
-            color: #ff4581;
-            /* Cor de perigo */
-        }
-
-        /* O restante do seu CSS aqui */
-        .dashboard-container {
-            display: grid;
-            grid-template-columns: 240px 1fr;
-            background-color: #151515;
-            color: #f5f5f7;
-            height: 100vh;
-        }
-
-        .main-content {
-            padding: 20px 30px;
-            overflow-y: auto;
-        }
-
-        .main-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-            border-bottom: 1px solid #3a3a3c;
-            padding-bottom: 20px;
-        }
-
-        .main-header h2 {
-            font-size: 1.8em;
-        }
-
-        #add-notebook-btn {
-            background-color: #0a84ff;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 0.9em;
-            cursor: pointer;
-            transition: background-color 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        #add-notebook-btn:hover {
-            background-color: #339cff;
-        }
-
-        .notebooks-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 20px;
-        }
-
-        .notebook-card:hover {
-            transform: translateY(-5px);
-            border-color: #0a84ff;
-        }
-
-        .notebook-card-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 15px;
-        }
-
-        .notebook-card-header .icon {
-            font-size: 1.5em;
-            color: #8a8a8e;
-        }
-
-        .notebook-card-header h3 {
-            margin: 0;
-            font-size: 1.2em;
-            word-break: break-word;
-        }
-
-        .notebook-card-footer p {
-            margin: 0;
-            font-size: 0.9em;
-            color: #8a8a8e;
-        }
-
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(8px);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            visibility: hidden;
-            opacity: 0;
-            transition: visibility 0s 0.3s, opacity 0.3s;
-        }
-
-        .modal-overlay.visible {
-            visibility: visible;
-            opacity: 1;
-            transition: visibility 0s, opacity 0.3s;
-        }
-
-        .modal-content {
-            background: #2c2c2e;
-            padding: 30px;
-            border-radius: 16px;
-            width: 90%;
-            max-width: 500px;
-            border: 1px solid #3a3a3c;
-        }
-
-        .modal-content h3 {
-            margin-top: 0;
-            margin-bottom: 10px;
-        }
-
-        .modal-content p {
-            color: #8a8a8e;
-            margin-bottom: 20px;
-        }
-
-        .modal-content input[type="text"] {
-            width: 100%;
-            background-color: #1c1c1e;
-            border: 1px solid #3a3a3c;
-            color: #f5f5f7;
-            padding: 12px;
-            border-radius: 8px;
-            font-size: 1em;
-            margin-bottom: 20px;
-        }
-
-        .modal-content input[type="text"]:focus {
-            outline: none;
-            border-color: #0a84ff;
-            box-shadow: 0 0 0 3px rgba(10, 132, 255, 0.3);
-        }
-
-        .modal-actions {
-            display: flex;
-            justify-content: flex-end;
-            gap: 10px;
-        }
-
-        .modal-actions button {
-            padding: 10px 20px;
-            font-weight: 600;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-        }
-
-        .modal-actions button[type="button"] {
-            background-color: #3a3a3c;
-            color: #f5f5f7;
-        }
-
-        .modal-actions button[type="submit"] {
-            background-color: #0a84ff;
-            color: white;
-        }
-    </style>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const addNotebookBtn = document.getElementById('add-notebook-btn');
-            const modal = document.getElementById('add-notebook-modal');
-            const cancelBtn = document.getElementById('cancel-btn');
-            const addNotebookForm = document.getElementById('add-notebook-form');
-            const notebookNameInput = document.getElementById('notebook-name-input');
-            const notebooksGrid = document.getElementById('notebooks-grid');
-
-            let notebooks = JSON.parse(localStorage.getItem('notebooks')) || [];
-
-            const saveNotebooks = () => {
-                localStorage.setItem('notebooks', JSON.stringify(notebooks));
-            };
-
-            const renderNotebooks = () => {
-                notebooksGrid.innerHTML = '';
-                if (notebooks.length === 0) {
-                    notebooksGrid.innerHTML = `<p>Você ainda não tem cadernos. Clique em "Adicionar Caderno" para começar!</p>`;
-                    return;
-                }
-
-                notebooks.forEach(notebook => {
-                    const cardWrapper = document.createElement('div'); // Usamos um wrapper para o card e o botão
-                    cardWrapper.className = 'notebook-card';
-
-                    // ALTERAÇÃO 1: O link agora aponta para a página do editor com o ID
-                    cardWrapper.innerHTML = `
-                <a href="pagina_caderno.html?id=${notebook.id}" class="card-link-wrapper">
-                    <div>
-                        <div class="notebook-card-header">
-                            <i class="fa-solid fa-book-bookmark icon"></i>
-                            <h3>${notebook.name}</h3>
-                        </div>
-                    </div>
-                    <div class="notebook-card-footer">
-                        <p>${notebook.pages || 0} páginas</p>
-                    </div>
-                </a>
-                <button class="delete-notebook-btn" data-id="${notebook.id}" title="Deletar caderno">
-                    <i class="fa-solid fa-trash"></i>
-                </button>
-            `;
-                    notebooksGrid.appendChild(cardWrapper);
-                });
-            };
-
-            // ALTERAÇÃO 2: Lógica para deletar o caderno
-            notebooksGrid.addEventListener('click', (e) => {
-                const deleteButton = e.target.closest('.delete-notebook-btn');
-                if (deleteButton) {
-                    const notebookId = deleteButton.dataset.id;
-                    const notebookToDelete = notebooks.find(n => n.id == notebookId);
-
-                    if (confirm(`Tem certeza que deseja deletar o caderno "${notebookToDelete.name}"? Esta ação não pode ser desfeita.`)) {
-                        notebooks = notebooks.filter(n => n.id != notebookId);
-                        localStorage.removeItem(`notebook_content_${notebookId}`); // Remove o conteúdo do caderno
-                        saveNotebooks();
-                        renderNotebooks();
-                    }
-                }
-            });
-
-            addNotebookForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                const notebookName = notebookNameInput.value.trim();
-                if (notebookName) {
-                    const newNotebook = {
-                        id: Date.now(),
-                        name: notebookName,
-                        pages: 0
-                    };
-                    notebooks.push(newNotebook);
-                    saveNotebooks();
-                    renderNotebooks();
-                    notebookNameInput.value = '';
-                    modal.classList.remove('visible');
-                }
-            });
-
-            // Código para abrir e fechar o modal (sem alterações)
-            addNotebookBtn.addEventListener('click', () => modal.classList.add('visible'));
-            cancelBtn.addEventListener('click', () => modal.classList.remove('visible'));
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) modal.classList.remove('visible');
-            });
-
-            renderNotebooks();
-        });
-    </script>
-
-    <style>
-        .card-link-wrapper {
-            text-decoration: none;
-            color: inherit;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            height: 100%;
-        }
-    </style>
-
+    <script src="app.js"></script>
+    <script src="caderno.js"></script>
 </body>
 
 </html>

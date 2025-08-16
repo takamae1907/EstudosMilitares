@@ -5,129 +5,58 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Analisador de Editais IA</title>
     
-    <!-- Links para Fontes e Ícones -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="icon" type="image/png" href="fotos/logo.png">
 
-    <!-- Link para o arquivo CSS -->
     <link rel="stylesheet" href="edital.css">
 </head>
 <body>
 
-    <div class="app-container">
-        <!-- Barra Lateral Padrão -->
+    <div class="dashboard-container">
+        
         <aside class="sidebar">
             <div class="sidebar-logo">
                 <a href="TelaPrincipal.html"> <img src="fotos/logo.png" alt="Logo Meus Estudos"></a>
             </div>
-               <nav class="sidebar-nav">
+            <nav class="sidebar-nav">
                 <ul>
-                    <li>
-                        <a href="TelaPrincipal.html">
-                            <i class="fa-solid fa-house"></i>
-                            <span>Home</span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="edital-pmdf.html">
-                            <i class="fa-solid fa-book"></i>
-                            <span>Conteúdo</span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="calendario.html">
-                            <i class="fa-solid fa-calendar-days"></i>
-                            <span>Calendario</span>
-                        </a>
-                    </li>
-
-                    <li class="active">
-                        <a href="cronometro.html">
-                            <i class="fa-solid fa-stopwatch"></i>
-                            <span>Cronômetro</span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="painel_tatico.html">
-                            <i class="fa-solid fa-chart-pie"></i>
-                            <span>Painel Tático</span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="questões.html">
-                            <i class="fa-solid fa-list-check"></i>
-                            <span>Questões</span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="caderno.html">
-                            <i class="fa-solid fa-swatchbook"></i>
-                            <span>Cadernos</span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="flashcards.html">
-                            <i class="fa-solid fa-layer-group"></i>
-                            <span>Flashcards</span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="guia.html">
-                            <i class="fa-solid fa-map-location-dot"></i>
-                            <span>Guia</span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="edital.html">
-                            <i class="fa-solid fa-book-open"></i>
-                            <span>Edital</span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="musica.html">
-                            <i class="fa-solid fa-music"></i>
-                            <span>Música</span>
-                        </a>
-                    </li>
+                    <li><a href="TelaPrincipal.html"><i class="fa-solid fa-house"></i><span>Home</span></a></li>
+                    <li><a href="edital-pmdf.html"><i class="fa-solid fa-book"></i><span>Conteúdo</span></a></li>
+                    <li><a href="calendario.html"><i class="fa-solid fa-calendar-days"></i><span>Calendário</span></a></li>
+                    <li><a href="cronometro.html"><i class="fa-solid fa-stopwatch"></i><span>Cronômetro</span></a></li>
+                    <li><a href="painel_tatico.html"><i class="fa-solid fa-chart-pie"></i><span>Painel Tático</span></a></li>
+                    <li><a href="questoes.html"><i class="fa-solid fa-list-check"></i><span>Questões</span></a></li>
+                    <li><a href="caderno.html"><i class="fa-solid fa-swatchbook"></i><span>Cadernos</span></a></li>
+                    <li><a href="flashcards.html"><i class="fa-solid fa-layer-group"></i><span>Flashcards</span></a></li>
+                    <li><a href="guia.html"><i class="fa-solid fa-map-location-dot"></i><span>Guia</span></a></li>
+                    <li class="active"><a href="edital.html"><i class="fa-solid fa-book-open"></i><span>Edital</span></a></li>
+                    <li><a href="musica.html"><i class="fa-solid fa-music"></i><span>Música</span></a></li>
                 </ul>
             </nav>
         </aside>
 
-        <!-- Conteúdo Principal do Analisador -->
         <main class="main-content">
             <header class="page-header">
                 <h1>Analisador de Editais IA</h1>
                 <p>A alma do seu estudo começa aqui. Envie o edital e deixe a IA fazer o trabalho pesado.</p>
             </header>
 
-            <!-- Seção de Upload -->
             <section id="upload-section" class="upload-widget">
                 <h2>1. Envie seu Edital em PDF</h2>
-                <div class="drop-zone">
+                <div class="drop-zone" tabindex="0">
                     <i class="fas fa-file-pdf"></i>
                     <p>Arraste e solte o arquivo aqui, ou</p>
                     <input type="file" id="edital-input" accept=".pdf" class="hidden-input">
-                    <label for="edital-input" class="browse-btn">Procure no seu computador</label>
+                    <label for="edital-input" class="browse-btn">procure no seu computador</label>
                 </div>
                 <button id="analyze-btn">Analisar Edital</button>
             </section>
 
-            <!-- Seção de Carregamento -->
             <section id="loading-section" class="loading-widget hidden">
                 <div class="spinner"></div>
                 <p>Analisando o edital... A IA está lendo, interpretando e criando seu plano de estudos.</p>
             </section>
 
-            <!-- Dashboard de Resultados -->
             <section id="dashboard-main" class="hidden">
                 <div class="dashboard-grid">
                     <div id="fases-concurso" class="widget">
@@ -174,9 +103,38 @@
                 </div>
             </section>
         </main>
+        
+        <aside class="right-column">
+            <div class="section-header">
+                <h2>Resumo da Análise</h2>
+            </div>
+            <div class="insights-widget">
+                <div class="insight-card">
+                    <i class="fa-solid fa-list-ol"></i>
+                    <div>
+                        <span>Fases do Concurso</span>
+                        <strong id="summary-fases">Aguardando...</strong>
+                    </div>
+                </div>
+                <div class="insight-card">
+                    <i class="fa-solid fa-bullseye"></i>
+                    <div>
+                        <span>Total de Matérias</span>
+                        <strong id="summary-materias">Aguardando...</strong>
+                    </div>
+                </div>
+                <div class="insight-card">
+                    <i class="fa-solid fa-calendar-check"></i>
+                    <div>
+                        <span>Próxima Data</span>
+                        <strong id="summary-data">Aguardando...</strong>
+                    </div>
+                </div>
+            </div>
+        </aside>
     </div>
 
-    <!-- Link para o script -->
+    <script src="app.js"></script>
     <script src="edital.js"></script>
 </body>
 </html>

@@ -1,24 +1,6 @@
-/*
-========================================
-APPLE-INSPIRED STUDY PLAN STYLESHEET
-========================================
-*/
-
-/* --- VARIÁVEIS DE COR E FONTES GLOBAIS --- */
-:root {
-    --bg-color: #000000;
-    --primary-widget-bg: #1c1c1e;
-    --secondary-bg: #2c2c2e;
-    --border-color: #3a3a3c;
-    --text-color: #f5f5f7;
-    --text-muted-color: #8a8a8e;
-    --accent-color: #0a84ff;
-    /* Apple Blue */
-    --success-color: #34c759;
-    /* Apple Green */
-    --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-}
-
+/* ---
+APPLE DESIGN PHILOSOPHY - RESET & GLOBAIS
+--- */
 * {
     margin: 0;
     padding: 0;
@@ -26,31 +8,36 @@ APPLE-INSPIRED STUDY PLAN STYLESHEET
 }
 
 body {
-    font-family: var(--font-family);
-    background-color: var(--bg-color);
-    color: var(--text-color);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+    background-color: #000000;
+    color: #f5f5f7;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
-/* --- LAYOUT PRINCIPAL E SIDEBAR PADRÃO --- */
+/* ---
+LAYOUT PRINCIPAL - GRID E ESPAÇAMENTO
+--- */
 .dashboard-container {
     display: grid;
     grid-template-columns: 240px 1fr 340px;
-    /* Sidebar padrão larga */
     height: 100vh;
     gap: 24px;
     padding: 20px;
 }
 
+/* ---
+BARRA LATERAL (SIDEBAR)
+--- */
 .sidebar {
-    padding: 10px 15px;
+    padding: 10px 0;
     display: flex;
     flex-direction: column;
-    align-items: stretch;
 }
 
 .sidebar-logo {
-    padding: 15px 10px;
-    margin-bottom: 20px;
+    padding: 15px 25px;
+    margin-bottom: 10px;
 }
 
 .sidebar-logo img {
@@ -60,6 +47,7 @@ body {
 .sidebar-nav ul {
     list-style: none;
     width: 100%;
+    padding: 0 15px;
 }
 
 .sidebar-nav li a {
@@ -67,11 +55,11 @@ body {
     flex-direction: row;
     align-items: center;
     gap: 20px;
-    color: var(--text-muted-color);
+    color: #8a8a8e;
     text-decoration: none;
     padding: 12px 10px;
     border-radius: 8px;
-    transition: all 0.2s ease;
+    transition: all 0.2s ease-in-out;
 }
 
 .sidebar-nav li a i {
@@ -87,14 +75,16 @@ body {
 
 .sidebar-nav li.active a,
 .sidebar-nav li a:hover {
-    color: var(--text-color);
-    background-color: var(--secondary-bg);
+    color: #ffffff;
+    background-color: #2c2c2e;
 }
 
-/* --- CONTEÚDO PRINCIPAL --- */
-.main-content {
+/* ---
+CONTEÚDO PRINCIPAL E COLUNA DIREITA
+--- */
+.main-content,
+.right-column {
     overflow-y: auto;
-    padding-right: 10px;
 }
 
 .main-content::-webkit-scrollbar {
@@ -106,8 +96,18 @@ body {
 }
 
 .main-content::-webkit-scrollbar-thumb {
-    background: var(--border-color);
+    background: #3a3a3c;
     border-radius: 4px;
+}
+
+.right-column {
+    background-color: #1c1c1e;
+    border-radius: 16px;
+    padding: 25px;
+}
+
+.right-column::-webkit-scrollbar {
+    display: none;
 }
 
 .page-header {
@@ -121,7 +121,7 @@ body {
 }
 
 .page-header p {
-    color: var(--text-muted-color);
+    color: #8a8a8e;
     font-size: 1.1em;
 }
 
@@ -134,7 +134,7 @@ body {
 }
 
 .chart-container {
-    background-color: var(--primary-widget-bg);
+    background-color: #1c1c1e;
     padding: 20px;
     border-radius: 16px;
 }
@@ -143,24 +143,25 @@ body {
     margin-bottom: 15px;
     font-size: 0.9em;
     font-weight: 500;
-    color: var(--text-muted-color);
+    color: #8a8a8e;
 }
 
 .overall-chart h4 {
     font-size: 1.1em;
-    color: var(--text-color);
+    color: #f5f5f7;
     font-weight: 600;
 }
 
 .progress-bar-container {
-    background-color: var(--secondary-bg);
+    background-color: #2c2c2e;
     border-radius: 5px;
     height: 10px;
     width: 100%;
+    overflow: hidden;
 }
 
 .progress-bar {
-    background-color: var(--accent-color);
+    background-color: #0a84ff;
     height: 100%;
     border-radius: 5px;
     width: 0%;
@@ -168,7 +169,7 @@ body {
 }
 
 .overall-chart .progress-bar {
-    background: linear-gradient(90deg, var(--accent-color), var(--success-color));
+    background: linear-gradient(90deg, #0a84ff, #34c759);
 }
 
 .progress-label {
@@ -186,11 +187,16 @@ body {
 }
 
 .accordion-item {
-    background-color: var(--primary-widget-bg);
+    background-color: #1c1c1e;
     border-radius: 16px;
     margin-bottom: 12px;
     overflow: hidden;
-    border: 1px solid var(--border-color);
+    border: 1px solid transparent;
+    transition: border-color 0.3s;
+}
+
+.accordion-item.active {
+    border-color: #3a3a3c;
 }
 
 .accordion-header {
@@ -203,7 +209,7 @@ body {
 }
 
 .accordion-header:hover {
-    background-color: var(--secondary-bg);
+    background-color: #252527;
 }
 
 .accordion-header h3 {
@@ -215,13 +221,13 @@ body {
 
 .progress-label-semana {
     font-size: 0.8em;
-    color: var(--text-muted-color);
+    color: #8a8a8e;
     font-weight: 500;
 }
 
 .accordion-header .icon {
     transition: transform 0.3s ease;
-    color: var(--text-muted-color);
+    color: #8a8a8e;
 }
 
 .accordion-content {
@@ -233,20 +239,15 @@ body {
 
 .accordion-item.active .accordion-content {
     max-height: 4000px;
-    /* Valor alto para acomodar todo o conteúdo */
     padding: 0 20px 20px;
 }
 
 .accordion-item.active .accordion-header .icon {
-    transform: rotate(135deg);
-}
-
-.accordion-item.active .accordion-header {
-    background-color: var(--secondary-bg);
+    transform: rotate(45deg);
 }
 
 .day-plan {
-    border-top: 1px solid var(--border-color);
+    border-top: 1px solid #3a3a3c;
     padding-top: 20px;
     margin-top: 20px;
 }
@@ -259,7 +260,7 @@ body {
 .day-plan h4 {
     margin-bottom: 15px;
     font-weight: 600;
-    color: var(--text-color);
+    color: #f5f5f7;
     font-size: 1.1em;
 }
 
@@ -273,12 +274,11 @@ body {
     gap: 15px;
     padding: 10px 5px;
     border-radius: 8px;
-    cursor: pointer;
     transition: background-color 0.2s;
 }
 
 .topic-item:hover {
-    background-color: var(--secondary-bg);
+    background-color: #2c2c2e;
 }
 
 .topic-item label {
@@ -291,22 +291,21 @@ body {
 .topic-item .subject-tag {
     font-size: 0.75em;
     font-weight: 600;
-    color: var(--text-color);
-    background-color: var(--border-color);
+    color: #f5f5f7;
+    background-color: #3a3a3c;
     padding: 3px 8px;
     border-radius: 5px;
     margin-top: 5px;
     align-self: flex-start;
 }
 
-/* Checkbox Estilo Apple (circular) */
 .topic-item input[type="checkbox"] {
     appearance: none;
     -webkit-appearance: none;
     flex-shrink: 0;
     width: 22px;
     height: 22px;
-    border: 2px solid var(--border-color);
+    border: 2px solid #3a3a3c;
     border-radius: 50%;
     cursor: pointer;
     position: relative;
@@ -314,19 +313,19 @@ body {
 }
 
 .topic-item input[type="checkbox"]:hover {
-    border-color: var(--text-muted-color);
+    border-color: #8a8a8e;
 }
 
 .topic-item input[type="checkbox"]:checked {
-    background-color: var(--success-color);
-    border-color: var(--success-color);
+    background-color: #34c759;
+    border-color: #34c759;
 }
 
 .topic-item input[type="checkbox"]:checked::before {
     content: '\f00c';
     font-family: 'Font Awesome 6 Free';
     font-weight: 900;
-    color: #fff;
+    color: #000;
     font-size: 12px;
     position: absolute;
     top: 50%;
@@ -334,22 +333,12 @@ body {
     transform: translate(-50%, -50%);
 }
 
-.topic-item.completed label {
-    color: var(--text-muted-color);
-}
-
-.topic-item.completed {
+.topic-item.completed label span:first-child {
+    color: #8a8a8e;
     text-decoration: line-through;
 }
 
 /* --- COLUNA DA DIREITA --- */
-.right-column {
-    background-color: var(--primary-widget-bg);
-    border-radius: 16px;
-    padding: 25px;
-    overflow-y: auto;
-}
-
 .right-column .widget {
     padding: 0;
     background: none;
@@ -368,7 +357,7 @@ body {
 
 .right-column #current-date {
     font-size: 0.9em;
-    color: var(--text-muted-color);
+    color: #8a8a8e;
 }
 
 .today-widget,
@@ -381,7 +370,7 @@ body {
     margin-bottom: 15px;
     padding-bottom: 10px;
     font-size: 1.1em;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 1px solid #3a3a3c;
     display: flex;
     align-items: center;
     gap: 10px;
@@ -394,8 +383,8 @@ body {
 
 .today-widget li,
 .lembretes-widget li {
-    padding: 12px 0;
-    border-bottom: 1px solid var(--border-color);
+    padding: 12px 5px;
+    border-bottom: 1px solid #3a3a3c;
 }
 
 .today-widget li:last-child,
@@ -413,21 +402,26 @@ body {
 .today-widget li span,
 .lembretes-widget li span {
     font-size: 0.85em;
-    color: var(--text-muted-color);
+    color: #8a8a8e;
 }
 
 /* --- RESPONSIVIDADE --- */
 @media (max-width: 1200px) {
     .dashboard-container {
         grid-template-columns: 90px 1fr;
+        grid-template-areas: "sidebar main";
+    }
+
+    .sidebar {
+        grid-area: sidebar;
+    }
+
+    .main-content {
+        grid-area: main;
     }
 
     .right-column {
         display: none;
-    }
-
-    .sidebar {
-        padding: 10px 0;
     }
 
     .sidebar-nav li a {
@@ -455,7 +449,7 @@ body {
         flex-direction: column;
         height: auto;
         min-height: 100vh;
-        padding: 15px 15px 85px 15px;
+        padding: 10px 10px 80px 10px;
     }
 
     .main-content {
@@ -467,8 +461,7 @@ body {
     .right-column {
         display: block;
         order: 2;
-        margin-top: 20px;
-        padding: 25px;
+        margin-top: 24px;
     }
 
     .sidebar {
@@ -481,7 +474,6 @@ body {
         width: 100%;
         height: 70px;
         padding: 5px 0;
-        border-radius: 0;
         z-index: 1000;
         background-color: rgba(28, 28, 30, 0.7);
         backdrop-filter: blur(15px);
@@ -491,7 +483,6 @@ body {
 
     .sidebar-nav {
         width: 100%;
-        padding: 0;
     }
 
     .sidebar-nav ul {
@@ -499,18 +490,20 @@ body {
         justify-content: space-around;
         align-items: center;
         width: 100%;
+        padding: 0;
     }
 
     .sidebar-nav li a span {
         display: none;
     }
 
-    .sidebar-nav li a:hover,
-    .sidebar-nav li.active a {
-        background-color: transparent;
+    .sidebar-nav li a i {
+        font-size: 1.6em;
     }
 
-    .sidebar-nav li.active a {
-        color: var(--accent-color);
+    .sidebar-nav li.active a,
+    .sidebar-nav li a:hover {
+        background-color: transparent;
+        color: #0a84ff;
     }
 }

@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Lógica de Arrastar e Soltar (Drag and Drop)
     dropZone.addEventListener('dragover', (e) => {
         e.preventDefault();
-        dropZone.style.borderColor = '#0a84ff'; // Feedback visual
+        dropZone.style.borderColor = '#0a84ff';
     });
     dropZone.addEventListener('dragleave', () => {
         dropZone.style.borderColor = '#3a3a3c';
@@ -29,8 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
         dropZone.style.borderColor = '#3a3a3c';
         if (e.dataTransfer.files.length && e.dataTransfer.files[0].type === 'application/pdf') {
             editalInput.files = e.dataTransfer.files;
-            const fileName = e.dataTransfer.files[0].name;
-            dropZone.querySelector('p').textContent = `Arquivo selecionado: ${fileName}`;
+            updateDropZoneText(e.dataTransfer.files[0].name);
         } else {
             alert('Por favor, solte um arquivo PDF.');
         }
@@ -38,44 +37,53 @@ document.addEventListener('DOMContentLoaded', () => {
     dropZone.addEventListener('click', () => editalInput.click());
     editalInput.addEventListener('change', () => {
         if (editalInput.files.length > 0) {
-            const fileName = editalInput.files[0].name;
-            dropZone.querySelector('p').textContent = `Arquivo selecionado: ${fileName}`;
+            updateDropZoneText(editalInput.files[0].name);
         }
     });
+    
+    function updateDropZoneText(fileName) {
+         const p = dropZone.querySelector('p');
+         const browseBtn = dropZone.querySelector('.browse-btn');
+         p.innerHTML = `Arquivo selecionado: <strong>${fileName}</strong>`;
+         browseBtn.textContent = 'trocar arquivo';
+    }
 
-    /**
-     * Função principal que envia o arquivo para o backend e processa a resposta.
-     */
     async function handleAnalysis() {
         uploadSection.classList.add('hidden');
         loadingSection.classList.remove('hidden');
         dashboardMain.classList.add('hidden');
 
-        const formData = new FormData();
-        formData.append('editalPdf', editalInput.files[0]);
+        // SIMULAÇÃO DE CHAMADA DE API
+        await new Promise(resolve => setTimeout(resolve, 3000)); // Simula o tempo de processamento
 
         try {
-            // --- CHAMADA REAL PARA O BACKEND ---
-            console.log("Enviando edital para o backend em http://localhost:3000/api/edital/upload");
-            const response = await fetch('http://localhost:3000/api/edital/upload', {
-                method: 'POST',
-                body: formData,
-            });
+            // DADOS MOCKADOS (simulando a resposta da API)
+            const mockApiData = {
+                analise_edital: {
+                    fases_concurso: ["Prova Objetiva", "Prova Discursiva", "Teste de Aptidão Física (TAF)", "Avaliação Psicológica", "Investigação Social"],
+                    criterios_avaliacao: [
+                        { materia: "Língua Portuguesa", numero_questoes: 20, peso: 1 },
+                        { materia: "Direito Constitucional", numero_questoes: 15, peso: 1.5 },
+                        { materia: "Direito Penal", numero_questoes: 15, peso: 1.5 },
+                        { materia: "Legislação Extravagante", numero_questoes: 10, peso: 2 }
+                    ],
+                    conteudo_programatico: {
+                        "Língua Portuguesa": ["Interpretação de textos", "Gramática e uso da norma culta", "Redação Oficial"],
+                        "Direito Constitucional": ["Art. 5º - Direitos e Deveres Individuais e Coletivos", "Art. 144 - Segurança Pública", "Controle de Constitucionalidade"]
+                    },
+                    cronograma: [
+                        { evento: "Publicação do Edital", data: "15/08/2025" },
+                        { evento: "Período de Inscrição", data: "20/08/2025 a 15/09/2025" },
+                        { evento: "Data da Prova Objetiva", data: "26/10/2025" }
+                    ]
+                }
+            };
 
-            if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.error || `Erro HTTP: ${response.status}`);
-            }
-
-            const apiData = await response.json();
-
-            // Prepara os dados recebidos para a função que exibe o dashboard
             const dadosParaDashboard = {
-                fases: apiData.analise_edital.fases_concurso || [],
-                criterios: apiData.analise_edital.criterios_avaliacao || [],
-                conteudo: Object.entries(apiData.analise_edital.conteudo_programatico || {}).map(([materia, topicos]) => ({ materia, topicos })),
-                cronograma: apiData.analise_edital.cronograma || [],
-                // Dados de progresso do usuário podem ser mockados ou vir de outra fonte no futuro
+                fases: mockApiData.analise_edital.fases_concurso || [],
+                criterios: mockApiData.analise_edital.criterios_avaliacao || [],
+                conteudo: Object.entries(mockApiData.analise_edital.conteudo_programatico || {}).map(([materia, topicos]) => ({ materia, topicos })),
+                cronograma: mockApiData.analise_edital.cronograma || [],
                 progressoUsuario: { editalVisto: 35, rendimentoQuestoes: 78 },
             };
 
@@ -83,27 +91,23 @@ document.addEventListener('DOMContentLoaded', () => {
             dashboardMain.classList.remove('hidden');
 
         } catch (error) {
-            alert(`Ocorreu um erro ao analisar o edital: ${error.message}\n\nVerifique se o servidor backend está rodando.`);
+            alert(`Ocorreu um erro ao analisar o edital: ${error.message}`);
             uploadSection.classList.remove('hidden');
         } finally {
             loadingSection.classList.add('hidden');
         }
     }
 
-    /**
-     * Preenche o dashboard na tela com os dados processados da API.
-     * @param {object} data - O objeto com os dados do edital.
-     */
     function displayDashboardData(data) {
-        // Preenche as Fases do Concurso
+        // Fases
         const fasesList = document.getElementById('fases-list');
         fasesList.innerHTML = data.fases.map(fase => `<li>${fase}</li>`).join('') || '<li>Nenhuma fase encontrada.</li>';
 
-        // Preenche a Tabela de Critérios de Avaliação
+        // Tabela de Critérios
         const materiasTableBody = document.querySelector('#materias-table tbody');
         materiasTableBody.innerHTML = data.criterios.map(c => `<tr><td>${c.materia || 'N/A'}</td><td>${c.numero_questoes || 'N/A'}</td><td>${c.peso || 'N/A'}</td></tr>`).join('') || '<tr><td colspan="3">Nenhum critério encontrado.</td></tr>';
 
-        // Preenche o Conteúdo Programático
+        // Conteúdo Programático
         const conteudoList = document.getElementById('conteudo-list');
         conteudoList.innerHTML = data.conteudo.map(item => `
             <div class="topic">
@@ -112,19 +116,19 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
         `).join('') || '<p>Nenhum conteúdo programático encontrado.</p>';
 
-        // Preenche o Cronograma de Datas
+        // Cronograma
         const cronogramaList = document.getElementById('cronograma-list');
         cronogramaList.innerHTML = data.cronograma.map(item => `<li><strong>${item.evento}:</strong> ${item.data}</li>`).join('') || '<li>Nenhum cronograma encontrado.</li>';
 
-        // Atualiza as Barras de Progresso (dados de exemplo)
-        const editalVistoBar = document.getElementById('edital-visto-bar');
-        const editalVistoPercent = document.getElementById('edital-visto-percent');
-        editalVistoBar.style.width = `${data.progressoUsuario.editalVisto}%`;
-        editalVistoPercent.textContent = `${data.progressoUsuario.editalVisto}%`;
-
-        const rendimentoBar = document.getElementById('rendimento-bar');
-        const rendimentoPercent = document.getElementById('rendimento-percent');
-        rendimentoBar.style.width = `${data.progressoUsuario.rendimentoQuestoes}%`;
-        rendimentoPercent.textContent = `${data.progressoUsuario.rendimentoQuestoes}%`;
+        // Barras de Progresso
+        document.getElementById('edital-visto-bar').style.width = `${data.progressoUsuario.editalVisto}%`;
+        document.getElementById('edital-visto-percent').textContent = `${data.progressoUsuario.editalVisto}%`;
+        document.getElementById('rendimento-bar').style.width = `${data.progressoUsuario.rendimentoQuestoes}%`;
+        document.getElementById('rendimento-percent').textContent = `${data.progressoUsuario.rendimentoQuestoes}%`;
+        
+        // **NOVO**: Atualiza o widget de resumo na coluna da direita
+        document.getElementById('summary-fases').textContent = `${data.fases.length} fases`;
+        document.getElementById('summary-materias').textContent = `${data.criterios.length} matérias`;
+        document.getElementById('summary-data').textContent = data.cronograma.length > 1 ? `${data.cronograma[1].evento}: ${data.cronograma[1].data}` : 'Não definida';
     }
 });

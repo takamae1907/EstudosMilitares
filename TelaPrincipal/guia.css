@@ -1,5 +1,5 @@
 /* ---
-BASE DO DESIGN (Copiado do padrão)
+APPLE DESIGN PHILOSOPHY - RESET & GLOBAIS
 --- */
 * {
     margin: 0;
@@ -15,6 +15,9 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
+/* ---
+LAYOUT PRINCIPAL - GRID E ESPAÇAMENTO
+--- */
 .dashboard-container {
     display: grid;
     grid-template-columns: 240px 1fr 340px;
@@ -23,6 +26,9 @@ body {
     padding: 20px;
 }
 
+/* ---
+BARRA LATERAL (SIDEBAR)
+--- */
 .sidebar {
     padding: 10px 0;
     display: flex;
@@ -73,6 +79,9 @@ body {
     background-color: #2c2c2e;
 }
 
+/* ---
+CONTEÚDO PRINCIPAL E COLUNA DIREITA
+--- */
 .main-content,
 .right-column {
     overflow-y: auto;
@@ -91,13 +100,14 @@ body {
     border-radius: 4px;
 }
 
+.right-column::-webkit-scrollbar {
+    display: none;
+}
+
 .main-header {
     background-color: #1c1c1e;
     border-radius: 12px;
     padding: 18px 25px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     margin-bottom: 24px;
 }
 
@@ -106,6 +116,7 @@ body {
     font-weight: 600;
     color: #8a8a8e;
     letter-spacing: 0.5px;
+    text-transform: uppercase;
 }
 
 .right-column {
@@ -114,16 +125,9 @@ body {
     padding: 25px;
 }
 
-.right-column::-webkit-scrollbar {
-    display: none;
-}
-
 .right-column .section-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     margin-bottom: 20px;
-    padding: 0 5px;
+    padding: 0;
 }
 
 .right-column .section-header h2 {
@@ -132,7 +136,7 @@ body {
 }
 
 /* ---
-NOVOS ESTILOS PARA A PÁGINA GUIA
+ESTILOS ESPECÍFICOS: PÁGINA GUIA
 --- */
 
 /* Widgets de Resumo */
@@ -169,7 +173,7 @@ NOVOS ESTILOS PARA A PÁGINA GUIA
     font-weight: 600;
 }
 
-/* Seção de Progresso (Baseado na Imagem) */
+/* Seção de Progresso */
 .progress-section {
     margin-bottom: 30px;
 }
@@ -217,16 +221,13 @@ NOVOS ESTILOS PARA A PÁGINA GUIA
 .progress-bar-fill {
     height: 100%;
     width: 0%;
-    /* Alterado pelo JS */
     border-radius: 5px;
     background-color: #0a84ff;
-    /* Cor padrão azul */
     transition: width 1s ease-out;
 }
 
 .progress-bar-fill.geral {
     background-color: #34c759;
-    /* Cor verde para o geral */
 }
 
 .percentage {
@@ -253,6 +254,8 @@ NOVOS ESTILOS PARA A PÁGINA GUIA
     font-weight: 600;
     margin-bottom: 15px;
     color: #8a8a8e;
+    display: flex;
+    align-items: center;
 }
 
 .performance-card h3 i {
@@ -269,6 +272,7 @@ NOVOS ESTILOS PARA A PÁGINA GUIA
 
 .performance-card ul {
     list-style: none;
+    padding: 0;
 }
 
 .performance-card li {
@@ -285,18 +289,22 @@ NOVOS ESTILOS PARA A PÁGINA GUIA
 
 .performance-card li span {
     color: #8a8a8e;
+    font-weight: 500;
 }
 
 /* Widgets da Coluna Direita */
 .sugestoes-widget ul,
 .atividade-recente-widget ul {
     list-style: none;
+    padding: 0;
 }
 
 .sugestoes-widget li,
 .atividade-recente-widget li {
     padding: 12px 5px;
     border-bottom: 1px solid #3a3a3c;
+    display: flex;
+    align-items: center;
 }
 
 .sugestoes-widget li:last-child,
@@ -307,19 +315,45 @@ NOVOS ESTILOS PARA A PÁGINA GUIA
 .sugestoes-widget i {
     color: #0a84ff;
     margin-right: 12px;
+    width: 20px;
+    text-align: center;
 }
 
 .atividade-recente-widget i {
     color: #8a8a8e;
     margin-right: 12px;
+    width: 20px;
+    text-align: center;
+}
+
+/* Regra para espaçar seções na coluna da direita (substitui o estilo inline) */
+.sugestoes-widget+.section-header {
+    margin-top: 30px;
 }
 
 
-/* --- RESPONSIVIDADE (Padrão) --- */
+/* ---
+RESPONSIVIDADE
+--- */
 @media (max-width: 1200px) {
     .dashboard-container {
         grid-template-columns: 90px 1fr;
         grid-template-areas: "sidebar main" "sidebar right";
+    }
+
+    .sidebar {
+        grid-area: sidebar;
+    }
+
+    .main-content {
+        grid-area: main;
+    }
+
+    .right-column {
+        grid-area: right;
+        height: auto;
+        overflow-y: visible;
+        margin-top: 0;
     }
 
     .sidebar-nav li a {
@@ -334,21 +368,6 @@ NOVOS ESTILOS PARA A PÁGINA GUIA
 
     .sidebar-logo img {
         width: 40px;
-    }
-
-    .right-column {
-        grid-area: right;
-        height: auto;
-        overflow-y: visible;
-        margin-top: 0;
-    }
-
-    .sidebar {
-        grid-area: sidebar;
-    }
-
-    .main-content {
-        grid-area: main;
     }
 }
 
@@ -375,7 +394,6 @@ NOVOS ESTILOS PARA A PÁGINA GUIA
         width: 100%;
         height: 70px;
         padding: 5px 0;
-        border-radius: 0;
         z-index: 1000;
         background-color: rgba(28, 28, 30, 0.7);
         backdrop-filter: blur(15px);

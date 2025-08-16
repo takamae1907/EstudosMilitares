@@ -3,8 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Caderno</title>
+    <title>Caderno - Meus Estudos</title>
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <link rel="stylesheet" href="TelaPrincipal.css">
+    
+    <link rel="stylesheet" href="caderno_editor.css">
+
+    <link rel="icon" type="image/png" href="fotos/logo.png">
     
     <script src="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/@editorjs/header@latest"></script>
@@ -13,100 +20,15 @@
     <script src="https://cdn.jsdelivr.net/npm/@editorjs/marker@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/@editorjs/undo@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/@editorjs/inline-code@latest"></script>
-
 </head>
 <body>
 
 <div class="notebook-container">
-    <aside class="sidebar">
-        <div class="sidebar-logo">
-            <a href="#"><img src="fotos/logo.png" alt="Logo Meus Estudos"></a>
-        </div>
-         <nav class="sidebar-nav">
-                <ul>
-                    <li>
-                        <a href="TelaPrincipal.html">
-                            <i class="fa-solid fa-house"></i>
-                            <span>Home</span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="edital-pmdf.html">
-                            <i class="fa-solid fa-book"></i>
-                            <span>Conteúdo</span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="calendario.html">
-                            <i class="fa-solid fa-calendar-days"></i>
-                            <span>Calendario</span>
-                        </a>
-                    </li>
-
-                    <li class="active">
-                        <a href="cronometro.html">
-                            <i class="fa-solid fa-stopwatch"></i>
-                            <span>Cronômetro</span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="painel_tatico.html">
-                            <i class="fa-solid fa-chart-pie"></i>
-                            <span>Painel Tático</span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="questões.html">
-                            <i class="fa-solid fa-list-check"></i>
-                            <span>Questões</span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="caderno.html">
-                            <i class="fa-solid fa-swatchbook"></i>
-                            <span>Cadernos</span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="flashcards.html">
-                            <i class="fa-solid fa-layer-group"></i>
-                            <span>Flashcards</span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="guia.html">
-                            <i class="fa-solid fa-map-location-dot"></i>
-                            <span>Guia</span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="edital.html">
-                            <i class="fa-solid fa-book-open"></i>
-                            <span>Edital</span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="musica.html">
-                            <i class="fa-solid fa-music"></i>
-                            <span>Música</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-    </aside>
+    <div id="sidebar-container"></div>
 
     <aside class="outline-sidebar">
         <div class="outline-header">
-            <a href="caderno.html"><i class="fa-solid fa-chevron-left"></i> Voltar para Cadernos</a>
+            <a href="cadernos.html"><i class="fa-solid fa-chevron-left"></i> Voltar para Cadernos</a>
         </div>
         <div class="notebook-title-in-sidebar">
             <i class="fa-solid fa-book-bookmark icon"></i>
@@ -140,196 +62,9 @@
     </main>
 </div>
 
-<style>
-    /* Estilos Gerais e das Sidebars (mantidos da versão anterior) */
-    body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #151515; color: #f5f5f7; overflow: hidden; }
-    .notebook-container { display: grid; grid-template-columns: 240px 280px 1fr; height: 100vh; }
-    .sidebar { background-color: #1c1c1e; border-right: 1px solid #3a3a3c; display: flex; flex-direction: column; }
-    .sidebar-logo { padding: 20px; text-align: center; }
-    .sidebar-logo img { max-width: 50px; }
-    .sidebar-nav ul { list-style: none; padding: 0; margin: 0; }
-    .sidebar-nav li a { display: flex; align-items: center; gap: 15px; padding: 12px 20px; text-decoration: none; color: #8a8a8e; transition: all 0.2s; border-radius: 8px; margin: 5px 10px; }
-    .sidebar-nav li a:hover { color: white; background-color: #3a3a3c; }
-    .sidebar-nav li.active a { color: white; background-color: #0a84ff; }
-    .sidebar-nav li a i { font-size: 1.2em; width: 20px; }
-    .outline-sidebar { background-color: #181818; border-right: 1px solid #3a3a3c; padding: 20px; display: flex; flex-direction: column; overflow-y: auto; }
-    .outline-header a { color: #8a8a8e; text-decoration: none; font-size: 0.9em; display: inline-block; margin-bottom: 20px; transition: color 0.2s; }
-    .outline-header a:hover { color: white; }
-    .notebook-title-in-sidebar { display: flex; align-items: center; gap: 12px; padding-bottom: 15px; border-bottom: 1px solid #3a3a3c; margin-bottom: 15px; }
-    .notebook-title-in-sidebar .icon { font-size: 1.5em; }
-    .notebook-title-in-sidebar h3 { margin: 0; }
-    .toc-nav h4 { font-size: 0.8em; text-transform: uppercase; color: #8a8a8e; margin-bottom: 10px; }
-    #toc-list { list-style: none; padding: 0; }
-    #toc-list li a { display: block; padding: 8px 10px; text-decoration: none; color: #b0b0b0; border-radius: 5px; transition: all 0.2s; font-size: 0.9em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    #toc-list li a:hover { background-color: #3a3a3c; color: white; }
-    #toc-list .toc-level-3 { padding-left: 25px; }
-    #toc-list .toc-level-4 { padding-left: 40px; }
+<script src="app.js"></script>
 
-    /* ============================================== */
-    /* ===== NOVOS ESTILOS PARA A ÁREA DE EDIÇÃO ===== */
-    /* ============================================== */
-    .editor-main-content {
-        display: flex;
-        flex-direction: column;
-        overflow: hidden; /* Para a barra de ferramentas ficar fixa */
-    }
-
-    #editor-toolbar {
-        background-color: #2c2c2e;
-        padding: 8px 15px;
-        border-bottom: 1px solid #3a3a3c;
-        flex-shrink: 0; /* Impede que a barra encolha */
-        display: flex;
-        align-items: center;
-        gap: 5px;
-    }
-
-    #editor-toolbar button {
-        background: transparent;
-        border: none;
-        color: #f5f5f7;
-        font-size: 1.1em;
-        width: 32px;
-        height: 32px;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: background-color 0.2s;
-    }
-    #editor-toolbar button:hover {
-        background-color: #3a3a3c;
-    }
-    #editor-toolbar button#h2-btn, #editor-toolbar button#h3-btn {
-        font-weight: bold;
-        font-size: 1em;
-    }
-
-    .toolbar-separator {
-        width: 1px;
-        height: 20px;
-        background-color: #444;
-        margin: 0 8px;
-    }
-
-    .editor-container {
-        padding: 40px;
-        overflow-y: auto; /* Permite a rolagem apenas na área do texto */
-        flex-grow: 1;
-    }
-
-    /* Estilos do Editor.js */
-    #editorjs { max-width: 800px; margin: 0 auto; }
-    .ce-block__content, .ce-toolbar__content { max-width: none; }
-    .ce-header { padding: 0; margin-bottom: 0.5em; }
-    h1.ce-header { font-size: 2.5em; font-weight: 700; }
-    h2.ce-header { font-size: 1.8em; font-weight: 600; border-bottom: 1px solid #3a3a3c; padding-bottom: 0.3em; margin-top: 1.5em; }
-    h3.ce-header { font-size: 1.4em; font-weight: 600; margin-top: 1.2em; }
-    .ce-paragraph { font-size: 1em; line-height: 1.6; }
-    /* Estilo para o marca-texto */
-    .cdx-marker {
-        background-color: rgba(245, 237, 109, 0.4);
-        padding: 2px 0;
-    }
-</style>
-
-<script>
-document.addEventListener('DOMContentLoaded', async () => {
-    // Lógica para carregar o caderno (sem alterações)
-    const urlParams = new URLSearchParams(window.location.search);
-    const notebookId = urlParams.get('id');
-    if (!notebookId) { window.location.href = 'caderno.html'; return; }
-    const allNotebooks = JSON.parse(localStorage.getItem('notebooks')) || [];
-    const currentNotebook = allNotebooks.find(n => n.id == notebookId);
-    if (!currentNotebook) { window.location.href = 'caderno.html'; return; }
-    document.title = `Caderno: ${currentNotebook.name}`;
-    document.getElementById('notebook-title-sidebar').textContent = currentNotebook.name;
-    const storageKey = `notebook_content_${notebookId}`;
-    const savedData = JSON.parse(localStorage.getItem(storageKey)) || { blocks: [] };
-
-    // ==============================================
-    // ===== CONFIGURAÇÃO DO EDITOR COM NOVAS FERRAMENTAS =====
-    // ==============================================
-    let undo; // Variavel para a instancia do Undo
-    const editor = new EditorJS({
-        holder: 'editorjs',
-        tools: {
-            header: Header,
-            list: List,
-            checklist: Checklist,
-            marker: Marker, // Ferramenta de marca-texto
-            inlineCode: InlineCode // Permite negrito/itálico funcionar melhor
-        },
-        data: savedData,
-        
-        onReady: () => {
-            // Inicializa o plugin de Undo quando o editor estiver pronto
-            undo = new Undo({ editor });
-            undo.initialize(savedData);
-            setupToolbar(editor, undo); // Configura os botões da nossa nova barra
-        },
-
-        onChange: (api, event) => {
-            updateTableOfContents();
-            autoSave(api);
-        }
-    });
-
-    // ==============================================
-    // ===== LÓGICA DA NOVA BARRA DE FERRAMENTAS =====
-    // ==============================================
-    function setupToolbar(editor, undoInstance) {
-        document.getElementById('undo-btn').addEventListener('click', () => undoInstance.undo());
-        document.getElementById('redo-btn').addEventListener('click', () => undoInstance.redo());
-
-        // Botões de Bloco
-        document.getElementById('h2-btn').addEventListener('click', () => editor.blocks.insert('header', { level: 2 }));
-        document.getElementById('h3-btn').addEventListener('click', () => editor.blocks.insert('header', { level: 3 }));
-        document.getElementById('list-ul-btn').addEventListener('click', () => editor.blocks.insert('list', { style: 'unordered' }));
-        document.getElementById('checklist-btn').addEventListener('click', () => editor.blocks.insert('checklist'));
-
-        // Botões de Formatação em Linha (Negrito, Itálico, etc.)
-        // Eles funcionam aplicando o comando na seleção de texto atual
-        const applyInlineFormat = (format) => {
-            editor.inlineToolbar.close(); // Fecha a barra flutuante se estiver aberta
-            editor.toolbar.toggleInlineTool(format);
-        };
-        
-        document.getElementById('bold-btn').addEventListener('click', () => applyInlineFormat('bold'));
-        document.getElementById('italic-btn').addEventListener('click', () => applyInlineFormat('italic'));
-        document.getElementById('marker-btn').addEventListener('click', () => applyInlineFormat('marker'));
-    }
-
-    // Lógica de salvamento e índice (sem alterações)
-    let debounceTimer;
-    const autoSave = (api) => {
-        clearTimeout(debounceTimer);
-        debounceTimer = setTimeout(async () => {
-            const outputData = await api.saver.save();
-            localStorage.setItem(storageKey, JSON.stringify(outputData));
-        }, 1500);
-    };
-    const tocList = document.getElementById('toc-list');
-    const updateTableOfContents = async () => {
-        const data = await editor.save();
-        tocList.innerHTML = '';
-        data.blocks.forEach(block => {
-            if (block.type === 'header') {
-                const headerElement = document.querySelector(`[data-id="${block.id}"] .ce-header`);
-                if(headerElement) headerElement.id = block.id;
-                const li = document.createElement('li');
-                const a = document.createElement('a');
-                a.textContent = block.data.text;
-                a.href = `#${block.id}`;
-                a.classList.add(`toc-level-${block.data.level}`);
-                a.addEventListener('click', (e) => { e.preventDefault(); document.getElementById(block.id)?.scrollIntoView({ behavior: 'smooth' }); });
-                li.appendChild(a);
-                tocList.appendChild(li);
-            }
-        });
-    };
-    await editor.isReady;
-    updateTableOfContents();
-});
-</script>
+<script src="caderno_editor.js"></script>
 
 </body>
 </html>

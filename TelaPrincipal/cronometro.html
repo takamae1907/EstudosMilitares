@@ -1,651 +1,112 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cronômetro - Meus Estudos (Funcional)</title>
+    <title>Cronômetro de Estudos</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
-
+    <link rel="stylesheet" href="cronometro.css">
     <link rel="icon" type="image/png" href="fotos/logo.png">
 
-    <style>
-        /* --- ESTILOS GLOBAIS --- */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html, body {
-            height: 100vh;
-            overflow: hidden;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #000000;
-            color: #f5f5f7;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-
-        .dashboard-container {
-            display: grid;
-            grid-template-columns: 240px 1fr;
-            height: 100vh;
-            padding: 20px;
-            gap: 24px;
-        }
-
-        .main-content {
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
-        
-        .main-header {
-            background-color: #1c1c1e;
-            border-radius: 12px;
-            padding: 18px 25px;
-            margin-bottom: 24px;
-            flex-shrink: 0;
-        }
-
-        .main-header h2 {
-            font-size: 1.1em;
-            font-weight: 600;
-            color: #8a8a8e;
-            letter-spacing: 0.5px;
-        }
-
-        .scrollable-area {
-            flex-grow: 1;
-            overflow-y: auto;
-            padding-right: 15px;
-        }
-
-        .scrollable-area::-webkit-scrollbar { width: 8px; }
-        .scrollable-area::-webkit-scrollbar-track { background: transparent; }
-        .scrollable-area::-webkit-scrollbar-thumb { background: #3a3a3c; border-radius: 4px; }
-
-        /* --- ESTILOS DA SIDEBAR (INTOCADO) --- */
-        .sidebar {
-            display: flex;
-            flex-direction: column;
-            background-color: #1c1c1e;
-            border-radius: 16px;
-        }
-        .sidebar-logo { padding: 15px 25px; margin-bottom: 10px; }
-        .sidebar-logo img { width: 50px; }
-        .sidebar-nav ul { list-style: none; width: 100%; padding: 0 15px; }
-        .sidebar-nav li a {
-            display: flex; flex-direction: row; align-items: center; gap: 20px;
-            color: #8a8a8e; text-decoration: none; padding: 12px 10px;
-            border-radius: 8px; transition: all 0.2s ease-in-out;
-        }
-        .sidebar-nav li a i { font-size: 1.2em; width: 25px; text-align: center; }
-        .sidebar-nav li a span { font-size: 1em; font-weight: 500; }
-        .sidebar-nav li.active a, .sidebar-nav li a:hover { color: #ffffff; background-color: #2c2c2e; }
-
-        /* --- ESTILOS GERAIS DA ÁREA DE ATIVIDADE --- */
-        .hidden { display: none !important; }
-
-        .activity-grid {
-            display: grid;
-            grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); /* Colunas flexíveis */
-            gap: 24px;
-            align-items: start; /* Alinha os itens no topo */
-        }
-        
-        /* --- ESTILOS DO FORMULÁRIO (ESQUERDA) --- */
-        .mode-selector {
-            display: flex; background-color: #2c2c2e;
-            border-radius: 10px; padding: 5px; margin-bottom: 24px;
-        }
-        .mode-selector button {
-            flex: 1; padding: 10px; border: none; background-color: transparent;
-            color: #8a8a8e; font-size: 1em; font-weight: 600;
-            border-radius: 8px; cursor: pointer; transition: all 0.3s ease;
-        }
-        .mode-selector button.active { background-color: #0a84ff; color: #ffffff; }
-
-        .form-card { background-color: #1c1c1e; border-radius: 16px; padding: 30px; }
-        
-        .form-section { margin-bottom: 20px; }
-        .form-section label { display: block; color: #f5f5f7; margin-bottom: 8px; font-weight: 500; }
-        .form-section input, .form-section select, .form-section textarea {
-            width: 100%; background-color: #2c2c2e; border: 1px solid #3a3a3c;
-            color: #f5f5f7; padding: 12px 15px; border-radius: 8px;
-            font-size: 1em; font-family: inherit;
-        }
-        .form-section input:focus, .form-section select:focus, .form-section textarea:focus {
-            outline: none; border-color: #0a84ff;
-            box-shadow: 0 0 0 3px rgba(10, 132, 255, 0.3);
-        }
-        .form-row { display: flex; gap: 15px; }
-        .form-divider { border: none; border-top: 1px solid #3a3a3c; margin: 30px 0; }
-
-        .timer-display { text-align: center; padding: 20px 0; }
-        #timer { font-size: 4em; font-weight: 600; font-family: 'SF Mono', 'Menlo', 'Monaco', monospace; }
-        .timer-controls { display: flex; justify-content: center; gap: 15px; margin-top: 10px; }
-        .timer-controls button {
-            background-color: #2c2c2e; border: none; color: #f5f5f7;
-            padding: 10px 20px; border-radius: 8px; cursor: pointer;
-            font-size: 0.9em; font-weight: 500; transition: background-color 0.2s ease;
-        }
-        .timer-controls button:hover { background-color: #3a3a3c; }
-
-        .save-button {
-            width: 100%; background-color: #34c759; color: #ffffff;
-            border: none; padding: 15px; font-size: 1.1em;
-            font-weight: 600; border-radius: 8px; cursor: pointer;
-            margin-top: 10px; transition: background-color 0.2s ease;
-        }
-        .save-button:hover { background-color: #30b152; }
-        
-        /* --- [CORRIGIDO] ESTILOS DO PAINEL DE DESEMPENHO (DIREITA) --- */
-        .performance-dashboard {
-            display: flex;
-            flex-direction: column;
-            gap: 16px; /* Espaçamento reduzido */
-        }
-
-        .performance-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: #1c1c1e;
-            border-radius: 16px;
-            padding: 10px 15px; /* Padding reduzido */
-        }
-
-        .filter-btn-group button {
-            background: none; border: none; color: #8a8a8e; padding: 8px 12px;
-            font-size: 0.9em; font-weight: 500; border-radius: 8px;
-            cursor: pointer; transition: all 0.2s ease-in-out;
-        }
-        .filter-btn-group button:hover { background-color: #3a3a3c; color: #ffffff; }
-        .filter-btn-group button.active { background-color: #0a84ff; color: #ffffff; }
-
-        #reset-questions-btn {
-            background-color: #3a3a3c; color: #ff453a; border: none;
-            border-radius: 8px; padding: 8px 12px; font-size: 0.9em;
-            font-weight: 500; cursor: pointer; transition: background-color 0.2s ease;
-        }
-        #reset-questions-btn:hover { background-color: #ff453a; color: #ffffff; }
-        
-        .charts-container-new {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-        
-        .chart-card { 
-            background-color: #1c1c1e; border-radius: 16px; 
-            padding: 20px; display: flex; flex-direction: column;
-        }
-        .chart-card h3 { 
-            color: #f5f5f7; margin-bottom: 15px; 
-            font-weight: 600; text-align: center; font-size: 1em;
-        }
-        /* A altura do wrapper agora é flexível e não fixa */
-        .chart-wrapper { 
-            position: relative; 
-            width: 100%;
-            /* A altura será determinada pelo aspect-ratio do gráfico */
-        }
-        
-        /* --- MEDIA QUERIES --- */
-        @media (max-width: 1200px) {
-            .dashboard-container { grid-template-columns: 90px 1fr; }
-            .sidebar-nav li a span { display: none; }
-            .sidebar-logo img { width: 40px; }
-        }
-        @media (max-width: 1024px) {
-            .activity-grid { grid-template-columns: 1fr; }
-        }
-    </style>
+    <!-- Chart.js para o gráfico -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
+
 <body>
 
     <div class="dashboard-container">
+        <!-- === SIDEBAR PADRÃO INSERIDA AQUI === -->
         <aside class="sidebar">
-             <div class="sidebar-logo">
-                <a href="TelaPrincipal.html"><img src="fotos/logo.png" alt="Logo Meus Estudos"></a>
+            <div class="sidebar-logo">
+                <a href="TelaPrincipal.html"> <img src="fotos/logo.png" alt="Logo Meus Estudos"></a>
             </div>
-             <nav class="sidebar-nav">
+            <nav class="sidebar-nav">
                 <ul>
-                    <li>
-                        <a href="TelaPrincipal.html">
-                            <i class="fa-solid fa-house"></i>
-                            <span>Home</span>
-                        </a>
+                    <li><a href="TelaPrincipal.html"><i class="fa-solid fa-house"></i><span>Home</span></a></li>
+                    <li><a href="edital-pmdf.html"><i class="fa-solid fa-book"></i><span>Conteúdo</span></a></li>
+                    <li><a href="calendario.html"><i class="fa-solid fa-calendar-days"></i><span>Calendário</span></a>
                     </li>
-
-                    <li>
-                        <a href="edital-pmdf.html">
-                            <i class="fa-solid fa-book"></i>
-                            <span>Conteúdo</span>
-                        </a>
+                    <li class="active"><a href="cronometro.html"><i
+                                class="fa-solid fa-stopwatch"></i><span>Cronômetro</span></a></li>
+                    <li><a href="painel_tatico.html"><i class="fa-solid fa-chart-pie"></i><span>Painel Tático</span></a>
                     </li>
-
-                    <li>
-                        <a href="calendario.html">
-                            <i class="fa-solid fa-calendar-days"></i>
-                            <span>Calendario</span>
-                        </a>
+                    <li><a href="questoes.html"><i class="fa-solid fa-list-check"></i><span>Questões</span></a></li>
+                    <li><a href="cadernos.html"><i class="fa-solid fa-swatchbook"></i><span>Cadernos</span></a></li>
+                    <li><a href="flashcards.html"><i class="fa-solid fa-layer-group"></i><span>Flashcards</span></a>
                     </li>
-
-                    <li class="active">
-                        <a href="cronometro.html">
-                            <i class="fa-solid fa-stopwatch"></i>
-                            <span>Cronômetro</span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="painel_tatico.html">
-                            <i class="fa-solid fa-chart-pie"></i>
-                            <span>Painel Tático</span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="questões.html">
-                            <i class="fa-solid fa-list-check"></i>
-                            <span>Questões</span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="caderno.html">
-                            <i class="fa-solid fa-swatchbook"></i>
-                            <span>Cadernos</span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="flashcards.html">
-                            <i class="fa-solid fa-layer-group"></i>
-                            <span>Flashcards</span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="guia.html">
-                            <i class="fa-solid fa-map-location-dot"></i>
-                            <span>Guia</span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="edital.html">
-                            <i class="fa-solid fa-book-open"></i>
-                            <span>Edital</span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="musica.html">
-                            <i class="fa-solid fa-music"></i>
-                            <span>Música</span>
-                        </a>
-                    </li>
+                    <li><a href="guia.html"><i class="fa-solid fa-map-location-dot"></i><span>Guia</span></a></li>
+                    <li><a href="edital.html"><i class="fa-solid fa-book-open"></i><span>Edital</span></a></li>
+                    <li><a href="musica.html"><i class="fa-solid fa-music"></i><span>Música</span></a></li>
                 </ul>
             </nav>
         </aside>
 
         <main class="main-content">
             <header class="main-header">
-                <h2>REGISTRO DE ATIVIDADE</h2>
+                <h2>Cronômetro de Atividades</h2>
             </header>
 
-            <div class="scrollable-area">
-                <div class="activity-grid">
-                    <div class="activity-form-container">
-                         <div class="mode-selector">
-                            <button id="mode-cronometro" class="active">Cronômetro</button>
-                            <button id="mode-manual">Manual</button>
-                        </div>
-                        <form id="activity-form" class="form-card">
-                            <div class="form-section">
-                                <label for="materia-input">Matéria</label>
-                                <input type="text" id="materia-input" placeholder="Ex: Direito Constitucional" required>
-                            </div>
-                            <div class="form-section">
-                                <label for="conteudo-input">Conteúdo</label>
-                                <input type="text" id="conteudo-input" placeholder="Ex: Art. 5º da CF">
-                            </div>
-                            <div id="cronometro-view">
-                                <div class="timer-display"><span id="timer">00:00:00</span></div>
-                                <div class="timer-controls">
-                                    <button type="button" id="start-btn"><i class="fa-solid fa-play"></i> Iniciar</button>
-                                    <button type="button" id="pause-btn"><i class="fa-solid fa-pause"></i> Pausar</button>
-                                    <button type="button" id="reset-btn"><i class="fa-solid fa-rotate-left"></i> Zerar</button>
-                                </div>
-                            </div>
-                            <div id="manual-view" class="hidden">
-                                <div class="form-row">
-                                    <div class="form-section">
-                                        <label for="start-date">Data da Atividade</label>
-                                        <input type="date" id="start-date">
-                                    </div>
-                                    <div class="form-section">
-                                        <label for="start-time">Horário</label>
-                                        <input type="time" id="start-time">
-                                    </div>
-                                </div>
-                                <div class="form-section">
-                                    <label for="duration-input">Duração (h:m:s)</label>
-                                    <input type="text" id="duration-input" placeholder="Ex: 01:30:00">
-                                </div>
-                            </div>
-                            <hr class="form-divider">
-                            <div class="form-section">
-                                <label>Registro de exercícios</label>
-                                <div class="form-row">
-                                    <input type="number" id="questoes-qnt" placeholder="Quantidade" min="0">
-                                    <input type="number" id="questoes-acertos" placeholder="Acertos" min="0">
-                                </div>
-                            </div>
-                            <div class="form-section">
-                                <label for="study-type">Tipo de estudo</label>
-                                <select id="study-type">
-                                    <option value="nao-definido">Não definido</option>
-                                    <option value="teoria">Teoria</option>
-                                    <option value="exercicios">Exercícios</option>
-                                    <option value="revisao">Revisão</option>
-                                    <option value="simulado">Simulado</option>
-                                </select>
-                            </div>
-                            <div class="form-section">
-                                <label for="anotacoes">Anotações</label>
-                                <textarea id="anotacoes" rows="4"></textarea>
-                            </div>
-                            <button type="submit" class="save-button">Salvar Atividade</button>
-                        </form>
-                    </div>
+            <div class="mode-selector">
+                <button id="mode-cronometro" class="active">Cronômetro</button>
+                <button id="mode-manual">Registro Manual</button>
+            </div>
 
-                    <div class="performance-dashboard">
-                        <header class="performance-header">
-                            <div class="filter-btn-group" id="filter-group">
-                                <button class="filter-btn active" data-period="sempre">Sempre</button>
-                                <button class="filter-btn" data-period="30dias">30 dias</button>
-                                <button class="filter-btn" data-period="7dias">7 dias</button>
-                                <button class="filter-btn" data-period="hoje">Hoje</button>
+            <div class="activity-grid">
+                <div class="form-card">
+                    <!-- Formulário do Cronômetro -->
+                    <form id="timer-form">
+                        <div class="form-section">
+                            <label for="activity-name-timer">Atividade ou Matéria</label>
+                            <input type="text" id="activity-name-timer" placeholder="Ex: Revisão de Direito Penal"
+                                required>
+                        </div>
+                        <hr class="form-divider">
+                        <div class="timer-display">
+                            <div id="timer">00:00:00</div>
+                        </div>
+                        <div class="timer-controls">
+                            <button type="button" id="start-btn">Iniciar</button>
+                            <button type="button" id="pause-btn">Pausar</button>
+                            <button type="button" id="reset-btn">Zerar</button>
+                        </div>
+                    </form>
+
+                    <!-- Formulário de Registro Manual -->
+                    <form id="manual-form" class="hidden">
+                        <div class="form-section">
+                            <label for="activity-name-manual">Atividade ou Matéria</label>
+                            <input type="text" id="activity-name-manual" placeholder="Ex: Resolução de Questões"
+                                required>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-section">
+                                <label for="activity-date">Data</label>
+                                <input type="date" id="activity-date" required>
                             </div>
-                            <button id="reset-questions-btn">Zerar</button>
-                        </header>
-                        <div class="charts-container-new">
-                            <div class="chart-card">
-                                <h3>Percentual de rendimento</h3>
-                                <div class="chart-wrapper">
-                                    <canvas id="performance-chart"></canvas>
-                                </div>
-                            </div>
-                            <div class="chart-card">
-                                <h3>Histórico de resoluções</h3>
-                                <div class="chart-wrapper">
-                                    <canvas id="history-chart"></canvas>
-                                </div>
+                            <div class="form-section">
+                                <label for="activity-duration">Duração (minutos)</label>
+                                <input type="number" id="activity-duration" placeholder="Ex: 45" min="1" required>
                             </div>
                         </div>
-                    </div>
+                    </form>
 
+                    <button id="save-btn" class="save-button" type="button">Salvar Atividade</button>
+                </div>
+
+                <div class="chart-card">
+                    <h3>Atividades da Semana</h3>
+                    <div class="chart-wrapper">
+                        <canvas id="activity-chart"></canvas>
+                    </div>
                 </div>
             </div>
         </main>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // --- VARIÁVEIS DO FORMULÁRIO E CRONÔMETRO ---
-            const modeCronometroBtn = document.getElementById('mode-cronometro');
-            const modeManualBtn = document.getElementById('mode-manual');
-            const cronometroView = document.getElementById('cronometro-view');
-            const manualView = document.getElementById('manual-view');
-            const form = document.getElementById('activity-form');
-            const timerDisplay = document.getElementById('timer');
-            const startBtn = document.getElementById('start-btn');
-            const pauseBtn = document.getElementById('pause-btn');
-            const resetBtn = document.getElementById('reset-btn');
-
-            let seconds = 0;
-            let timerInterval = null;
-            let currentMode = 'cronometro';
-
-            // --- LÓGICA DO FORMULÁRIO E CRONÔMETRO ---
-            modeCronometroBtn.addEventListener('click', () => setMode('cronometro'));
-            modeManualBtn.addEventListener('click', () => setMode('manual'));
-
-            function setMode(mode) {
-                currentMode = mode;
-                if (mode === 'cronometro') {
-                    modeCronometroBtn.classList.add('active');
-                    modeManualBtn.classList.remove('active');
-                    cronometroView.classList.remove('hidden');
-                    manualView.classList.add('hidden');
-                } else {
-                    modeManualBtn.classList.add('active');
-                    modeCronometroBtn.classList.remove('active');
-                    manualView.classList.remove('hidden');
-                    cronometroView.classList.add('hidden');
-                }
-            }
-
-            startBtn.addEventListener('click', () => {
-                if (timerInterval) return;
-                timerInterval = setInterval(() => {
-                    seconds++;
-                    updateTimerDisplay();
-                }, 1000);
-            });
-
-            pauseBtn.addEventListener('click', () => {
-                clearInterval(timerInterval);
-                timerInterval = null;
-            });
-
-            resetBtn.addEventListener('click', resetTimer);
-            
-            function updateTimerDisplay() {
-                const hours = Math.floor(seconds / 3600);
-                const minutes = Math.floor((seconds % 3600) / 60);
-                const secs = seconds % 60;
-                timerDisplay.textContent = 
-                    `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
-            }
-
-            function resetTimer() {
-                clearInterval(timerInterval);
-                timerInterval = null;
-                seconds = 0;
-                updateTimerDisplay();
-            }
-
-            // --- LÓGICA DO PAINEL DE DESEMPENHO (A "CONVERSA") ---
-
-            // 1. "Memória" das questões: Pega dados salvos no navegador ou cria um array de exemplo.
-            let resolutionHistory = JSON.parse(localStorage.getItem('resolutionHistory')) || [
-                { date: '2025-07-15', questions: 96, correct: 80 },
-                { date: '2025-07-20', questions: 72, correct: 65 },
-                { date: '2025-08-01', questions: 50, correct: 45 },
-                { date: '2025-08-05', questions: 51, correct: 40 },
-                { date: '2025-08-10', questions: 18, correct: 15 },
-                { date: new Date().toISOString().slice(0, 10), questions: 25, correct: 22 }
-            ];
-
-            function saveData() {
-                localStorage.setItem('resolutionHistory', JSON.stringify(resolutionHistory));
-            }
-
-            // 2. Variáveis dos gráficos e elementos do painel
-            const filterGroup = document.getElementById('filter-group');
-            const resetQuestionsBtn = document.getElementById('reset-questions-btn');
-            let performanceChart, historyChart;
-
-            // 3. Função para inicializar ou atualizar os gráficos
-            function updateCharts(period = 'sempre') {
-                const now = new Date();
-                let filteredHistory = resolutionHistory.filter(item => {
-                    // Ajuste para garantir que a data do item seja tratada como UTC para evitar erros de fuso
-                    const itemDate = new Date(item.date + 'T00:00:00');
-                    if (period === 'sempre') return true;
-                    
-                    const diffTime = now - itemDate;
-                    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
-                    if (period === 'hoje') return now.toISOString().slice(0, 10) === item.date;
-                    if (period === '7dias') return diffDays <= 7;
-                    if (period === '30dias') return diffDays <= 30;
-                    return false;
-                });
-
-                // Atualizar Gráfico de Rendimento (Rosca)
-                const totalCorrect = filteredHistory.reduce((sum, item) => sum + item.correct, 0);
-                const totalQuestions = filteredHistory.reduce((sum, item) => sum + item.questions, 0);
-                const totalErrors = totalQuestions - totalCorrect;
-
-                const performanceData = {
-                    labels: ['Acertos', 'Erros'],
-                    datasets: [{
-                        data: [totalCorrect, totalErrors > 0 ? totalErrors : 0],
-                        backgroundColor: ['#34c759', '#ff453a'],
-                        borderColor: '#1c1c1e',
-                        borderWidth: 3,
-                    }]
-                };
-                if (!performanceChart) {
-                    const ctx = document.getElementById('performance-chart').getContext('2d');
-                    performanceChart = new Chart(ctx, {
-                        type: 'doughnut',
-                        data: performanceData,
-                        options: {
-                            responsive: true,
-                            maintainAspectRatio: true, /* Deixa o gráfico manter a proporção */
-                            aspectRatio: 2, /* Ajusta a proporção, 2 significa 2x mais largo que alto */
-                            plugins: { legend: { position: 'bottom', labels: { color: '#f5f5f7', padding: 15 }}}
-                        }
-                    });
-                } else {
-                    performanceChart.data = performanceData;
-                    performanceChart.update();
-                }
-
-                // Atualizar Gráfico de Histórico (Linha)
-                const historyByMonth = {};
-                filteredHistory.forEach(item => {
-                    const month = item.date.slice(0, 7); // YYYY-MM
-                    if (!historyByMonth[month]) {
-                        historyByMonth[month] = { questions: 0, correct: 0 };
-                    }
-                    historyByMonth[month].questions += item.questions;
-                    historyByMonth[month].correct += item.correct;
-                });
-
-                const sortedMonths = Object.keys(historyByMonth).sort();
-                const historyLabels = sortedMonths.map(month => {
-                    const [year, m] = month.split('-');
-                    return `${m}/${year.slice(2)}`;
-                });
-                const historyDataPoints = sortedMonths.map(month => {
-                    const { questions, correct } = historyByMonth[month];
-                    return questions > 0 ? (correct / questions) * 100 : 0;
-                });
-                const historyData = {
-                    labels: historyLabels,
-                    datasets: [{
-                        label: 'Rendimento (%)', data: historyDataPoints, fill: true,
-                        backgroundColor: 'rgba(255, 159, 10, 0.2)', borderColor: 'rgba(255, 159, 10, 1)',
-                        tension: 0.1
-                    }]
-                };
-
-                if (!historyChart) {
-                    const ctx = document.getElementById('history-chart').getContext('2d');
-                    historyChart = new Chart(ctx, {
-                        type: 'line', data: historyData,
-                        options: {
-                            responsive: true, maintainAspectRatio: true, aspectRatio: 2,
-                            scales: {
-                                x: { ticks: { color: '#8a8a8e' }, grid: { color: '#3a3a3c' }},
-                                y: { beginAtZero: true, max: 100, ticks: { color: '#8a8a8e', callback: (value) => value + '%' }, grid: { color: '#3a3a3c' }}
-                            },
-                            plugins: { legend: { display: false }}
-                        }
-                    });
-                } else {
-                    historyChart.data = historyData;
-                    historyChart.update();
-                }
-            }
-            
-            // 4. Lógica dos Botões de Filtro e Reset
-            filterGroup.addEventListener('click', (e) => {
-                if (e.target.tagName === 'BUTTON') {
-                    filterGroup.querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
-                    e.target.classList.add('active');
-                    updateCharts(e.target.dataset.period);
-                }
-            });
-
-            resetQuestionsBtn.addEventListener('click', () => {
-                if (confirm('Tem certeza que deseja zerar TODO o histórico de questões? Esta ação não pode ser desfeita.')) {
-                    resolutionHistory = []; 
-                    saveData(); // Limpa os dados salvos
-                    updateCharts(); 
-                    alert('Histórico de questões zerado.');
-                }
-            });
-            
-            // --- PONTO PRINCIPAL DA "CONVERSA" ---
-            form.addEventListener('submit', (event) => {
-                event.preventDefault();
-                
-                const quantidade = parseInt(document.getElementById('questoes-qnt').value, 10);
-                const acertos = parseInt(document.getElementById('questoes-acertos').value, 10);
-
-                // PASSO 1: Verifica se o usuário registrou exercícios na atividade.
-                if (!isNaN(quantidade) && !isNaN(acertos) && quantidade > 0) {
-                    let activityDate;
-                    if (currentMode === 'manual' && document.getElementById('start-date').value) {
-                       activityDate = document.getElementById('start-date').value;
-                    } else {
-                       activityDate = new Date().toISOString().slice(0, 10);
-                    }
-                    
-                    // PASSO 2: Adiciona os novos dados à "memória" (o array).
-                    resolutionHistory.push({
-                        date: activityDate,
-                        questions: quantidade,
-                        correct: acertos
-                    });
-                    
-                    console.log("Novo registro de questão adicionado:", resolutionHistory[resolutionHistory.length -1]);
-                    
-                    // PASSO 3: Salva a memória atualizada no navegador.
-                    saveData();
-
-                    // PASSO 4: Manda os gráficos se atualizarem com os novos dados.
-                    updateCharts(filterGroup.querySelector('.active').dataset.period);
-                }
-
-                // Lógica original para salvar a atividade completa (pode ser enviada para outro lugar no futuro)
-                console.log("Atividade Completa Salva:", {
-                    materia: document.getElementById('materia-input').value,
-                    conteudo: document.getElementById('conteudo-input').value,
-                    exercicios: { quantidade, acertos },
-                });
-                alert("Atividade salva com sucesso!");
-                form.reset();
-                resetTimer();
-                document.getElementById('start-date').valueAsDate = new Date();
-            });
-
-            // --- INICIALIZAÇÃO ---
-            document.getElementById('start-date').valueAsDate = new Date();
-            updateCharts('sempre'); // Carrega os gráficos com os dados existentes ao abrir a página.
-        });
-    </script>
+    <script src="app.js"></script>
+    <script src="cronometro.js"></script>
 </body>
+
 </html>

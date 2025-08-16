@@ -15,94 +15,29 @@
 
 <body>
     <div class="dashboard-container">
+        
         <aside class="sidebar">
             <div class="sidebar-logo">
                 <a href="TelaPrincipal.html"> <img src="fotos/logo.png" alt="Logo Meus Estudos"></a>
             </div>
-             <nav class="sidebar-nav">
+            <nav class="sidebar-nav">
                 <ul>
-                    <li>
-                        <a href="TelaPrincipal.html">
-                            <i class="fa-solid fa-house"></i>
-                            <span>Home</span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="edital-pmdf.html">
-                            <i class="fa-solid fa-book"></i>
-                            <span>Conteúdo</span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="calendario.html">
-                            <i class="fa-solid fa-calendar-days"></i>
-                            <span>Calendario</span>
-                        </a>
-                    </li>
-
-                    <li class="active">
-                        <a href="cronometro.html">
-                            <i class="fa-solid fa-stopwatch"></i>
-                            <span>Cronômetro</span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="painel_tatico.html">
-                            <i class="fa-solid fa-chart-pie"></i>
-                            <span>Painel Tático</span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="questões.html">
-                            <i class="fa-solid fa-list-check"></i>
-                            <span>Questões</span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="caderno.html">
-                            <i class="fa-solid fa-swatchbook"></i>
-                            <span>Cadernos</span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="flashcards.html">
-                            <i class="fa-solid fa-layer-group"></i>
-                            <span>Flashcards</span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="guia.html">
-                            <i class="fa-solid fa-map-location-dot"></i>
-                            <span>Guia</span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="edital.html">
-                            <i class="fa-solid fa-book-open"></i>
-                            <span>Edital</span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="musica.html">
-                            <i class="fa-solid fa-music"></i>
-                            <span>Música</span>
-                        </a>
-                    </li>
+                    <li><a href="TelaPrincipal.html"><i class="fa-solid fa-house"></i><span>Home</span></a></li>
+                    <li><a href="edital-pmdf.html"><i class="fa-solid fa-book"></i><span>Conteúdo</span></a></li>
+                    <li><a href="calendario.html"><i class="fa-solid fa-calendar-days"></i><span>Calendário</span></a></li>
+                    <li><a href="cronometro.html"><i class="fa-solid fa-stopwatch"></i><span>Cronômetro</span></a></li>
+                    <li><a href="painel_tatico.html"><i class="fa-solid fa-chart-pie"></i><span>Painel Tático</span></a></li>
+                    <li><a href="questoes.html"><i class="fa-solid fa-list-check"></i><span>Questões</span></a></li>
+                    <li><a href="caderno.html"><i class="fa-solid fa-swatchbook"></i><span>Cadernos</span></a></li>
+                    <li class="active"><a href="flashcards.html"><i class="fa-solid fa-layer-group"></i><span>Flashcards</span></a></li>
+                    <li><a href="guia.html"><i class="fa-solid fa-map-location-dot"></i><span>Guia</span></a></li>
+                    <li><a href="edital.html"><i class="fa-solid fa-book-open"></i><span>Edital</span></a></li>
+                    <li><a href="musica.html"><i class="fa-solid fa-music"></i><span>Música</span></a></li>
                 </ul>
             </nav>
         </aside>
 
         <main class="main-content">
-
             <div id="deck-selection-view">
                 <header class="main-page-header">
                     <h1>Meus Baralhos</h1>
@@ -149,10 +84,8 @@
         <div class="modal-content">
             <h2>Criar Novo Baralho</h2>
             <form id="add-deck-form">
-                <div class="form-section">
-                    <label for="new-deck-title">Título do Baralho</label>
-                    <input type="text" id="new-deck-title" placeholder="Ex: Direito Constitucional - Art. 5º" required>
-                </div>
+                <label for="new-deck-title">Título do Baralho</label>
+                <input type="text" id="new-deck-title" placeholder="Ex: Direito Constitucional - Art. 5º" required>
                 <div class="modal-buttons">
                     <button type="button" class="cancel-btn">Cancelar</button>
                     <button type="submit" class="save-btn">Criar Baralho</button>
@@ -165,22 +98,19 @@
         <div class="modal-content">
             <h2>Adicionar Novo Flashcard</h2>
             <form id="add-flashcard-form">
-                <div class="form-section">
-                    <label for="new-card-question">Frente (Pergunta)</label>
-                    <textarea id="new-card-question" required></textarea>
-                </div>
-                <div class="form-section">
-                    <label for="new-card-answer">Verso (Resposta)</label>
-                    <textarea id="new-card-answer" required></textarea>
-                </div>
+                <label for="new-card-question">Frente (Pergunta)</label>
+                <textarea id="new-card-question" placeholder="Escreva a pergunta aqui..." required></textarea>
+                <label for="new-card-answer">Verso (Resposta)</label>
+                <textarea id="new-card-answer" placeholder="Escreva a resposta aqui..." required></textarea>
                 <div class="modal-buttons">
                     <button type="button" class="cancel-btn">Cancelar</button>
-                    <button type="submit" class="save-btn">Salvar</button>
+                    <button type="submit" class="save-btn">Salvar Card</button>
                 </div>
             </form>
         </div>
     </div>
 
+    <script src="app.js"></script>
     <script src="flashcards.js"></script>
 </body>
 </html>

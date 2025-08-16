@@ -56,6 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const questionContainer = document.querySelector('.question-container');
     const answerBtn = document.getElementById('answer-btn');
     const nextQuestionBtn = document.getElementById('next-question-btn');
+    const searchInput = document.getElementById('search-materias');
 
     let currentMateria = null;
     let currentQuestionIndex = 0;
@@ -64,27 +65,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- FUNÇÕES PRINCIPAIS ---
 
-    // 1. Renderiza os cards das matérias na tela inicial
-    function renderMaterias() {
+    function renderMaterias(filter = '') {
         materiasGrid.innerHTML = '';
-        materias.forEach((materia, index) => {
+        const filteredMaterias = materias.filter(materia => 
+            materia.nome.toLowerCase().includes(filter.toLowerCase())
+        );
+
+        filteredMaterias.forEach((materia, originalIndex) => {
             const card = document.createElement('div');
             card.className = 'materia-card';
-            card.dataset.index = index;
+            // Usamos o índice do array original para encontrar a matéria correta depois
+            card.dataset.index = materias.indexOf(materia);
             card.innerHTML = `
                 <i class="fa-solid ${materia.icon}"></i>
                 <h3>${materia.nome}</h3>
                 <p>${materia.questoes.length} questões disponíveis</p>
             `;
-            card.addEventListener('click', () => startQuiz(index));
+            card.addEventListener('click', () => startQuiz(materias.indexOf(materia)));
             materiasGrid.appendChild(card);
         });
     }
 
-    // 2. Inicia o "quiz" para uma matéria selecionada
     function startQuiz(materiaIndex) {
         currentMateria = materias[materiaIndex];
-        questionsForCurrentMateria = currentMateria.questoes;
+        questionsForCurrentMateria = [...currentMateria.questoes]; // Cria uma cópia para não alterar a original
         currentQuestionIndex = 0;
 
         materiasView.classList.add('hidden');
@@ -94,7 +98,6 @@ document.addEventListener('DOMContentLoaded', () => {
         displayQuestion();
     }
 
-    // 3. Mostra a questão atual na tela
     function displayQuestion() {
         const questao = questionsForCurrentMateria[currentQuestionIndex];
         questionContainer.innerHTML = `
@@ -102,26 +105,28 @@ document.addEventListener('DOMContentLoaded', () => {
             <ul class="alternativas">
                 ${questao.alternativas.map((alt, i) => `
                     <li data-index="${i}">
-                        <input type="radio" name="alternativa" id="alt-${i}" value="${i}">
                         <label for="alt-${i}">${alt}</label>
+                        <input type="radio" name="alternativa" id="alt-${i}" value="${i}">
                     </li>
                 `).join('')}
             </ul>
         `;
-        answerBtn.classList.remove('hidden', 'disabled');
+        answerBtn.classList.remove('hidden');
         nextQuestionBtn.classList.add('hidden');
         
-        // Adiciona evento de clique para selecionar o radio ao clicar no LI
         document.querySelectorAll('.alternativas li').forEach(li => {
-            li.addEventListener('click', () => {
-                li.querySelector('input[type="radio"]').checked = true;
+            li.addEventListener('click', (e) => {
+                // Impede que o clique seja processado duas vezes
+                if (e.target.tagName === 'INPUT') return; 
+
+                // Desmarca todos os outros e marca o clicado
                 document.querySelectorAll('.alternativas li').forEach(item => item.classList.remove('selected'));
                 li.classList.add('selected');
+                li.querySelector('input[type="radio"]').checked = true;
             });
         });
     }
 
-    // 4. Verifica a resposta do usuário
     function checkAnswer() {
         const selectedRadio = document.querySelector('input[name="alternativa"]:checked');
         if (!selectedRadio) {
@@ -133,19 +138,17 @@ document.addEventListener('DOMContentLoaded', () => {
         const correctAnswerIndex = questionsForCurrentMateria[currentQuestionIndex].respostaCorreta;
         const alternativasLis = document.querySelectorAll('.alternativas li');
 
-        // Mostra a resposta correta e a incorreta (se houver)
-        alternativasLis.forEach((li, index) => {
+        alternativasLis.forEach((li) => {
+            li.style.pointerEvents = 'none'; // Desabilita cliques
+            li.classList.remove('selected');
+            const index = parseInt(li.dataset.index);
             if (index === correctAnswerIndex) {
                 li.classList.add('correct');
-            }
-            if (index === selectedIndex && selectedIndex !== correctAnswerIndex) {
+            } else if (index === selectedIndex) {
                 li.classList.add('incorrect');
             }
-            // Desabilita cliques futuros
-            li.style.pointerEvents = 'none';
         });
 
-        // Atualiza estatísticas
         stats.resolvidas++;
         if (selectedIndex === correctAnswerIndex) {
             stats.acertos++;
@@ -154,18 +157,16 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         updateStats();
 
-        // Prepara para a próxima questão
         answerBtn.classList.add('hidden');
         if (currentQuestionIndex < questionsForCurrentMateria.length - 1) {
             nextQuestionBtn.classList.remove('hidden');
+            nextQuestionBtn.textContent = 'Próxima';
         } else {
-            // Fim do quiz
             nextQuestionBtn.textContent = 'Finalizar';
             nextQuestionBtn.classList.remove('hidden');
         }
     }
 
-    // 5. Atualiza o widget de estatísticas
     function updateStats() {
         document.getElementById('stat-resolvidas').textContent = stats.resolvidas;
         document.getElementById('stat-acertos').textContent = stats.acertos;
@@ -178,20 +179,24 @@ document.addEventListener('DOMContentLoaded', () => {
     backToMateriasBtn.addEventListener('click', () => {
         questoesView.classList.add('hidden');
         materiasView.classList.remove('hidden');
+        nextQuestionBtn.textContent = 'Próxima';
     });
 
     answerBtn.addEventListener('click', checkAnswer);
 
     nextQuestionBtn.addEventListener('click', () => {
-        if (nextQuestionBtn.textContent === 'Finalizar') {
-            backToMateriasBtn.click(); // Volta para a tela de matérias
-            nextQuestionBtn.textContent = 'Próxima'; // Reseta o botão
-        } else {
+        if (currentQuestionIndex < questionsForCurrentMateria.length - 1) {
             currentQuestionIndex++;
             displayQuestion();
+        } else {
+            backToMateriasBtn.click();
         }
     });
 
-    // Inicialização da página
+    searchInput.addEventListener('input', (e) => {
+        renderMaterias(e.target.value);
+    });
+
+    // Inicialização
     renderMaterias();
 });

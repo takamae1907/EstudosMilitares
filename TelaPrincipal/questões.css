@@ -1,5 +1,5 @@
 /* ---
-BASE DO DESIGN (Copiado de TelaPrincipal.css)
+APPLE DESIGN PHILOSOPHY - RESET & GLOBAIS
 --- */
 * {
     margin: 0;
@@ -15,6 +15,13 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
+.hidden {
+    display: none !important;
+}
+
+/* ---
+LAYOUT PRINCIPAL - GRID E ESPAÇAMENTO
+--- */
 .dashboard-container {
     display: grid;
     grid-template-columns: 240px 1fr 340px;
@@ -23,6 +30,9 @@ body {
     padding: 20px;
 }
 
+/* ---
+BARRA LATERAL (SIDEBAR)
+--- */
 .sidebar {
     padding: 10px 0;
     display: flex;
@@ -73,6 +83,9 @@ body {
     background-color: #2c2c2e;
 }
 
+/* ---
+CONTEÚDO PRINCIPAL
+--- */
 .main-content {
     overflow-y: auto;
 }
@@ -93,7 +106,7 @@ body {
 .main-header {
     background-color: #1c1c1e;
     border-radius: 12px;
-    padding: 12px 25px;
+    padding: 18px 25px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -104,26 +117,32 @@ body {
     font-size: 1.1em;
     font-weight: 600;
     color: #8a8a8e;
+    text-transform: uppercase;
     letter-spacing: 0.5px;
 }
 
-.main-header input {
+.main-header input,
+#search-materias {
     background-color: #2c2c2e;
     border: 1px solid #3a3a3c;
     color: #f5f5f7;
     padding: 10px 15px;
     border-radius: 8px;
     font-size: 1em;
-    width: 250px;
+    width: 280px;
     transition: all 0.2s;
 }
 
-.main-header input:focus {
+.main-header input:focus,
+#search-materias:focus {
     outline: none;
     border-color: #0a84ff;
     box-shadow: 0 0 0 3px rgba(10, 132, 255, 0.3);
 }
 
+/* ---
+COLUNA DA DIREITA
+--- */
 .right-column {
     background-color: #1c1c1e;
     border-radius: 16px;
@@ -136,11 +155,7 @@ body {
 }
 
 .right-column .section-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     margin-bottom: 20px;
-    padding: 0 5px;
 }
 
 .right-column .section-header h2 {
@@ -148,12 +163,8 @@ body {
     font-weight: 600;
 }
 
-.hidden {
-    display: none !important;
-}
-
 /* ---
-NOVOS ESTILOS PARA A PÁGINA DE QUESTÕES
+ESTILOS ESPECÍFICOS: PÁGINA DE QUESTÕES
 --- */
 
 /* Grid de Matérias */
@@ -169,12 +180,12 @@ NOVOS ESTILOS PARA A PÁGINA DE QUESTÕES
     padding: 25px;
     cursor: pointer;
     transition: all 0.2s ease-in-out;
-    border: 1px solid transparent;
 }
 
 .materia-card:hover {
-    transform: translateY(-5px);
-    border-color: #0a84ff;
+    transform: scale(1.03);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    background-color: #2c2c2e;
 }
 
 .materia-card i {
@@ -199,6 +210,7 @@ NOVOS ESTILOS PARA A PÁGINA DE QUESTÕES
     background-color: #1c1c1e;
     border-radius: 16px;
     padding: 25px;
+    animation: fadeIn 0.5s ease-in-out forwards;
 }
 
 .questoes-header {
@@ -220,6 +232,7 @@ NOVOS ESTILOS PARA A PÁGINA DE QUESTÕES
     font-size: 1em;
     cursor: pointer;
     transition: background-color 0.2s;
+    flex-shrink: 0;
 }
 
 #back-to-materias:hover {
@@ -261,25 +274,26 @@ ul.alternativas li:hover {
 
 ul.alternativas li.selected {
     border-color: #0a84ff;
-    background-color: #0a84ff20;
+    background-color: rgba(10, 132, 255, 0.15);
 }
 
 ul.alternativas li.correct {
     border-color: #34c759;
-    background-color: #34c75930;
+    background-color: rgba(52, 199, 89, 0.2);
     color: #34c759;
+    font-weight: 500;
 }
 
 ul.alternativas li.incorrect {
     border-color: #ff3b30;
-    background-color: #ff3b3030;
+    background-color: rgba(255, 59, 48, 0.2);
     color: #ff3b30;
+    font-weight: 500;
 }
 
 ul.alternativas li input[type="radio"] {
-    accent-color: #0a84ff;
-    width: 18px;
-    height: 18px;
+    display: none;
+    /* Escondemos o radio original para um visual mais limpo */
 }
 
 /* Navegação das Questões */
@@ -304,11 +318,6 @@ ul.alternativas li input[type="radio"] {
 
 .question-nav button:hover {
     background-color: #0077e6;
-}
-
-.question-nav button.disabled {
-    background-color: #3a3a3c;
-    cursor: not-allowed;
 }
 
 /* Widget de Estatísticas */
@@ -347,12 +356,48 @@ ul.alternativas li input[type="radio"] {
     color: #0a84ff;
 }
 
+/* ---
+ANIMAÇÃO DE TRANSIÇÃO
+--- */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
 
-/* --- RESPONSIVIDADE (Padrão) --- */
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+#materias-view {
+    animation: fadeIn 0.5s ease-in-out forwards;
+}
+
+/* ---
+RESPONSIVIDADE
+--- */
 @media (max-width: 1200px) {
     .dashboard-container {
         grid-template-columns: 90px 1fr;
-        grid-template-areas: "sidebar main" "sidebar right";
+        grid-template-areas:
+            "sidebar main"
+            "sidebar right";
+    }
+
+    .sidebar {
+        grid-area: sidebar;
+    }
+
+    .main-content {
+        grid-area: main;
+    }
+
+    .right-column {
+        grid-area: right;
+        height: auto;
+        overflow-y: visible;
     }
 
     .sidebar-nav li a {
@@ -367,20 +412,6 @@ ul.alternativas li input[type="radio"] {
 
     .sidebar-logo img {
         width: 40px;
-    }
-
-    .right-column {
-        grid-area: right;
-        height: auto;
-        overflow-y: visible;
-    }
-
-    .sidebar {
-        grid-area: sidebar;
-    }
-
-    .main-content {
-        grid-area: main;
     }
 }
 
@@ -407,7 +438,6 @@ ul.alternativas li input[type="radio"] {
         width: 100%;
         height: 70px;
         padding: 5px 0;
-        border-radius: 0;
         z-index: 1000;
         background-color: rgba(28, 28, 30, 0.7);
         backdrop-filter: blur(15px);
@@ -457,7 +487,18 @@ ul.alternativas li input[type="radio"] {
 
     .main-header {
         flex-direction: column;
-        align-items: flex-start;
+        align-items: stretch;
+        /* Ocupa toda a largura */
         gap: 15px;
+    }
+
+    .main-header input,
+    #search-materias {
+        width: 100%;
+        /* Largura total em mobile */
+    }
+
+    .materias-grid {
+        grid-template-columns: 1fr;
     }
 }

@@ -472,3 +472,23 @@ RESPONSIVIDADE - ADAPTAÇÃO FLUIDA
     .turmas-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
 }
 
+/* ---
+ANIMAÇÃO DE TRANSIÇÃO
+--- */
+
+/* Define a animação de fade-in */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px); /* Começa um pouco para baixo */
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Aplica a animação ao corpo do site ou ao container principal */
+.main-content, .right-column {
+    animation: fadeIn 0.5s ease-in-out forwards;
+}

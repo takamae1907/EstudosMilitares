@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Questões - Meus Estudos</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <link rel="stylesheet" href="questões.css">
+
+    <link rel="icon" type="image/png" href="fotos/logo.png">
+</head>
+
+<body>
+    <div class="dashboard-container">
+        
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <a href="TelaPrincipal.html"> <img src="fotos/logo.png" alt="Logo Meus Estudos"></a>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li>
+                        <a href="TelaPrincipal.html">
+                            <i class="fa-solid fa-house"></i>
+                            <span>Home</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="edital-pmdf.html">
+                            <i class="fa-solid fa-book"></i>
+                            <span>Conteúdo</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="calendario.html">
+                            <i class="fa-solid fa-calendar-days"></i>
+                            <span>Calendário</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="cronometro.html">
+                            <i class="fa-solid fa-stopwatch"></i>
+                            <span>Cronômetro</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="painel_tatico.html">
+                            <i class="fa-solid fa-chart-pie"></i>
+                            <span>Painel Tático</span>
+                        </a>
+                    </li>
+                    <li class="active">
+                        <a href="questoes.html">
+                            <i class="fa-solid fa-list-check"></i>
+                            <span>Questões</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="caderno.html">
+                            <i class="fa-solid fa-swatchbook"></i>
+                            <span>Cadernos</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="flashcards.html">
+                            <i class="fa-solid fa-layer-group"></i>
+                            <span>Flashcards</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="guia.html">
+                            <i class="fa-solid fa-map-location-dot"></i>
+                            <span>Guia</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="edital.html">
+                            <i class="fa-solid fa-book-open"></i>
+                            <span>Edital</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="musica.html">
+                            <i class="fa-solid fa-music"></i>
+                            <span>Música</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="main-header">
+                <h2>BANCO DE QUESTÕES</h2>
+                <input type="text" id="search-materias" placeholder="Pesquisar matéria...">
+            </header>
+
+            <section id="materias-view">
+                <div class="materias-grid">
+                    </div>
+            </section>
+
+            <section id="questoes-view" class="hidden">
+                <div class="questoes-header">
+                     <button id="back-to-materias" title="Voltar"><i class="fa-solid fa-arrow-left"></i></button>
+                    <h2 id="materia-title"></h2>
+                </div>
+                <div class="question-container">
+                    </div>
+                <div class="question-nav">
+                    <button id="answer-btn">Responder</button>
+                    <button id="next-question-btn" class="hidden">Próxima <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+        </main>
+
+        <aside class="right-column">
+            <div class="section-header">
+                <h2>Sessão Atual</h2>
+            </div>
+            <div class="stats-widget">
+                <div class="stat-item">
+                    <span>Questões Resolvidas</span>
+                    <strong id="stat-resolvidas">0</strong>
+                </div>
+                <div class="stat-item">
+                    <span>Acertos</span>
+                    <strong id="stat-acertos" class="acertos">0</strong>
+                </div>
+                <div class="stat-item">
+                    <span>Erros</span>
+                    <strong id="stat-erros" class="erros">0</strong>
+                </div>
+                <div class="stat-item aproveitamento">
+                    <span>Aproveitamento</span>
+                    <strong id="stat-aproveitamento">0%</strong>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <script src="app.js"></script> 
+    <script src="questoes.js"></script>
+</body>
+</html>

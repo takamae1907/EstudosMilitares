@@ -1,24 +1,6 @@
-/*
-========================================
-APPLE-INSPIRED CALENDAR STYLESHEET (V3 - Layout Modificado)
-========================================
-*/
-
-/* --- VARIÁVEIS DE COR E FONTES GLOBAIS --- */
-:root {
-    --bg-color: #151515;
-    --primary-widget-bg: #1c1c1e;
-    --secondary-bg: #2c2c2e;
-    --border-color: #3a3a3c;
-    --text-color: #f5f5f7;
-    --text-muted-color: #8a8a8e;
-    --accent-color: #0a84ff;
-    --danger-color: #ff4581;
-    --success-color: #34c759;
-    --calendar-highlight: #F95D47;
-    --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-}
-
+/* ---
+APPLE DESIGN PHILOSOPHY - RESET & GLOBAIS
+--- */
 * {
     margin: 0;
     padding: 0;
@@ -26,16 +8,18 @@ APPLE-INSPIRED CALENDAR STYLESHEET (V3 - Layout Modificado)
 }
 
 body {
-    font-family: var(--font-family);
-    background-color: var(--bg-color);
-    color: var(--text-color);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: #000000;
+    color: #f5f5f7;
     overflow: hidden;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
 
-/* --- LAYOUT PRINCIPAL DA APLICAÇÃO --- */
-.app-container {
+/* ---
+LAYOUT PRINCIPAL E SIDEBAR
+--- */
+.dashboard-container {
     display: grid;
     grid-template-columns: 240px 1fr;
     height: 100vh;
@@ -43,37 +27,36 @@ body {
     gap: 24px;
 }
 
-/* --- BARRA LATERAL --- */
-.sidebar-nav {
+.sidebar {
+    padding: 10px 0;
     display: flex;
     flex-direction: column;
-    align-items: stretch;
-    padding: 10px 15px;
 }
 
 .sidebar-logo {
-    padding: 15px 10px;
-    margin-bottom: 20px;
-    font-size: 2em;
-    text-align: center;
+    padding: 15px 25px;
+    margin-bottom: 10px;
 }
 
-.sidebar-nav nav ul {
+.sidebar-logo img {
+    width: 50px;
+}
+
+.sidebar-nav ul {
     list-style: none;
     width: 100%;
+    padding: 0 15px;
 }
 
 .sidebar-nav li a {
     display: flex;
-    flex-direction: row;
     align-items: center;
-    justify-content: flex-start;
-    color: var(--text-muted-color);
+    gap: 20px;
+    color: #8a8a8e;
     text-decoration: none;
     padding: 12px 10px;
-    transition: all 0.2s ease;
-    gap: 20px;
     border-radius: 8px;
+    transition: all 0.2s ease-in-out;
 }
 
 .sidebar-nav li a i {
@@ -89,58 +72,40 @@ body {
 
 .sidebar-nav li.active a,
 .sidebar-nav li a:hover {
-    color: var(--text-color);
-    background-color: var(--secondary-bg);
+    color: #ffffff;
+    background-color: #2c2c2e;
 }
 
-/* --- CONTEÚDO PRINCIPAL (CENTRO) --- */
 .main-content {
     display: flex;
     flex-direction: column;
-    overflow-y: auto;
+    overflow: hidden;
 }
 
-.main-content::-webkit-scrollbar {
-    width: 8px;
-}
-
-.main-content::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-.main-content::-webkit-scrollbar-thumb {
-    background: var(--border-color);
-    border-radius: 4px;
-}
-
-
-/* ==========================================================
-   --- NOVO: GRID DE LAYOUT PARA O CALENDÁRIO E WIDGETS ---
-   ========================================================== */
+/* --- GRID DE LAYOUT DA PÁGINA --- */
 .calendar-layout-grid {
     display: grid;
-    /* Grid de duas colunas: a primeira flexível, a segunda com largura fixa */
     grid-template-columns: 1fr 420px;
     gap: 24px;
     align-items: start;
-    /* Alinha os itens ao topo */
     height: 100%;
+    overflow: hidden;
 }
 
 .left-calendar-column {
     display: flex;
     flex-direction: column;
     gap: 24px;
+    height: 100%;
 }
+
 .right-widgets-column {
     display: flex;
     flex-direction: column;
     gap: 24px;
     height: calc(100vh - 40px);
-    /* Ocupa altura total menos o padding do body */
     overflow-y: auto;
     padding-right: 8px;
-    /* Espaço para a scrollbar não colar */
 }
 
 .right-widgets-column::-webkit-scrollbar {
@@ -148,46 +113,25 @@ body {
 }
 
 .right-widgets-column::-webkit-scrollbar-thumb {
-    background: var(--border-color);
+    background: #3a3a3c;
     border-radius: 3px;
 }
 
-.right-widgets-column::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-/* --- ESTILOS GERAIS PARA WIDGETS --- */
+/* --- WIDGETS --- */
 .widget {
-    background-color: var(--primary-widget-bg);
+    background-color: #1c1c1e;
     border-radius: 16px;
     padding: 25px;
-    border: 1px solid var(--border-color);
 }
 
-/* ==================================================================================
---- CALENDÁRIO (ESTILO GLASSMORPHISM) ---
-================================================================================== */
+/* --- CALENDÁRIO (GLASSMORPHISM) --- */
 .calendar-widget {
-    background: rgba(44, 44, 46, 0.6);
-    backdrop-filter: blur(25px);
-    -webkit-backdrop-filter: blur(25px);
+    background: rgba(28, 28, 30, 0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    position: relative;
-    overflow: hidden;
     padding: 20px;
     border-radius: 20px;
-}
-
-.calendar-widget::before {
-    content: '';
-    position: absolute;
-    top: -50px;
-    left: -50px;
-    width: 200px;
-    height: 200px;
-    background: radial-gradient(circle, rgba(168, 85, 247, 0.25), transparent 70%);
-    opacity: 0.8;
-    z-index: -1;
 }
 
 .calendar-header {
@@ -195,19 +139,18 @@ body {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 25px;
-    padding: 0 5px;
 }
 
 .calendar-header h2 {
     text-transform: capitalize;
-    font-size: 1.2em;
-    font-weight: 500;
+    font-size: 1.3em;
+    font-weight: 600;
 }
 
 .nav-button {
     background: transparent;
     border: none;
-    color: var(--text-muted-color);
+    color: #8a8a8e;
     font-size: 1.1em;
     cursor: pointer;
     transition: all 0.2s;
@@ -217,7 +160,7 @@ body {
 }
 
 .nav-button:hover {
-    color: var(--text-color);
+    color: #f5f5f7;
     background-color: rgba(255, 255, 255, 0.1);
 }
 
@@ -232,7 +175,7 @@ body {
     text-align: center;
     font-weight: 500;
     font-size: 0.8em;
-    color: var(--text-muted-color);
+    color: #8a8a8e;
     padding-bottom: 10px;
 }
 
@@ -255,22 +198,17 @@ body {
 }
 
 .day-cell:not(.empty-day):hover {
-    background-color: var(--secondary-bg);
+    background-color: #2c2c2e;
 }
 
-.selected-day {
-    background-color: var(--calendar-highlight);
+.day-cell.selected-day {
+    background-color: #0a84ff;
     color: #ffffff;
     font-weight: 600;
 }
 
-.today-cell:not(.selected-day) {
-    border-color: var(--calendar-highlight);
-}
-
-.selected-day.has-reminder::after,
-.selected-day.has-prova::after {
-    display: none;
+.day-cell.today {
+    border-color: #0a84ff;
 }
 
 .day-cell.has-reminder::after,
@@ -284,14 +222,14 @@ body {
 }
 
 .day-cell.has-reminder::after {
-    background-color: var(--success-color);
+    background-color: #34c759;
 }
 
 .day-cell.has-prova::after {
-    background-color: var(--danger-color);
+    background-color: #ff3b30;
 }
 
-/* --- WIDGETS DA COLUNA DIREITA E FORMULÁRIOS --- */
+/* --- WIDGETS DA DIREITA E FORMULÁRIOS --- */
 .widget h4,
 .widget h3 {
     font-size: 1.1em;
@@ -299,12 +237,7 @@ body {
     display: flex;
     align-items: center;
     gap: 10px;
-    color: var(--text-color);
     margin-bottom: 20px;
-}
-
-.widget h4 i {
-    color: var(--text-muted-color);
 }
 
 .form-group {
@@ -314,7 +247,7 @@ body {
 label {
     display: block;
     font-size: 0.9em;
-    color: var(--text-muted-color);
+    color: #8a8a8e;
     margin-bottom: 8px;
     font-weight: 500;
 }
@@ -322,20 +255,19 @@ label {
 input[type="text"],
 input[type="date"] {
     width: 100%;
-    background-color: var(--bg-color);
-    border: 1px solid var(--border-color);
-    color: var(--text-color);
+    background-color: #000;
+    border: 1px solid #3a3a3c;
+    color: #f5f5f7;
     padding: 12px;
     border-radius: 8px;
     font-size: 1em;
-    font-family: var(--font-family);
     transition: all 0.2s;
 }
 
 input[type="text"]:focus,
 input[type="date"]:focus {
     outline: none;
-    border-color: var(--accent-color);
+    border-color: #0a84ff;
     box-shadow: 0 0 0 3px rgba(10, 132, 255, 0.3);
 }
 
@@ -347,7 +279,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 button[type="submit"] {
     width: 100%;
     padding: 12px;
-    background: var(--accent-color);
+    background: #0a84ff;
     color: #ffffff;
     font-weight: 600;
     font-size: 1em;
@@ -366,8 +298,8 @@ button[type="submit"]:hover {
 }
 
 .provas-widget li {
-    padding: 15px 0;
-    border-bottom: 1px solid var(--border-color);
+    padding: 15px 5px;
+    border-bottom: 1px solid #3a3a3c;
     display: flex;
     flex-direction: column;
     gap: 4px;
@@ -383,13 +315,14 @@ button[type="submit"]:hover {
 
 .provas-widget li span {
     font-size: 0.9em;
-    color: var(--text-muted-color);
+    color: #8a8a8e;
 }
 
 /* --- WIDGET DE LEMBRETES (TO-DO) --- */
 .todo-widget {
     display: flex;
     flex-direction: column;
+    height: 100%;
 }
 
 .todo-header {
@@ -397,15 +330,15 @@ button[type="submit"]:hover {
     justify-content: space-between;
     align-items: center;
     padding-bottom: 15px;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 1px solid #3a3a3c;
     margin-bottom: 10px;
 }
 
 .todo-header h3 {
     margin-bottom: 0;
+    font-size: 1.2em;
 }
 
-/* Reset margin */
 .todo-filter {
     display: flex;
     align-items: center;
@@ -420,7 +353,7 @@ button[type="submit"]:hover {
 .todo-body {
     overflow-y: auto;
     flex-grow: 1;
-    max-height: 350px;
+    max-height: 250px;
 }
 
 #reminder-list {
@@ -431,12 +364,7 @@ button[type="submit"]:hover {
     display: flex;
     align-items: center;
     padding: 15px 5px;
-    border-bottom: 1px solid var(--border-color);
-    transition: opacity 0.3s;
-}
-
-#reminder-list li.hidden {
-    display: none;
+    border-bottom: 1px solid #3a3a3c;
 }
 
 #reminder-list li:last-child {
@@ -450,7 +378,7 @@ button[type="submit"]:hover {
 
 #reminder-list .completed .task-text {
     text-decoration: line-through;
-    color: var(--text-muted-color);
+    color: #8a8a8e;
 }
 
 .task-actions {
@@ -462,27 +390,27 @@ button[type="submit"]:hover {
 .complete-btn {
     background: none;
     border: none;
-    color: var(--text-muted-color);
+    color: #8a8a8e;
     cursor: pointer;
     font-size: 1.1em;
 }
 
 .task-actions .edit-btn:hover {
-    color: var(--accent-color);
+    color: #0a84ff;
 }
 
 .task-actions .delete-btn:hover {
-    color: var(--danger-color);
+    color: #ff3b30;
 }
 
 .complete-btn:hover,
 .complete-btn .fa-check-square {
-    color: var(--success-color);
+    color: #34c759;
 }
 
 .todo-footer {
     padding-top: 15px;
-    border-top: 1px solid var(--border-color);
+    border-top: 1px solid #3a3a3c;
 }
 
 #add-reminder-form {
@@ -492,7 +420,7 @@ button[type="submit"]:hover {
 
 #add-reminder-form input {
     flex-grow: 1;
-    background: var(--secondary-bg);
+    background: #2c2c2e;
 }
 
 #add-reminder-form button {
@@ -500,7 +428,7 @@ button[type="submit"]:hover {
     padding: 0 20px;
 }
 
-/* --- COMPONENTES (SWITCH, MODAL, ETC) --- */
+/* --- COMPONENTES (SWITCH, MODAL) --- */
 .switch {
     position: relative;
     display: inline-block;
@@ -521,7 +449,7 @@ button[type="submit"]:hover {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: var(--secondary-bg);
+    background-color: #3a3a3c;
     transition: .4s;
     border-radius: 24px;
 }
@@ -539,20 +467,87 @@ button[type="submit"]:hover {
 }
 
 input:checked+.slider {
-    background-color: var(--success-color);
+    background-color: #34c759;
 }
 
 input:checked+.slider:before {
     transform: translateX(20px);
 }
 
-/* O resto do CSS para modal e responsividade pode ser mantido como estava */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.modal-overlay.visible {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.modal-content {
+    background-color: #2c2c2e;
+    padding: 30px;
+    border-radius: 16px;
+    width: 90%;
+    max-width: 400px;
+}
+
+#edit-reminder-form textarea {
+    width: 100%;
+    background-color: #1c1c1e;
+    border: 1px solid #3a3a3c;
+    color: #f5f5f7;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 1em;
+    margin-bottom: 20px;
+    resize: vertical;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.modal-actions button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.modal-actions button[type="submit"] {
+    background-color: #0a84ff;
+    color: #fff;
+}
+
+.modal-actions button[type="button"] {
+    background-color: #3a3a3c;
+    color: #fff;
+}
 
 /* --- RESPONSIVIDADE --- */
 @media (max-width: 1300px) {
-    .app-container {
+    .dashboard-container {
         grid-template-columns: 90px 1fr;
-        /* Colapsa a sidebar */
+    }
+
+    .sidebar-logo {
+        display: none;
     }
 
     .sidebar-nav li a {
@@ -565,59 +560,49 @@ input:checked+.slider:before {
         font-size: 0.7em;
     }
 
-    .sidebar-logo {
-        font-size: 1.5em;
-    }
-
     .calendar-layout-grid {
         grid-template-columns: 1fr 350px;
-        /* Diminui a coluna da direita */
     }
 }
 
 @media (max-width: 992px) {
     .calendar-layout-grid {
         grid-template-columns: 1fr;
-        /* Transforma em coluna única */
     }
 
     .right-widgets-column {
         height: auto;
-        /* Altura automática no modo coluna */
         overflow-y: visible;
         padding-right: 0;
     }
 
     .todo-widget {
         order: 1;
-        /* Lembretes primeiro */
     }
 
     .provas-widget {
         order: 2;
-        /* Provas depois */
     }
 }
 
 @media (max-width: 768px) {
-
-    /* Mantém as mesmas regras de layout do breakpoint anterior, mas adapta o menu */
     body {
         overflow-y: auto;
     }
 
-    .app-container {
+    .dashboard-container {
         display: flex;
         flex-direction: column;
-        padding: 10px 10px 80px 10px;
         height: auto;
+        padding: 10px 10px 80px 10px;
     }
 
     .main-content {
         order: 1;
+        overflow: visible;
     }
 
-    .sidebar-nav {
+    .sidebar {
         order: 2;
         flex-direction: row;
         justify-content: space-around;
@@ -627,7 +612,6 @@ input:checked+.slider:before {
         width: 100%;
         height: 70px;
         padding: 5px 0;
-        border-radius: 0;
         z-index: 1000;
         background-color: rgba(28, 28, 30, 0.7);
         backdrop-filter: blur(15px);
@@ -635,28 +619,28 @@ input:checked+.slider:before {
         border-top: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    .sidebar-logo,
+    .sidebar-nav {
+        width: 100%;
+    }
+
+    .sidebar-nav ul {
+        display: flex;
+        justify-content: space-around;
+        width: 100%;
+        padding: 0;
+    }
+
     .sidebar-nav li a span {
         display: none;
     }
 
-    .sidebar-nav nav {
-        width: 100%;
+    .sidebar-nav li a i {
+        font-size: 1.6em;
     }
 
-    .sidebar-nav nav ul {
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-        width: 100%;
-    }
-
-    .sidebar-nav li a:hover,
-    .sidebar-nav li.active a {
+    .sidebar-nav li.active a,
+    .sidebar-nav li a:hover {
         background-color: transparent;
-    }
-
-    .sidebar-nav li.active a {
-        color: var(--accent-color);
+        color: #0a84ff;
     }
 }

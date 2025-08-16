@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const deckSelectionView = document.getElementById('deck-selection-view');
     const flashcardViewerView = document.getElementById('flashcard-viewer-view');
     const deckGrid = document.getElementById('deck-grid');
-    const addDeckBtn = document.getElementById('add-deck-btn'); // Novo botão do header
+    const addDeckBtn = document.getElementById('add-deck-btn');
     
     // Elementos do Viewer
     const flashcard = document.getElementById('flashcard');
@@ -35,9 +35,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if (savedDecks) {
             decks = JSON.parse(savedDecks);
         } else {
+            // Dados de exemplo para o primeiro uso
             decks = [{
                 id: Date.now(),
-                title: "Direito Constitucional",
+                title: "Exemplo: Direito Constitucional",
                 cards: [
                     { question: "Qual o objetivo da RFB que busca construir uma sociedade livre, justa e solidária?", answer: "É o Inciso I do Art. 3º da CF." },
                     { question: "Quando é permitido entrar na casa de alguém sem consentimento, durante a noite?", answer: "Apenas em flagrante delito, desastre, ou para prestar socorro." }
@@ -53,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- FUNÇÕES DE RENDERIZAÇÃO E VISUALIZAÇÃO ---
 
     function renderDecks() {
-        deckGrid.innerHTML = ''; // Limpa a grade
+        deckGrid.innerHTML = '';
         
         decks.forEach(deck => {
             const card = document.createElement('div');
@@ -63,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
             card.innerHTML = `
                 <div class="card-header">
                     <span class="icon"><i class="fa-solid fa-layer-group"></i></span>
-                    <button class="delete-btn" data-deck-id="${deck.id}"><i class="fa-solid fa-trash-can"></i></button>
+                    <button class="delete-btn" title="Apagar baralho" data-deck-id="${deck.id}"><i class="fa-solid fa-trash-can"></i></button>
                 </div>
                 <div class="card-content">
                     <h2>${deck.title}</h2>
@@ -71,16 +72,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             `;
             
-            // Evento para abrir o baralho (não dispara se clicar no botão de deletar)
             card.addEventListener('click', (e) => {
                 if (!e.target.closest('.delete-btn')) {
                     showFlashcardView(deck.id);
                 }
             });
 
-            // Evento para o botão de deletar
             card.querySelector('.delete-btn').addEventListener('click', (e) => {
-                e.stopPropagation(); // Impede que o baralho seja aberto
+                e.stopPropagation();
                 if (confirm(`Tem certeza que deseja apagar o baralho "${deck.title}"?`)) {
                     deleteDeck(deck.id);
                 }
@@ -154,27 +153,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
     backToDecksBtn.addEventListener('click', showDeckSelectionView);
     addFlashcardBtn.addEventListener('click', () => openModal(addFlashcardModal));
-    addDeckBtn.addEventListener('click', () => openModal(addDeckModal)); // Botão do Header
+    addDeckBtn.addEventListener('click', () => openModal(addDeckModal));
 
-    // Lógica para fechar modais
-    addDeckModal.addEventListener('click', (e) => {
-        if (e.target.classList.contains('modal-overlay') || e.target.classList.contains('cancel-btn')) {
-            closeModal(addDeckModal);
-        }
-    });
-    addFlashcardModal.addEventListener('click', (e) => {
-        if (e.target.classList.contains('modal-overlay') || e.target.classList.contains('cancel-btn')) {
-            closeModal(addFlashcardModal);
-        }
+    [addDeckModal, addFlashcardModal].forEach(modal => {
+        modal.addEventListener('click', (e) => {
+            if (e.target.classList.contains('modal-overlay') || e.target.classList.contains('cancel-btn')) {
+                closeModal(modal);
+            }
+        });
     });
 
-    // Submeter formulário de novo baralho
     addDeckForm.addEventListener('submit', (e) => {
         e.preventDefault();
         const titleInput = document.getElementById('new-deck-title');
-        const newTitle = titleInput.value.trim();
-        if (newTitle) {
-            decks.push({ id: Date.now(), title: newTitle, cards: [] });
+        if (titleInput.value.trim()) {
+            decks.push({ id: Date.now(), title: titleInput.value.trim(), cards: [] });
             saveDecks();
             renderDecks();
             titleInput.value = '';
@@ -182,7 +175,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Submeter formulário de novo flashcard
     addFlashcardForm.addEventListener('submit', (e) => {
         e.preventDefault();
         const questionInput = document.getElementById('new-card-question');

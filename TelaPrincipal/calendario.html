@@ -1,123 +1,63 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cronograma Integrado</title>
-    <link rel="stylesheet" href="calendario.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="calendario.css">
+    <link rel="icon" type="image/png" href="fotos/logo.png">
 </head>
+
 <body>
+    <div class="dashboard-container">
 
-    <div class="app-container">
-        <aside class="sidebar-nav">
-            <div class="sidebar-logo"><i class="fa-solid fa-skull-crossbones"></i></div>
-             <nav class="sidebar-nav">
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <a href="TelaPrincipal.html"> <img src="fotos/logo.png" alt="Logo Meus Estudos"></a>
+            </div>
+            <nav class="sidebar-nav">
                 <ul>
-                    <li>
-                        <a href="TelaPrincipal.html">
-                            <i class="fa-solid fa-house"></i>
-                            <span>Home</span>
-                        </a>
+                    <li><a href="TelaPrincipal.html"><i class="fa-solid fa-house"></i><span>Home</span></a></li>
+                    <li><a href="edital-pmdf.html"><i class="fa-solid fa-book"></i><span>Conteúdo</span></a></li>
+                    <li class="active"><a href="calendario.html"><i
+                                class="fa-solid fa-calendar-days"></i><span>Calendário</span></a></li>
+                    <li><a href="cronometro.html"><i class="fa-solid fa-stopwatch"></i><span>Cronômetro</span></a></li>
+                    <li><a href="painel_tatico.html"><i class="fa-solid fa-chart-pie"></i><span>Painel Tático</span></a>
                     </li>
-
-                    <li>
-                        <a href="edital-pmdf.html">
-                            <i class="fa-solid fa-book"></i>
-                            <span>Conteúdo</span>
-                        </a>
+                    <li><a href="questoes.html"><i class="fa-solid fa-list-check"></i><span>Questões</span></a></li>
+                    <li><a href="cadernos.html"><i class="fa-solid fa-swatchbook"></i><span>Cadernos</span></a></li>
+                    <li><a href="flashcards.html"><i class="fa-solid fa-layer-group"></i><span>Flashcards</span></a>
                     </li>
-
-                    <li>
-                        <a href="calendario.html">
-                            <i class="fa-solid fa-calendar-days"></i>
-                            <span>Calendario</span>
-                        </a>
-                    </li>
-
-                    <li class="active">
-                        <a href="cronometro.html">
-                            <i class="fa-solid fa-stopwatch"></i>
-                            <span>Cronômetro</span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="painel_tatico.html">
-                            <i class="fa-solid fa-chart-pie"></i>
-                            <span>Painel Tático</span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="questões.html">
-                            <i class="fa-solid fa-list-check"></i>
-                            <span>Questões</span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="caderno.html">
-                            <i class="fa-solid fa-swatchbook"></i>
-                            <span>Cadernos</span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="flashcards.html">
-                            <i class="fa-solid fa-layer-group"></i>
-                            <span>Flashcards</span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="guia.html">
-                            <i class="fa-solid fa-map-location-dot"></i>
-                            <span>Guia</span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="edital.html">
-                            <i class="fa-solid fa-book-open"></i>
-                            <span>Edital</span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="musica.html">
-                            <i class="fa-solid fa-music"></i>
-                            <span>Música</span>
-                        </a>
-                    </li>
+                    <li><a href="guia.html"><i class="fa-solid fa-map-location-dot"></i><span>Guia</span></a></li>
+                    <li><a href="edital.html"><i class="fa-solid fa-book-open"></i><span>Edital</span></a></li>
+                    <li><a href="musica.html"><i class="fa-solid fa-music"></i><span>Música</span></a></li>
                 </ul>
             </nav>
         </aside>
 
         <main class="main-content">
-            
             <div class="calendar-layout-grid">
-                
                 <div class="left-calendar-column">
-                    
                     <div class="todo-widget widget">
                         <div class="todo-header">
                             <h3 id="todo-title">Lembretes para DD/MM/AAAA</h3>
-                             <div class="todo-filter">
+                            <div class="todo-filter">
                                 <label for="show-completed-toggle">Mostrar Concluídos</label>
                                 <label class="switch">
                                     <input type="checkbox" id="show-completed-toggle">
-                                    <span class="slider round"></span>
+                                    <span class="slider"></span>
                                 </label>
                             </div>
                         </div>
                         <div class="todo-body">
-                            <ul id="reminder-list">
-                                </ul>
+                            <ul id="reminder-list"></ul>
                         </div>
                         <div class="todo-footer">
                             <form id="add-reminder-form">
-                                <input type="text" id="new-reminder-input" placeholder="Adicionar nova tarefa..." required>
+                                <input type="text" id="new-reminder-input" placeholder="Adicionar nova tarefa..."
+                                    required>
                                 <button type="submit"><i class="fas fa-plus"></i> Adicionar</button>
                             </form>
                         </div>
@@ -125,20 +65,20 @@
 
                     <div class="calendar-widget">
                         <div class="calendar-header">
-                            <button id="prev-month-button" class="nav-button"><i class="fas fa-chevron-left"></i></button>
+                            <button id="prev-month-button" class="nav-button"><i
+                                    class="fas fa-chevron-left"></i></button>
                             <h2 id="month-year-header">Carregando...</h2>
-                            <button id="next-month-button" class="nav-button"><i class="fas fa-chevron-right"></i></button>
+                            <button id="next-month-button" class="nav-button"><i
+                                    class="fas fa-chevron-right"></i></button>
                         </div>
                         <div class="calendar-weekdays">
                             <span>DOM</span><span>SEG</span><span>TER</span><span>QUA</span><span>QUI</span><span>SEX</span><span>SÁB</span>
                         </div>
                         <div class="calendar-days" id="calendar-days-grid"></div>
                     </div>
-                    
                 </div>
 
                 <div class="right-widgets-column">
-
                     <div class="add-prova-widget widget">
                         <h4><i class="fas fa-calendar-plus"></i> Adicionar Prova</h4>
                         <form id="add-prova-form">
@@ -156,19 +96,16 @@
 
                     <div class="provas-widget widget">
                         <h4><i class="fas fa-flag-checkered"></i> Próximas Provas</h4>
-                        <ul id="provas-list">
-                            </ul>
+                        <ul id="provas-list"></ul>
                     </div>
                 </div>
-
             </div>
-
         </main>
-        
     </div>
 
-    <div id="edit-modal" class="modal-overlay"> </div>
-
+    <div id="edit-modal" class="modal-overlay"></div>
+    <script src="app.js"></script>
     <script src="calendario.js"></script>
 </body>
+
 </html>

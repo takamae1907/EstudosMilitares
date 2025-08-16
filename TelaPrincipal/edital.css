@@ -1,10 +1,6 @@
-/*
-=====================================================
-APPLE-INSPIRED NOTICE ANALYZER STYLESHEET (VERSÃO CORRIGIDA)
-=====================================================
-*/
-
-/* --- RESET & GLOBAIS --- */
+/* ---
+APPLE DESIGN PHILOSOPHY - RESET & GLOBAIS
+--- */
 * {
     margin: 0;
     padding: 0;
@@ -19,8 +15,14 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
-/* --- LAYOUT PRINCIPAL (3 COLUNAS) --- */
-.app-container {
+.hidden {
+    display: none !important;
+}
+
+/* ---
+LAYOUT PRINCIPAL - GRID E ESPAÇAMENTO
+--- */
+.dashboard-container {
     display: grid;
     grid-template-columns: 240px 1fr 340px;
     height: 100vh;
@@ -28,7 +30,9 @@ body {
     padding: 20px;
 }
 
-/* --- BARRA LATERAL (SIDEBAR) --- */
+/* ---
+BARRA LATERAL (SIDEBAR)
+--- */
 .sidebar {
     padding: 10px 0;
     display: flex;
@@ -79,7 +83,9 @@ body {
     background-color: #2c2c2e;
 }
 
-/* --- CONTEÚDO PRINCIPAL E COLUNA DIREITA --- */
+/* ---
+CONTEÚDO PRINCIPAL E COLUNA DIREITA
+--- */
 .main-content,
 .right-column {
     overflow-y: auto;
@@ -111,6 +117,12 @@ body {
     display: none;
 }
 
+.right-column .section-header h2 {
+    font-size: 1.5em;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
 /* --- ESTILOS ESPECÍFICOS DA PÁGINA DO ANALISADOR --- */
 .page-header {
     text-align: center;
@@ -130,22 +142,21 @@ body {
     margin: 0 auto;
 }
 
-.hidden {
-    display: none !important;
+.upload-widget,
+.loading-widget {
+    max-width: 700px;
+    margin: 40px auto;
+    text-align: center;
 }
 
-/* Widgets de Upload, Loading, Dashboard, etc. (sem alterações) */
 .upload-widget {
     background-color: #1c1c1e;
     border-radius: 16px;
-    padding: 30px;
-    text-align: center;
-    max-width: 800px;
-    margin: 0 auto;
+    padding: 40px;
 }
 
 .upload-widget h2 {
-    margin-bottom: 20px;
+    margin-bottom: 25px;
     font-size: 1.5em;
 }
 
@@ -153,14 +164,16 @@ body {
     border: 2px dashed #3a3a3c;
     border-radius: 12px;
     padding: 40px 20px;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
     cursor: pointer;
     transition: all 0.2s;
 }
 
-.drop-zone:hover {
+.drop-zone:hover,
+.drop-zone:focus {
     border-color: #0a84ff;
     background-color: #2c2c2e;
+    outline: none;
 }
 
 .drop-zone i {
@@ -181,8 +194,6 @@ body {
 .browse-btn {
     color: #0a84ff;
     font-weight: 500;
-    text-decoration: underline;
-    cursor: pointer;
 }
 
 #analyze-btn {
@@ -208,7 +219,6 @@ body {
     align-items: center;
     justify-content: center;
     padding: 4rem;
-    text-align: center;
 }
 
 .spinner {
@@ -263,16 +273,17 @@ body {
     margin-bottom: 10px;
 }
 
-ul {
+.widget ul {
     list-style: none;
+    padding: 0;
 }
 
-ul li {
-    padding: 10px;
+.widget ul li {
+    padding: 10px 5px;
     border-bottom: 1px solid #3a3a3c;
 }
 
-ul li:last-child {
+.widget ul li:last-child {
     border-bottom: none;
 }
 
@@ -297,15 +308,16 @@ th {
     font-weight: 500;
 }
 
-tbody tr:nth-child(even) {
-    background-color: #2c2c2e;
+tbody tr:last-child td {
+    border-bottom: none;
 }
 
 .progress-bar-container {
     width: 100%;
-    background-color: #2c2c2e;
+    background-color: #3a3a3c;
     border-radius: 5px;
     margin: 0.5rem 0;
+    overflow: hidden;
 }
 
 .progress-bar {
@@ -346,21 +358,48 @@ span[id$="-percent"] {
     padding: 4px 0;
 }
 
-/* --- RESPONSIVIDADE (SEÇÃO TOTALMENTE CORRIGIDA) --- */
+.insights-widget {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
 
-/* Telas de Tablet (Até 1200px) */
+.insight-card {
+    background-color: #2c2c2e;
+    border-radius: 16px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.insight-card i {
+    font-size: 1.8em;
+    width: 30px;
+    text-align: center;
+    color: #0a84ff;
+}
+
+.insight-card span {
+    font-size: 0.9em;
+    color: #8a8a8e;
+    display: block;
+}
+
+.insight-card strong {
+    font-size: 1.3em;
+    font-weight: 600;
+    margin-top: 2px;
+    display: block;
+}
+
+/* --- RESPONSIVIDADE --- */
 @media (max-width: 1200px) {
-
-    /* CORREÇÃO: Definimos um layout de 2 colunas e um mapa de áreas */
-    .app-container {
+    .dashboard-container {
         grid-template-columns: 90px 1fr;
-        grid-template-areas:
-            "sidebar main"
-            "sidebar right";
-        /* A coluna 'right' agora fica abaixo da 'main' */
+        grid-template-areas: "sidebar main" "sidebar right";
     }
 
-    /* CORREÇÃO: Atribuímos cada elemento à sua área do grid */
     .sidebar {
         grid-area: sidebar;
     }
@@ -371,12 +410,10 @@ span[id$="-percent"] {
 
     .right-column {
         grid-area: right;
-        margin-top: 24px;
-        /* Adiciona espaço entre o conteúdo e a coluna direita */
         height: auto;
+        overflow-y: visible;
     }
 
-    /* Estilos da sidebar encolhida */
     .sidebar-nav li a {
         flex-direction: column;
         gap: 8px;
@@ -387,39 +424,33 @@ span[id$="-percent"] {
         font-size: 0.7em;
     }
 
-    .sidebar-logo {
-        padding: 15px 0;
-        text-align: center;
-    }
-
     .sidebar-logo img {
         width: 40px;
     }
 }
 
-/* Telas menores (até 960px) */
 @media (max-width: 960px) {
     .card-large {
         grid-column: span 1;
     }
 }
 
-/* Telas de Celular (Até 768px) */
 @media (max-width: 768px) {
-    .app-container {
+    body {
+        overflow-y: auto;
+    }
+
+    .dashboard-container {
         display: flex;
-        /* Mudamos de grid para flex para reordenar */
         flex-direction: column;
         height: auto;
         min-height: 100vh;
-        padding: 15px 15px 85px 15px;
-        grid-template-areas: none;
-        /* Resetamos as áreas do grid */
+        padding: 10px 10px 80px 10px;
     }
 
-    /* Reordenamos os itens para a visualização mobile */
     .main-content {
         order: 1;
+        overflow-y: visible;
     }
 
     .right-column {
@@ -429,7 +460,6 @@ span[id$="-percent"] {
 
     .sidebar {
         order: 3;
-        /* Sidebar vira a barra de navegação inferior */
         flex-direction: row;
         justify-content: space-around;
         position: fixed;
@@ -438,7 +468,6 @@ span[id$="-percent"] {
         width: 100%;
         height: 70px;
         padding: 5px 0;
-        border-radius: 0;
         z-index: 1000;
         background-color: rgba(28, 28, 30, 0.7);
         backdrop-filter: blur(15px);
@@ -452,7 +481,6 @@ span[id$="-percent"] {
 
     .sidebar-nav {
         width: 100%;
-        padding: 0;
     }
 
     .sidebar-nav ul {
@@ -460,6 +488,7 @@ span[id$="-percent"] {
         justify-content: space-around;
         align-items: center;
         width: 100%;
+        padding: 0;
     }
 
     .sidebar-nav li a span {
